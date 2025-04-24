@@ -13,6 +13,7 @@ const loginController = async (req, res) => {
         })
     )
     if (err) return res.status(500).json({ message: err.message })
+    if(user == null) return res.status(404).json({ message: 'Valide los datos de entrada' })
     return res.status(200).json(user)
 }
 

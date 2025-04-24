@@ -21,6 +21,10 @@ Quota.init(
             type: DataTypes.DOUBLE,
             allowNull: false,
         },
+        ganancy: {
+            type: DataTypes.DOUBLE,
+            allowNull: false,
+        },
         date_to_pay: {
             type: DataTypes.DATE,
             allowNull: false,

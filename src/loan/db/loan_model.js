@@ -2,6 +2,8 @@ const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../../utils/db/connection');
 const User = require('../../user/db/user_model');
 const Customer = require('../../customer/db/customer_model');
+const PaymentFrequency = require('../../utils/db/payment_frequency_model');
+const PaymentMethod = require('../../utils/db/payment_method_model');
 
 class Loan extends Model { }
 
@@ -65,6 +67,8 @@ Loan.init(
 
 Loan.belongsTo(User, {foreignKey: 'id_user',})
 Loan.belongsTo(Customer, {foreignKey: 'id_customer',})
+Loan.belongsTo(PaymentFrequency, {foreignKey: 'id_payment_frequency',})
+Loan.belongsTo(PaymentMethod, {foreignKey: 'id_payment_method',})
 
 
 module.exports = Loan

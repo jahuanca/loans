@@ -11,6 +11,6 @@ const loanRoutes = Router()
 loanRoutes.get('/', getLoansController)
 loanRoutes.post('/create', createLoanController)
 loanRoutes.put('/update', updateLoanController)
-loanRoutes.delete('/delete', deleteLoanController)
+loanRoutes.delete('/delete/:id', deleteLoanController)
 
 module.exports = loanRoutes
