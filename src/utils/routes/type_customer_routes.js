@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const {
     getTypesDocumentController,
-} = require("../controllers");
+} = require("../controllers/type_document");
 
 const typeCustomerRoutes = Router()
 

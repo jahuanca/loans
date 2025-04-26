@@ -1,4 +1,4 @@
-const { getSummaryRepository } = require("../repositories");
+const { getSummaryRepository } = require("../../repositories/dashboard");
 
 const getSummaryUseCaseExecute = () => getSummaryRepository()
 

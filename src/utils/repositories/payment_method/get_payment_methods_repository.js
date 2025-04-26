@@ -1,4 +1,4 @@
-const PaymentMethod = require("../db/payment_method_model");
+const PaymentMethod = require("../../db/payment_method_model");
 
 const getPaymentMethodsRepository = () => PaymentMethod.findAll()
 

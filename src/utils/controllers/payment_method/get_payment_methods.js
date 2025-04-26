@@ -1,5 +1,5 @@
-const { getPromise } = require("../../utils/core/helpers")
-const getPaymentMethodsUseCaseExecute = require("../use_cases/get_payment_methods_use_case")
+const { getPromise } = require("../../../utils/core/helpers")
+const getPaymentMethodsUseCaseExecute = require("../../use_cases/payment_method/get_payment_methods_use_case")
 
 const getPaymentMethodsController = async (req, res)=> {
     const [err, paymentMethods] = await getPromise(getPaymentMethodsUseCaseExecute())

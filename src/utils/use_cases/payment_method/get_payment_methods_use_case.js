@@ -1,4 +1,4 @@
-const { getPaymentMethodsRepository } = require("../repositories");
+const { getPaymentMethodsRepository } = require("../../repositories/payment_method");
 
 const getPaymentMethodsUseCaseExecute = ()=> getPaymentMethodsRepository()
 

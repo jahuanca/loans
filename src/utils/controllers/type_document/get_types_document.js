@@ -1,5 +1,5 @@
-const { getPromise } = require("../../utils/core/helpers")
-const getTypesDocumentUseCaseExecute = require("../use_cases/get_types_customer_use_case")
+const { getPromise } = require("../../../utils/core/helpers")
+const getTypesDocumentUseCaseExecute = require("../../use_cases/type_document/get_types_document_use_case")
 
 const getTypesDocumentController = async (req, res)=> {
     const [err, typesDocument] = await getPromise(getTypesDocumentUseCaseExecute())

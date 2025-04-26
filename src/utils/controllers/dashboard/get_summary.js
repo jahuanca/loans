@@ -1,5 +1,5 @@
-const { getPromise } = require("../core/helpers")
-const getSummaryUseCaseExecute = require("../use_cases/get_summary_use_case")
+const { getPromise } = require("../../core/helpers")
+const getSummaryUseCaseExecute = require("../../use_cases/dasboard/get_summary_use_case")
 
 const getSummaryController = async (req, res)=> {
     const [err, summary] = await getPromise(

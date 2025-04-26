@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const {
     getPaymentMethodsController,
-} = require("../controllers");
+} = require("../controllers/payment_method");
 
 const paymentMethodRoutes = Router()
 

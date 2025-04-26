@@ -1,6 +1,6 @@
-const Customer = require("../../customer/db/customer_model")
-const Loan = require("../../loan/db/loan_model")
-const { sequelize } = require("../db/connection")
+const Customer = require("../../../customer/db/customer_model")
+const Loan = require("../../../loan/db/loan_model")
+const { sequelize } = require("../../db/connection")
 
 const getResumeRepository = async ()=> {
 

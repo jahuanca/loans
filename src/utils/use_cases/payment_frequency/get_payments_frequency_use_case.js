@@ -1,4 +1,4 @@
-const { getPaymentsFrequencyRepository } = require("../repositories");
+const { getPaymentsFrequencyRepository } = require("../../repositories/payment_frequency");
 
 const getPaymentsFrequencyUseCaseExecute = ()=> getPaymentsFrequencyRepository()
 

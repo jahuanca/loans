@@ -1,4 +1,4 @@
-const PaymentFrequency = require("../db/payment_frequency_model");
+const PaymentFrequency = require("../../db/payment_frequency_model");
 
 const getPaymentsFrequencyRepository = () => PaymentFrequency.findAll()
 

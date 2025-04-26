@@ -1,4 +1,4 @@
-const { getTypesDocumentRepository } = require("../repositories");
+const { getTypesDocumentRepository } = require("../../repositories/type_document");
 
 const getTypesDocumentUseCaseExecute = ()=> getTypesDocumentRepository()
 

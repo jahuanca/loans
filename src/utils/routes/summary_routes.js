@@ -1,6 +1,6 @@
 
 const express = require('express')
-const { getSummaryController } = require('../controllers')
+const { getSummaryController } = require('../controllers/dashboard')
 const summaryRoutes = express.Router()
 
 
