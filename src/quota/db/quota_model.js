@@ -38,7 +38,7 @@ Quota.init(
             allowNull: true,
         },
         id_state_quota: {
-            type: DataTypes.DATE,
+            type: DataTypes.INTEGER,
             allowNull: false,
         }
     },
