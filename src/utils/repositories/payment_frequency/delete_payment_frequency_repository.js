@@ -6,5 +6,4 @@ const  deletePaymentFrequencyRepository = async ({id}) => {
    return paymentFrequency
 }
 
-
 module.exports = deletePaymentFrequencyRepository
