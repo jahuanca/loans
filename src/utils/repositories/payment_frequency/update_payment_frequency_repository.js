@@ -18,6 +18,7 @@ const updatePaymentFrequencyRepository = async ({
         days_installment,
     })
     await paymentFrequency.save()
+    await paymentFrequency.reload()
     return paymentFrequency
 }
 
