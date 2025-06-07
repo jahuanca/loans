@@ -11,6 +11,6 @@ const userRoutes = Router()
 userRoutes.get('/', getUsersController)
 userRoutes.post('/create', createUserController)
 userRoutes.put('/update', updateUserController)
-userRoutes.delete('/delete', deleteUserController)
+userRoutes.delete('/delete/:id', deleteUserController)
 
 module.exports = userRoutes

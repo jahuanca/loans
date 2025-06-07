@@ -11,6 +11,6 @@ const customerRoutes = Router()
 customerRoutes.get('/', getCustomersController)
 customerRoutes.post('/create', createCustomerController)
 customerRoutes.put('/update', updateCustomerController)
-customerRoutes.delete('/delete', deleteCustomerController)
+customerRoutes.delete('/delete/:id', deleteCustomerController)
 
 module.exports = customerRoutes

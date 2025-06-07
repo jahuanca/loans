@@ -1,5 +1,6 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../../utils/db/connection');
+const Loan = require('../../loan/db/loan_model');
 
 class Quota extends Model { }
 
@@ -26,7 +27,7 @@ Quota.init(
             allowNull: false,
         },
         date_to_pay: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false,
         },
         paid_date: {
@@ -52,5 +53,7 @@ Quota.init(
 (async () => {
     await Quota.sync({force: false,})
 })();
+
+Quota.belongsTo(Loan, {foreignKey: 'id_loan',})
 
 module.exports = Quota
