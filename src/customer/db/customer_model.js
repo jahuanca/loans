@@ -26,7 +26,7 @@ Customer.init(
             allowNull: true,
         },
         id_type_document: {
-            type: DataTypes.STRING(100),
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
         document: {

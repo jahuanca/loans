@@ -4,45 +4,89 @@ const { sequelize } = require("../../db/connection")
 const Quota = require("../../../quota/db/quota_model")
 const { getFormatDate } = require("../../core/formats")
 
-const getResumeRepository = async ()=> {
+const getResumeRepository = async () => {
 
     const customerCount = await Customer.count()
-    const loanCount = await Loan.count()
-    const {
-        amount
-    } = (await Loan.findAll(
-        {
-            attributes: [[sequelize.fn('SUM', sequelize.col('amount')), 'amount']],
-            raw: true,
-        }
-    ))[0]
-
-    const {
-        ganancy
-    } = (await Loan.findAll(
-        {
-            attributes: [[sequelize.fn('SUM', sequelize.col('ganancy')), 'ganancy']],
-            raw: true,
-        }
-    ))[0]
+    const loansInfo = await getLoansInfo()
+    const amountsInfo = await getAmountsInfo()
+    const ganancyInfo = await getGanancyInfo()
 
     const firstQuotaPending = await Quota.findAll({
-        where: {id_state_quota: 1},
+        where: { id_state_quota: 1 },
         attributes: ['date_to_pay'],
         limit: 1,
-        order: [['date_to_pay','ASC']],
+        order: [['date_to_pay', 'ASC']],
     })
 
-    const defaultDateToPay = {date_to_pay: getFormatDate()}
-    const [ first= defaultDateToPay, ...args] = firstQuotaPending
+    const defaultDateToPay = { date_to_pay: getFormatDate() }
+    const [first = defaultDateToPay, ...args] = firstQuotaPending
     const { date_to_pay } = first
 
     return {
         'customers_count': customerCount,
-        'loans_count': loanCount,
-        'all_amount': amount,
-        'all_ganancy':ganancy,
-        'date_to_search': date_to_pay,
+        'amounts_info': amountsInfo,
+        'ganancy_info': ganancyInfo,
+        'date_to_search': date_to_pay,  
+        'loans_info': loansInfo,
+    }
+}
+
+const getLoansInfo = async () => {
+    const pendings = await Loan.count({ where: { id_state_loan: 1} })
+    const completes = await Loan.count({ where: { id_state_loan: 2 } })
+    
+    return {
+        'todas': pendings + completes,
+        'completas': completes,
+        'pendientes': pendings,
+    }
+}
+
+const getAmountsInfo = async () => {
+    const { amountPending } = (await Quota.findAll({
+        attributes: [
+            [ sequelize.fn('SUM', sequelize.col('amount')), 'amountPending'],
+        ],
+        where: {id_state_quota: 1},
+        raw: true,
+    }))[0]
+
+    const { amountComplete } = (await Quota.findAll({
+        attributes: [
+            [ sequelize.fn('SUM', sequelize.col('amount')), 'amountComplete'],
+        ],
+        where: {id_state_quota: 2},
+        raw: true,
+    }))[0]
+
+    return {
+        'todas': amountComplete + amountPending,
+        'completas': amountComplete,
+        'pendientes': amountPending,
+    }
+}
+
+const getGanancyInfo = async () => {
+    const { ganacyPending } = (await Quota.findAll({
+        attributes: [
+            [ sequelize.fn('SUM', sequelize.col('ganancy')), 'ganacyPending'],
+        ],
+        where: {id_state_quota: 1},
+        raw: true,
+    }))[0]
+
+    const { ganancyComplete } = (await Quota.findAll({
+        attributes: [
+            [ sequelize.fn('SUM', sequelize.col('ganancy')), 'ganancyComplete'],
+        ],
+        where: {id_state_quota: 2},
+        raw: true,
+    }))[0]
+
+    return {
+        'todo': ganacyPending + ganancyComplete,
+        'cobrado': ganancyComplete,
+        'pendiente': ganacyPending,
     }
 }
 
