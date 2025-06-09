@@ -1,8 +1,8 @@
-const { where } = require("sequelize")
 const Customer = require("../../../customer/db/customer_model")
 const Loan = require("../../../loan/db/loan_model")
 const { sequelize } = require("../../db/connection")
 const Quota = require("../../../quota/db/quota_model")
+const { getFormatDate } = require("../../core/formats")
 
 const getResumeRepository = async ()=> {
 
@@ -26,14 +26,23 @@ const getResumeRepository = async ()=> {
         }
     ))[0]
 
-    const quotas = await Quota.findAll()
+    const firstQuotaPending = await Quota.findAll({
+        where: {id_state_quota: 1},
+        attributes: ['date_to_pay'],
+        limit: 1,
+        order: [['date_to_pay','ASC']],
+    })
+
+    const defaultDateToPay = {date_to_pay: getFormatDate()}
+    const [ first= defaultDateToPay, ...args] = firstQuotaPending
+    const { date_to_pay } = first
 
     return {
         'customers_count': customerCount,
         'loans_count': loanCount,
         'all_amount': amount,
         'all_ganancy':ganancy,
-        'quotas': quotas,
+        'date_to_search': date_to_pay,
     }
 }
 

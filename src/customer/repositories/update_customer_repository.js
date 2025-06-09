@@ -2,15 +2,23 @@ const Customer = require("../db/customer_model")
 
 const updateCustomerRepository = async ({
     id,
-    idMachine,
-    idPoint,
-    porcentage,
+    id_type_document,
+    name,
+    lastName,
+    address,
+    latitude,
+    longitude,
+    document,
 }) => {
     const customerToUpdate = await Customer.findByPk(id)
     if (customerToUpdate == null) throw Error('No se encontro registro')
-    customerToUpdate.idMachine = idMachine
-    customerToUpdate.idPoint = idPoint
-    customerToUpdate.porcentage = porcentage
+    customerToUpdate.id_type_document = id_type_document
+    customerToUpdate.name = name
+    customerToUpdate.lastName = lastName
+    customerToUpdate.address = address
+    customerToUpdate.latitude = latitude
+    customerToUpdate.longitude = longitude
+    customerToUpdate.document = document
 
     await customerToUpdate.save()
     return customerToUpdate
