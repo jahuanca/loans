@@ -1,4 +1,4 @@
-const { getQuotasByDateRepository } = require("../repositories");
+const { getQuotasByDateRepository } = require("./../../repositories/dashboard");
 
 const getQuotasUseCaseExecute = (query)=> getQuotasByDateRepository(query)
 

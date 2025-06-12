@@ -1,7 +1,7 @@
 const { Sequelize } = require("sequelize");
-const Customer = require("../../customer/db/customer_model");
-const Loan = require("../../loan/db/loan_model");
-const Quota = require("../db/quota_model");
+const Customer = require("../../../customer/db/customer_model");
+const Loan = require("../../../loan/db/loan_model");
+const Quota = require("../../../quota/db/quota_model");
 
 const getQuotasByDateRepository = (query) => {
     const { date } = query
