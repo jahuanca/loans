@@ -1,6 +1,7 @@
 const { createCustomerRepository } = require("../repositories");
 
 const createCustomerUseCaseExecute = ({
+    alias,
     name,
     lastName,
     address,
@@ -9,6 +10,7 @@ const createCustomerUseCaseExecute = ({
     id_type_document,
     document,
 }) => createCustomerRepository({
+    alias,
     name,
     lastName,
     address,

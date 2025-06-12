@@ -5,6 +5,7 @@ const updateCustomerController = async (req, res) => {
     const {
         id,
         id_type_document,
+        alias,
         name,
         lastName,
         address,
@@ -13,9 +14,12 @@ const updateCustomerController = async (req, res) => {
         document,
     } = req.body
 
+    console.log(req.body)
+
     const [err, customer] = await getPromise(updateCustomerExecute({
         id,
         id_type_document,
+        alias,
         name,
         lastName,
         address,

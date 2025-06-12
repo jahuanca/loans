@@ -3,6 +3,7 @@ const createCustomerUseCaseExecute = require("../use_cases/create_customer_use_c
 
 const createCustomerController = async (req, res) => {
     const {
+        alias,
         name,
         lastName,
         address,
@@ -12,6 +13,7 @@ const createCustomerController = async (req, res) => {
         document,
     } = req.body
     const [err, customer] = await getPromise(createCustomerUseCaseExecute({
+        alias,
         name,
         lastName,
         address,
@@ -20,7 +22,7 @@ const createCustomerController = async (req, res) => {
         id_type_document,
         document,
     }))
-    if (err) return res.status(500).json({message: err.message})
+    if (err) return res.status(500).json({ message: err.message })
     return res.status(200).json(customer)
 }
 

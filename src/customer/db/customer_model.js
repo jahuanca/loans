@@ -5,6 +5,10 @@ class Customer extends Model { }
 
 Customer.init(
     {
+        alias: {
+            type: DataTypes.STRING(50),
+            allowNull: true,
+        },
         name: {
             type: DataTypes.STRING(100),
             allowNull: false,

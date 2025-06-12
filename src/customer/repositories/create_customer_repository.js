@@ -1,6 +1,7 @@
 const Customer = require("../db/customer_model");
 
 const createCustomerRepository = ({
+    alias,
     name,
     lastName,
     address,
@@ -9,6 +10,7 @@ const createCustomerRepository = ({
     id_type_document,
     document,
 }) => Customer.create({
+    alias,
     name,
     lastName,
     address,

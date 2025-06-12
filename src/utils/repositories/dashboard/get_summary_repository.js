@@ -60,9 +60,9 @@ const getAmountsInfo = async () => {
     }))[0]
 
     return {
-        'todas': amountComplete + amountPending,
-        'completas': amountComplete,
-        'pendientes': amountPending,
+        'tod.': amountComplete + amountPending,
+        'compl.': amountComplete ?? 0,
+        'pend.': amountPending ?? 0,
     }
 }
 
