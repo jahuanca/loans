@@ -26,7 +26,6 @@ PaymentFrequency.init(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-
     },
     {
         paranoid: true,

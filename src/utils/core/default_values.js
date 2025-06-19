@@ -50,8 +50,14 @@ const defaultPaymentFrequency = [
         monthly_installments: 1,
         days_installment: 28,
     },
+    {
+        name: 'Especial',
+        description: 'Cuotas y porcentaje a definir.',
+        recommended_percentage: 30,
+        monthly_installments: 1,
+        days_installment: 30,
+    },
 ]
-
 
 const defaultPaymentMethod = [
     {
