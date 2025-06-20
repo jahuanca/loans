@@ -29,7 +29,7 @@ Loan.init(
             type: DataTypes.DOUBLE,
             allowNull: false,
         },
-        date: {
+        start_date: {
             type: DataTypes.DATE,
             allowNull: false,
         },

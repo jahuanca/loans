@@ -1,5 +1,5 @@
 const { getLoansRepository } = require("../repositories");
 
-const getLoansUseCaseExecute = ()=> getLoansRepository()
+const getLoansUseCaseExecute = (query)=> getLoansRepository(query)
 
 module.exports = getLoansUseCaseExecute

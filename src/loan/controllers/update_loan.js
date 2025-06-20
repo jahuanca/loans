@@ -6,14 +6,14 @@ const updateLoanController = async (req, res) => {
         id,
         name,
         description,
-        date,
+        start_date,
     } = req.body
 
     const [err, loan] = await getPromise(updateLoanExecute({
         id,
         name,
         description,
-        date,
+        start_date,
     }))
     if (err) return res.status(500).json({message: err.message})
     return res.status(200).json(loan)

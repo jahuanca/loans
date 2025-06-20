@@ -60,9 +60,9 @@ const getAmountsInfo = async () => {
     }))[0]
 
     return {
-        'tod.': amountComplete + amountPending,
-        'compl.': amountComplete ?? 0,
-        'pend.': amountPending ?? 0,
+        'tod.': (amountComplete + amountPending).toFixed(2),
+        'compl.': (amountComplete ?? 0).toFixed(2),
+        'pend.': (amountPending ?? 0).toFixed(2),
     }
 }
 
@@ -84,9 +84,9 @@ const getGanancyInfo = async () => {
     }))[0]
 
     return {
-        'todo': ganacyPending + ganancyComplete,
-        'cobrado': ganancyComplete,
-        'pendiente': ganacyPending,
+        'todo': (ganacyPending + ganancyComplete).toFixed(2),
+        'cobrado': (ganancyComplete).toFixed(2),
+        'pendiente': (ganacyPending ?? 0).toFixed(2),
     }
 }
 

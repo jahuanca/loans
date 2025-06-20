@@ -1,6 +1,6 @@
-const { createLoanRepository } = require("../repositories");
+const { createSpecialLoanRepository } = require("../repositories");
 
-const createLoanUseCaseExecute = ({
+const createSpecialLoanUseCaseExecute = ({
     id_customer,
     id_user,
     id_payment_frequency,
@@ -12,7 +12,9 @@ const createLoanUseCaseExecute = ({
     observation,
     id_state_loan,
     evidence,
-})=> createLoanRepository({
+    number_of_installments,
+    days_between_installments,
+})=> createSpecialLoanRepository({
     id_customer,
     id_user,
     id_payment_frequency,
@@ -24,6 +26,8 @@ const createLoanUseCaseExecute = ({
     observation,
     id_state_loan,
     evidence,
+    number_of_installments,
+    days_between_installments,
 })
 
-module.exports = createLoanUseCaseExecute
+module.exports = createSpecialLoanUseCaseExecute

@@ -1,7 +1,8 @@
 const { getPromise } = require("../../utils/core/helpers")
-const createLoanUseCaseExecute = require("../use_cases/create_loan_use_case")
+const createSpecialLoanUseCaseExecute = require("../use_cases/create_special_loan_use_case")
 
-const createLoanController = async (req, res) => {
+const createSpecialLoanController = async (req, res) => {
+    console.log(req.body)
     const {
         id_customer,
         id_user,
@@ -14,8 +15,10 @@ const createLoanController = async (req, res) => {
         observation,
         id_state_loan,
         evidence,
+        number_of_installments,
+        days_between_installments,
     } = req.body
-    const [err, loan] = await getPromise(createLoanUseCaseExecute({
+    const [err, loan] = await getPromise(createSpecialLoanUseCaseExecute({
         id_customer,
         id_user,
         id_payment_frequency,
@@ -27,9 +30,12 @@ const createLoanController = async (req, res) => {
         observation,
         id_state_loan,
         evidence,
+        number_of_installments,
+        days_between_installments,
     }))
     if (err) return res.status(500).json({ message: err.message })
+    if (loan == null) res.status(404).json({ message: 'El préstamo no se pudo procesar' })
     return res.status(200).json(loan)
 }
 
-module.exports = createLoanController
+module.exports = createSpecialLoanController
