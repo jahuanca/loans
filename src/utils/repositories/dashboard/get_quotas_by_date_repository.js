@@ -23,9 +23,12 @@ const getQuotasByDateRepository = (query) => {
                 ),
                 'customer_name'
             ],
+            'Loan.Customer.alias',
+            'id_loan',
             'amount',
             'id_state_quota',
             'date_to_pay',
+            'paid_date',
         ],
     })
 }

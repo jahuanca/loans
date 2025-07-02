@@ -4,6 +4,7 @@ const getPaymentsFrequencyUseCaseExecute = require("../../use_cases/payment_freq
 const getPaymentsFrequencyController = async (req, res)=> {
     const [err, paymentsFrequency] = await getPromise(getPaymentsFrequencyUseCaseExecute())
     if (err) return res.status(500).json({message: err.message})
+    if (paymentsFrequency == null) return res.status(404).json({message: 'Frecuencias nulas'})
     return res.status(200).json(paymentsFrequency)
 }
 

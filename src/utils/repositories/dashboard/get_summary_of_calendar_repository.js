@@ -4,7 +4,7 @@ const { sequelize } = require("../../db/connection")
 const Quota = require("../../../quota/db/quota_model")
 const { getFormatDate } = require("../../core/formats")
 
-const getResumeRepository = async () => {
+const getSummaryOfCalendarRepository = async () => {
 
     const customerCount = await Customer.count()
     const loansInfo = await getLoansInfo()
@@ -91,4 +91,4 @@ const getGanancyInfo = async () => {
 }
 
 
-module.exports = getResumeRepository
+module.exports = getSummaryOfCalendarRepository
