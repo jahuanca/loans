@@ -12,8 +12,8 @@ const addDays = (date, numberDays) => {
   return resultado;
 }
 
-const initialOfDay = (date) => new Date(date).setHours(0, 0, 0)
-const finalOfDay = (date) => new Date(date).setHours(23, 59, 59)
+const initialOfDay = (date = Date.now()) => new Date(date).setHours(0, 0, 0)
+const finalOfDay = (date = Date.now()) => new Date(date).setHours(23, 59, 59)
 
 module.exports = {
   getPromise,

@@ -1,5 +1,5 @@
-const { getSummaryLoansRepository } = require("../../repositories/dashboard");
+const { getSummaryOfCalendarRepository } = require("../../repositories/dashboard");
 
-const getSummaryOfCalendarUseCaseExecute = () => getSummaryLoansRepository()
+const getSummaryOfCalendarUseCaseExecute = () => getSummaryOfCalendarRepository()
 
 module.exports = getSummaryOfCalendarUseCaseExecute

@@ -6,27 +6,13 @@ const { getFormatDate } = require("../../core/formats")
 
 const getSummaryOfDashboardRepository = async () => {
 
-    const customerCount = await Customer.count()
     const loansInfo = await getLoansInfo()
     const amountsInfo = await getAmountsInfo()
     const ganancyInfo = await getGanancyInfo()
 
-    const firstQuotaPending = await Quota.findAll({
-        where: { id_state_quota: 1 },
-        attributes: ['date_to_pay'],
-        limit: 1,
-        order: [['date_to_pay', 'ASC']],
-    })
-
-    const defaultDateToPay = { date_to_pay: getFormatDate() }
-    const [first = defaultDateToPay, ...args] = firstQuotaPending
-    const { date_to_pay } = first
-
     return {
-        'customers_count': customerCount,
         'amounts_info': amountsInfo,
         'ganancy_info': ganancyInfo,
-        'date_to_search': date_to_pay,  
         'loans_info': loansInfo,
     }
 }
