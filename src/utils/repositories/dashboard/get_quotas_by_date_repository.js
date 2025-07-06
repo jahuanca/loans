@@ -16,6 +16,12 @@ const getQuotasByDateRepository = ({
                     from_date, until_date
                 ]
             }
+    } else {
+        if (until_date) {
+            where.date_to_pay = {
+                [Op.lte]: until_date
+            }
+        }
     }
 
     if (id_state_quota) {
@@ -42,10 +48,14 @@ const getQuotasByDateRepository = ({
             'Loan.Customer.alias',
             'id_loan',
             'amount',
+            'ganancy',
             'id_state_quota',
             'date_to_pay',
             'paid_date',
         ],
+        order: [
+            ['date_to_pay','ASC']
+        ]
     })
 }
 
