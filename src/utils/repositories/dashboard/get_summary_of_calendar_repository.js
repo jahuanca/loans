@@ -1,10 +1,8 @@
-const Loan = require("../../../loan/db/loan_model")
-const { sequelize } = require("../../db/connection")
 const Quota = require("../../../quota/db/quota_model")
-const { getFormatDate } = require("../../core/formats")
 const { idOfPendingQuota } = require("../../core/constants")
 const { Op } = require("sequelize")
 const { initialOfDay, finalOfDay } = require("../../core/helpers")
+const { startOfWeek, endOfWeek } = require("date-fns")
 
 const getSummaryOfCalendarRepository = async () => {
 
@@ -12,18 +10,19 @@ const getSummaryOfCalendarRepository = async () => {
         where: {
             id_state_quota: idOfPendingQuota,
             date_to_pay: {
-                [Op.gte]: Date.now()
+                [Op.lte]: finalOfDay()
             }
         }
     })
 
+    const startWeek = startOfWeek(new Date(), { weekStartsOn: 1 })
+    const endWeek = endOfWeek(new Date())
     const paymentsOfToday = await Quota.count({
         where: {
-            id_state_quota: idOfPendingQuota,
             date_to_pay: {
                 [Op.between]: [
-                    initialOfDay(),
-                    finalOfDay(),
+                    startWeek,
+                    endWeek,
                 ]
             }
         }

@@ -14,8 +14,6 @@ const updateCustomerController = async (req, res) => {
         document,
     } = req.body
 
-    console.log(req.body)
-
     const [err, customer] = await getPromise(updateCustomerExecute({
         id,
         id_type_document,

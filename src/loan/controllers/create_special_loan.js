@@ -2,7 +2,6 @@ const { getPromise } = require("../../utils/core/helpers")
 const createSpecialLoanUseCaseExecute = require("../use_cases/create_special_loan_use_case")
 
 const createSpecialLoanController = async (req, res) => {
-    console.log(req.body)
     const {
         id_customer,
         id_user,
