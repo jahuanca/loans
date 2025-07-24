@@ -4,7 +4,6 @@ const createSpecialLoanUseCaseExecute = require("../use_cases/create_special_loa
 const createSpecialLoanController = async (req, res) => {
     const {
         id_customer,
-        id_user,
         id_payment_frequency,
         id_payment_method,
         amount,
@@ -17,9 +16,10 @@ const createSpecialLoanController = async (req, res) => {
         number_of_installments,
         days_between_installments,
     } = req.body
+    const { idUser } = req
     const [err, loan] = await getPromise(createSpecialLoanUseCaseExecute({
         id_customer,
-        id_user,
+        id_user: idUser,
         id_payment_frequency,
         id_payment_method,
         amount,

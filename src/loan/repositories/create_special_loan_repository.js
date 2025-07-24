@@ -33,7 +33,7 @@ const createSpecialLoanRepository = async ({
         const result = await sequelize.transaction(async t => {
             const loan = await Loan.create({
                 id_customer,
-                id_user: 1,
+                id_user,
                 id_payment_frequency,
                 id_payment_method,
                 percentage,
