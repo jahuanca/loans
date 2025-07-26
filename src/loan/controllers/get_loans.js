@@ -2,8 +2,14 @@ const { getPromise } = require("../../utils/core/helpers")
 const getLoansUseCaseExecute = require("../use_cases/get_loans_use_case")
 
 const getLoansController = async (req, res)=> {
-    const query = req.query
-    const [err, loans] = await getPromise(getLoansUseCaseExecute(query))
+    const {
+        id_customer,
+        id_state_loan,
+    } = req.query
+    const [err, loans] = await getPromise(getLoansUseCaseExecute({
+        id_customer,
+        id_state_loan,
+    }))
     if (err) return res.status(500).json({message: err.message})
     return res.status(200).json(loans)
 }

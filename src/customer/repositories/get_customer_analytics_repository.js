@@ -3,6 +3,7 @@ const Quota = require("../../quota/db/quota_model");
 const { sequelize } = require("../../utils/db/connection");
 
 const getCustomersRepository = async ({id_customer}) => {
+    id_customer = parseInt(id_customer)
     const { ganancy } = (await Quota.findAll({
         attributes: [
             [ sequelize.fn('SUM', sequelize.col('Quota.ganancy')), 'ganancy'],
@@ -24,7 +25,7 @@ const getCustomersRepository = async ({id_customer}) => {
     })
 
     const {
-        start_date
+        start_date,
     } = await Loan.findOne({
         where: {
             id_customer: id_customer,
@@ -57,6 +58,7 @@ const getCustomersRepository = async ({id_customer}) => {
     }
  
     return {
+        id_customer,
         ganancy: ganancy ?? 0,
         amount_of_loans,
         start_date,
