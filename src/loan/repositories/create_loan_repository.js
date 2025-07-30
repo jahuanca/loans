@@ -1,4 +1,5 @@
 const Quota = require("../../quota/db/quota_model");
+const { operationsOfLog } = require("../../utils/core/default_values");
 const { addDays } = require("../../utils/core/helpers");
 const { sequelize } = require("../../utils/db/connection");
 const PaymentFrequency = require("../../utils/db/payment_frequency_model");
@@ -31,7 +32,7 @@ const createLoanRepository = async ({
                 observation,
                 id_state_loan: 1,
                 evidence: 'ruta desconocida',
-                description_operation: 'Préstamo creado.',
+                description_operation: operationsOfLog.CREATE_LOAN,
                 idUser: id_user,
             }, { transaction: t})
 

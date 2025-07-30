@@ -1,3 +1,4 @@
+const { operationsOfLog } = require("../../utils/core/default_values");
 const Customer = require("../db/customer_model");
 
 const createCustomerRepository = ({
@@ -20,7 +21,7 @@ const createCustomerRepository = ({
     id_type_document: id_type_document,
     document,
     idUser,
-    description_operation: 'Se creó un nuevo cliente.',
+    description_operation: operationsOfLog.CREATE_CUSTOMER,
 })
 
 module.exports = createCustomerRepository

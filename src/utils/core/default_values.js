@@ -74,10 +74,18 @@ const defaultPaymentMethod = [
     },
 ]
 
-const operationsOfLog = Object.freeze({
+const typeOperationLog = Object.freeze({
     INSERT: 'I',
     UPDATE: 'U',
     DELETE: 'D',
+})
+
+const operationsOfLog = Object.freeze({
+    CREATE_CUSTOMER,
+    CREATE_LOAN,
+    CREATE_SPECIAL_LOAN,
+    PAY_QUOTA,
+    COMPLETE_LOAN,
 })
 
 module.exports = {
@@ -85,5 +93,6 @@ module.exports = {
     defaultPaymentFrequency,
     defaultPaymentMethod,
     defaultUsers,
+    typeOperationLog,
     operationsOfLog,
 }

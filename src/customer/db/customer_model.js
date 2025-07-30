@@ -1,6 +1,6 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../../utils/db/connection');
-const { operationsOfLog } = require('../../utils/core/default_values');
+const { typeOperationLog } = require('../../utils/core/default_values');
 const { setLog } = require('../../utils/db/utils');
 
 class Customer extends Model { }
@@ -60,7 +60,7 @@ Customer.afterCreate((record, options)=> {
         tableName: Quota.tableName,
         newValues: dataValues,
         oldValues: null,
-        typeOperation: operationsOfLog.INSERT,
+        typeOperation: typeOperationLog.INSERT,
         descriptionOperation: dataValues.description_operation,
         idUser: dataValues.idUser,
     })

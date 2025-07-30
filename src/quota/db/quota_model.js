@@ -1,7 +1,7 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../../utils/db/connection');
 const Loan = require('../../loan/db/loan_model');
-const { operationsOfLog } = require('../../utils/core/default_values');
+const { typeOperationLog } = require('../../utils/core/default_values');
 const { setLog } = require('../../utils/db/utils');
 
 class Quota extends Model { }
@@ -78,7 +78,7 @@ Quota.afterUpdate((record, options) => {
         tableName: Quota.tableName,
         newValues: dataValues,
         oldValues: _previousDataValues,
-        typeOperation: operationsOfLog.UPDATE,
+        typeOperation: typeOperationLog.UPDATE,
         descriptionOperation: dataValues.description_operation,
         idUser: dataValues.idUser,
     })

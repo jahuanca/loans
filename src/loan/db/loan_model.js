@@ -4,7 +4,7 @@ const User = require('../../user/db/user_model');
 const Customer = require('../../customer/db/customer_model');
 const PaymentFrequency = require('../../utils/db/payment_frequency_model');
 const PaymentMethod = require('../../utils/db/payment_method_model');
-const { operationsOfLog } = require('../../utils/core/default_values');
+const { typeOperationLog } = require('../../utils/core/default_values');
 const { setLog } = require('../../utils/db/utils');
 
 class Loan extends Model { }
@@ -100,7 +100,7 @@ Loan.afterCreate(async (record, options) => {
         tableName: Loan.tableName,
         newValues: dataValues,
         oldValues: null,
-        typeOperation: operationsOfLog.INSERT,
+        typeOperation: typeOperationLog.INSERT,
         descriptionOperation: dataValues.description_operation,
         idUser: dataValues.idUser,
     })
