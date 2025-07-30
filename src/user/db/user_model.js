@@ -35,7 +35,7 @@ User.init(
 );
 
 (async () => {
-    await User.sync({ force: false, })
+    await User.sync({ alter: false, })
         .then(async () => {
             const size = await User.count()
             if (size > 0) return

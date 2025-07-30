@@ -81,11 +81,11 @@ const typeOperationLog = Object.freeze({
 })
 
 const operationsOfLog = Object.freeze({
-    CREATE_CUSTOMER,
-    CREATE_LOAN,
-    CREATE_SPECIAL_LOAN,
-    PAY_QUOTA,
-    COMPLETE_LOAN,
+    CREATE_CUSTOMER: 'CREATE_CUSTOMER',
+    CREATE_LOAN: 'CREATE_LOAN',
+    CREATE_SPECIAL_LOAN: 'CREATE_SPECIAL_LOAN',
+    PAY_QUOTA: 'PAY_QUOTA',
+    COMPLETE_LOAN: 'COMPLETE_LOAN',
 })
 
 module.exports = {
