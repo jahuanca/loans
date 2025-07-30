@@ -14,6 +14,7 @@ const payQuotaRepository = async ({
         await validatePendings({ id_loan, date_to_pay, t })
         quota.id_state_quota = 2
         quota.paid_date = paid_date
+        quota.description_operation = 'Quota pagada.'
         await quota.save({ transaction: t })
         await setLoanComplete({ id_loan, t })
         return quota
@@ -52,7 +53,8 @@ const setLoanComplete = async ({
     if (count == 0) {
         const loan = await Loan.findByPk(id_loan, { transaction: t })
         loan.id_state_loan = 2
-        await loan.save({ transaction: t })
+        loan.description_operation = 'Préstamo completado'
+        await loan.save({ transaction: t})
     }
 }
 

@@ -1,5 +1,6 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../../utils/db/connection');
+const ActivityLog = require('../../utils/db/activity_log_model');
 
 class Customer extends Model { }
 
@@ -37,6 +38,9 @@ Customer.init(
             type: DataTypes.STRING(200),
             allowNull: false,
         },
+        user: {
+            type: DataTypes.VIRTUAL,
+        }
     },
     {
         paranoid: true,
@@ -46,7 +50,18 @@ Customer.init(
 );
 
 (async () => {
-    await Customer.sync({force: false,})
+    await Customer.sync({alter: false,})
 })();
+
+Customer.afterCreate( async (record, options)=> {
+    const { dataValues } = record
+    await ActivityLog.create({
+        id_user: dataValues.idUser,
+        new_registry: dataValues,
+        old_registry: null,
+        type_operation: 'I',
+        description_operation: 'Creo un nuevo cliente',
+    })
+})
 
 module.exports = Customer

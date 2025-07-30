@@ -1,6 +1,8 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../../utils/db/connection');
 const Loan = require('../../loan/db/loan_model');
+const { operationsOfLog } = require('../../utils/core/default_values');
+const { setLog } = require('../../utils/db/utils');
 
 class Quota extends Model { }
 
@@ -41,7 +43,10 @@ Quota.init(
         id_state_quota: {
             type: DataTypes.INTEGER,
             allowNull: false,
-        }
+        },
+        description_operation: {
+            type: DataTypes.VIRTUAL,
+        },
     },
     {
         paranoid: true,
@@ -50,10 +55,24 @@ Quota.init(
     },
 );
 
-(async () => {
-    await Quota.sync({force: false,})
-})();
+const sync = async () => await Quota.sync({ alter: false, })
+sync()
 
-Quota.belongsTo(Loan, {foreignKey: 'id_loan',})
+Quota.belongsTo(Loan, { foreignKey: 'id_loan', })
+
+Quota.afterUpdate((record, options) => {
+    const {
+        dataValues,
+        _previousDataValues,
+    } = record
+
+    setLog({
+        tableName: Quota.tableName,
+        newValues: dataValues,
+        oldValues: _previousDataValues,
+        typeOperation: operationsOfLog.UPDATE,
+        descriptionOperation: dataValues.description_operation,
+    })
+})
 
 module.exports = Quota

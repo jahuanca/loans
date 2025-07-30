@@ -9,6 +9,7 @@ const createCustomerRepository = ({
     longitude,
     id_type_document,
     document,
+    idUser,
 }) => Customer.create({
     alias,
     name,
@@ -18,6 +19,7 @@ const createCustomerRepository = ({
     longitude,
     id_type_document: id_type_document,
     document,
+    idUser,
 })
 
 module.exports = createCustomerRepository

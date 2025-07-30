@@ -43,6 +43,7 @@ const createSpecialLoanRepository = async ({
                 observation,
                 id_state_loan: 1,
                 evidence: 'ruta desconocida',
+                description_operation: 'Préstamo especial creado.',
             }, { transaction: t })
 
             const allAmount = amount * (percentage / 100 + 1)
@@ -73,9 +74,8 @@ const createQuotas = async ({
     amount,
     t,
 }) => {
-
     for (let i = 0; i < number_of_installments; i++) {
-        const quota = await Quota.create({
+        await Quota.create({
             name: `${(i + 1)}/${number_of_installments}`,
             description: '',
             id_loan,

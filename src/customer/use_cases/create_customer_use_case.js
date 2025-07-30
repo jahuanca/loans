@@ -9,6 +9,7 @@ const createCustomerUseCaseExecute = ({
     longitude,
     id_type_document,
     document,
+    idUser,
 }) => createCustomerRepository({
     alias,
     name,
@@ -18,6 +19,7 @@ const createCustomerUseCaseExecute = ({
     longitude,
     id_type_document,
     document,
+    idUser,
 })
 
 module.exports = createCustomerUseCaseExecute

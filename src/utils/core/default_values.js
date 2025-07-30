@@ -74,9 +74,16 @@ const defaultPaymentMethod = [
     },
 ]
 
+const operationsOfLog = Object.freeze({
+    INSERT: 'I',
+    UPDATE: 'U',
+    DELETE: 'D',
+})
+
 module.exports = {
     defaultTypesDocument,
     defaultPaymentFrequency,
     defaultPaymentMethod,
     defaultUsers,
+    operationsOfLog,
 }

@@ -21,6 +21,7 @@ const createCustomerController = async (req, res) => {
         longitude,
         id_type_document,
         document,
+        idUser: req.user,
     }))
     if (err) return res.status(500).json({ message: err.message })
     return res.status(200).json(customer)

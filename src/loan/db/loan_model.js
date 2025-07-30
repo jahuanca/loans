@@ -4,6 +4,8 @@ const User = require('../../user/db/user_model');
 const Customer = require('../../customer/db/customer_model');
 const PaymentFrequency = require('../../utils/db/payment_frequency_model');
 const PaymentMethod = require('../../utils/db/payment_method_model');
+const { operationsOfLog } = require('../../utils/core/default_values');
+const { setLog } = require('../../utils/db/utils');
 
 class Loan extends Model { }
 
@@ -53,6 +55,9 @@ Loan.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        description_operation: {
+            type: DataTypes.VIRTUAL,
+        },
     },
     {
         paranoid: true,
@@ -61,14 +66,25 @@ Loan.init(
     },
 );
 
-(async () => {
-    await Loan.sync({force: false,})
-})();
+const sync = async () => await Loan.sync({ alter: false })
+sync()
 
-Loan.belongsTo(User, {foreignKey: 'id_user',})
-Loan.belongsTo(Customer, {foreignKey: 'id_customer',})
-Loan.belongsTo(PaymentFrequency, {foreignKey: 'id_payment_frequency',})
-Loan.belongsTo(PaymentMethod, {foreignKey: 'id_payment_method',})
+Loan.belongsTo(User, { foreignKey: 'id_user', })
+Loan.belongsTo(Customer, { foreignKey: 'id_customer', })
+Loan.belongsTo(PaymentFrequency, { foreignKey: 'id_payment_frequency', })
+Loan.belongsTo(PaymentMethod, { foreignKey: 'id_payment_method', })
 
+Loan.afterCreate(async (record, options) => {
+    const {
+        dataValues,
+    } = record
+    setLog({
+        tableName: Loan.tableName,
+        newValues: dataValues,
+        oldValues: null,
+        typeOperation: operationsOfLog.INSERT,
+        descriptionOperation: dataValues.description_operation,
+    })
+})
 
 module.exports = Loan

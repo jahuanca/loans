@@ -9,8 +9,8 @@ const payQuotaController = async (req, res) => {
     const [err, quota] = await getPromise(
         payQuotaUseCaseExecute({ id_of_quota, paid_date })
     )
-    if (err) return res.status(500).json({message: err.message})
-    if (quota == null) return res.status(404).json({message: 'No se pudo editar la quota'})
+    if (err) return res.status(500).json({ message: err.message })
+    if (quota == null) return res.status(404).json({ message: 'No se pudo editar la quota' })
     return res.status(200).json(quota)
 }
 
