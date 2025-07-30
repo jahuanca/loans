@@ -47,6 +47,9 @@ Quota.init(
         description_operation: {
             type: DataTypes.VIRTUAL,
         },
+        idUser: {
+            type: DataTypes.VIRTUAL,
+        },
     },
     {
         paranoid: true,
@@ -58,7 +61,12 @@ Quota.init(
 const sync = async () => await Quota.sync({ alter: false, })
 sync()
 
-Quota.belongsTo(Loan, { foreignKey: 'id_loan', })
+Quota.belongsTo(Loan, { 
+    foreignKey: {
+        name: 'id_loan',
+        allowNull: false,
+    },
+})
 
 Quota.afterUpdate((record, options) => {
     const {
@@ -72,6 +80,7 @@ Quota.afterUpdate((record, options) => {
         oldValues: _previousDataValues,
         typeOperation: operationsOfLog.UPDATE,
         descriptionOperation: dataValues.description_operation,
+        idUser: dataValues.idUser,
     })
 })
 

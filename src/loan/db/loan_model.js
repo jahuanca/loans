@@ -58,6 +58,9 @@ Loan.init(
         description_operation: {
             type: DataTypes.VIRTUAL,
         },
+        idUser: {
+            type: DataTypes.VIRTUAL,
+        },
     },
     {
         paranoid: true,
@@ -69,9 +72,24 @@ Loan.init(
 const sync = async () => await Loan.sync({ alter: false })
 sync()
 
-Loan.belongsTo(User, { foreignKey: 'id_user', })
-Loan.belongsTo(Customer, { foreignKey: 'id_customer', })
-Loan.belongsTo(PaymentFrequency, { foreignKey: 'id_payment_frequency', })
+Loan.belongsTo(User, {
+    foreignKey: {
+        name: 'id_user',
+        allowNull: false,
+    }
+})
+Loan.belongsTo(Customer, { 
+    foreignKey: {
+        name: 'id_customer',
+        allowNull: false,
+    }
+})
+Loan.belongsTo(PaymentFrequency, { 
+    foreignKey: {
+        name: 'id_payment_frequency',
+        allowNull: false,
+    }
+})
 Loan.belongsTo(PaymentMethod, { foreignKey: 'id_payment_method', })
 
 Loan.afterCreate(async (record, options) => {
@@ -84,6 +102,7 @@ Loan.afterCreate(async (record, options) => {
         oldValues: null,
         typeOperation: operationsOfLog.INSERT,
         descriptionOperation: dataValues.description_operation,
+        idUser: dataValues.idUser,
     })
 })
 

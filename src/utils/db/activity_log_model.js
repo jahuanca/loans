@@ -32,7 +32,12 @@ ActivityLog.init(
     }
 )
 
-ActivityLog.belongsTo(User, {foreignKey: 'id_user',})
+ActivityLog.belongsTo(User, {
+    foreignKey: {
+        name: 'id_user',
+        allowNull: false,
+    }
+})
 
 const sync = async () => await ActivityLog.sync({ alter: false, })
 

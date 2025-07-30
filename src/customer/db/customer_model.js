@@ -1,6 +1,7 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../../utils/db/connection');
-const ActivityLog = require('../../utils/db/activity_log_model');
+const { operationsOfLog } = require('../../utils/core/default_values');
+const { setLog } = require('../../utils/db/utils');
 
 class Customer extends Model { }
 
@@ -38,7 +39,7 @@ Customer.init(
             type: DataTypes.STRING(200),
             allowNull: false,
         },
-        user: {
+        idUser: {
             type: DataTypes.VIRTUAL,
         }
     },
@@ -53,14 +54,15 @@ Customer.init(
     await Customer.sync({alter: false,})
 })();
 
-Customer.afterCreate( async (record, options)=> {
+Customer.afterCreate((record, options)=> {
     const { dataValues } = record
-    await ActivityLog.create({
-        id_user: dataValues.idUser,
-        new_registry: dataValues,
-        old_registry: null,
-        type_operation: 'I',
-        description_operation: 'Creo un nuevo cliente',
+    setLog({
+        tableName: Quota.tableName,
+        newValues: dataValues,
+        oldValues: null,
+        typeOperation: operationsOfLog.INSERT,
+        descriptionOperation: dataValues.description_operation,
+        idUser: dataValues.idUser,
     })
 })
 

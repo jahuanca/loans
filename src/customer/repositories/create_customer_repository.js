@@ -20,6 +20,7 @@ const createCustomerRepository = ({
     id_type_document: id_type_document,
     document,
     idUser,
+    description_operation: 'Se creó un nuevo cliente.',
 })
 
 module.exports = createCustomerRepository

@@ -44,6 +44,7 @@ const createSpecialLoanRepository = async ({
                 id_state_loan: 1,
                 evidence: 'ruta desconocida',
                 description_operation: 'Préstamo especial creado.',
+                idUser: id_user,
             }, { transaction: t })
 
             const allAmount = amount * (percentage / 100 + 1)

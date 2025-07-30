@@ -7,6 +7,7 @@ const Quota = require("../db/quota_model")
 const payQuotaRepository = async ({
     id_of_quota,
     paid_date,
+    idUser,
 }) => {
     const valueToReturn = await sequelize.transaction(async t => {
         const quota = await Quota.findByPk(id_of_quota, { transaction: t })
@@ -15,8 +16,9 @@ const payQuotaRepository = async ({
         quota.id_state_quota = 2
         quota.paid_date = paid_date
         quota.description_operation = 'Quota pagada.'
+        quota.idUser = idUser,
         await quota.save({ transaction: t })
-        await setLoanComplete({ id_loan, t })
+        await setLoanComplete({ id_loan, idUser, t })
         return quota
     })
     return valueToReturn
@@ -44,6 +46,7 @@ const validatePendings = async ({
 
 const setLoanComplete = async ({
     id_loan,
+    idUser,
     t,
 }) => {
     const count = await Quota.count({
@@ -54,6 +57,7 @@ const setLoanComplete = async ({
         const loan = await Loan.findByPk(id_loan, { transaction: t })
         loan.id_state_loan = 2
         loan.description_operation = 'Préstamo completado'
+        loan.idUser = idUser
         await loan.save({ transaction: t})
     }
 }

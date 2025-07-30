@@ -1,12 +1,12 @@
 
 const express = require('express')
+const summaryRoutes = express.Router()
 const { 
     getSummaryOfDashboardController, 
     getSummaryOfCalendarController,
     getSummaryMonthsController,
     getQuotasByDateController,
 } = require('../controllers/dashboard')
-const summaryRoutes = express.Router()
 
 
 summaryRoutes.get('/summary-of-dashboard', getSummaryOfDashboardController)
