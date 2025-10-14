@@ -1,8 +1,8 @@
-const Quota = require("../../quota/db/quota_model");
-const { operationsOfLog } = require("../../utils/core/default_values");
-const { addDays } = require("../../utils/core/helpers");
-const { sequelize } = require("../../utils/db/connection");
-const Loan = require("../db/loan_model");
+const Quota = require("./../../../quota/db/quota_model");
+const { operationsOfLog } = require("./../../../utils/core/default_values");
+const { addDays } = require("./../../../utils/core/helpers");
+const { sequelize } = require("./../../../utils/db/connection");
+const Loan = require("./../../db/loan_model");
 
 const createSpecialLoanRepository = async ({
     id_customer,

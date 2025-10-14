@@ -1,5 +1,7 @@
-const { getPromise } = require("../../utils/core/helpers")
-const getLoansUseCaseExecute = require("../use_cases/get_loans_use_case")
+const { getPromise } = require("./../../../utils/core/helpers")
+const {
+    getLoansUseCaseExecute
+} = require("./../../use_cases/")
 
 const getLoansController = async (req, res)=> {
     const {

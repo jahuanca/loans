@@ -1,6 +1,6 @@
 const { Op } = require("sequelize");
-const Loan = require("../db/loan_model");
-const { addDays } = require("../../utils/core/helpers");
+const Loan = require("./../../db/loan_model");
+const { addDays } = require("../../../utils/core/helpers");
 
 const validateLoanRepository = async ({
     id_customer,

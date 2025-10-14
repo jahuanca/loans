@@ -1,4 +1,4 @@
-const { validateLoanRepository } = require("../repositories");
+const { validateLoanRepository } = require("./../../repositories");
 
 const validateLoanUseCaseExecute = ({
     id_customer,

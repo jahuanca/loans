@@ -1,4 +1,4 @@
-const Loan = require("../db/loan_model")
+const Loan = require("./../../db/loan_model")
 
 const deleteLoanRepository = async ({ id }) => {
     const loanToDelete = await Loan.findByPk(id)

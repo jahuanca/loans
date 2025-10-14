@@ -1,4 +1,4 @@
-const { createLoanRepository } = require("../repositories");
+const { createLoanRepository } = require("./../../repositories/index");
 
 const createLoanUseCaseExecute = ({
     id_customer,

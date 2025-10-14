@@ -1,5 +1,7 @@
-const { getPromise } = require("../../utils/core/helpers")
-const updateLoanExecute = require("../use_cases/update_loan_use_case")
+const { getPromise } = require("./../../../utils/core/helpers")
+const {
+    updateLoanUseCaseExecute
+} = require("./../../use_cases/")
 
 const updateLoanController = async (req, res) => {
     const {
@@ -9,7 +11,7 @@ const updateLoanController = async (req, res) => {
         start_date,
     } = req.body
 
-    const [err, loan] = await getPromise(updateLoanExecute({
+    const [err, loan] = await getPromise(updateLoanUseCaseExecute({
         id,
         name,
         description,
