@@ -80,6 +80,12 @@ const typeOperationLog = Object.freeze({
     DELETE: 'D',
 })
 
+const typeRenewal = Object.freeze({
+    SAME_AMOUNT: 'S',
+    INCREASE: 'I',
+    DECREASE: 'D',
+})
+
 const operationsOfLog = Object.freeze({
     CREATE_CUSTOMER: 'CREATE_CUSTOMER',
     CREATE_LOAN: 'CREATE_LOAN',
@@ -95,4 +101,5 @@ module.exports = {
     defaultUsers,
     typeOperationLog,
     operationsOfLog,
+    typeRenewal,
 }

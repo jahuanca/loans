@@ -57,7 +57,7 @@ Customer.init(
 Customer.afterCreate((record, options)=> {
     const { dataValues } = record
     setLog({
-        tableName: Quota.tableName,
+        tableName: Customer.tableName,
         newValues: dataValues,
         oldValues: null,
         typeOperation: typeOperationLog.INSERT,

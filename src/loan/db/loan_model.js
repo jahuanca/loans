@@ -93,9 +93,7 @@ Loan.belongsTo(PaymentFrequency, {
 Loan.belongsTo(PaymentMethod, { foreignKey: 'id_payment_method', })
 
 Loan.afterCreate(async (record, options) => {
-    const {
-        dataValues,
-    } = record
+    const { dataValues } = record
     setLog({
         tableName: Loan.tableName,
         newValues: dataValues,

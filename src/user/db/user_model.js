@@ -1,6 +1,7 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../../utils/db/connection');
 const { defaultUsers } = require('../../utils/core/default_values');
+const crypto = require('crypto')
 
 class User extends Model { }
 
@@ -19,12 +20,21 @@ User.init(
             allowNull: false,
         },
         password: {
-            type: DataTypes.STRING(100),
+            type: DataTypes.STRING(200),
             allowNull: false,
         },
         phoneNumber: {
             type: DataTypes.STRING(9),
             allowNull: false,
+        },
+        salt: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        isValidated: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false,
         },
     },
     {
@@ -34,13 +44,40 @@ User.init(
     },
 );
 
-(async () => {
+const sync = async () => {
     await User.sync({ alter: false, })
         .then(async () => {
             const size = await User.count()
             if (size > 0) return
             await User.bulkCreate(defaultUsers)
         })
-})();
+}
+
+sync()
+
+User.generateSalt = () => crypto.randomBytes(16).toString('base64')
+
+User.encryptPassword = (plaintText, salt) => crypto.createHash('RSA-SHA256')
+    .update(plaintText)
+    .update(salt)
+    .digest('hex')
+
+User.prototype.correctPassword = (fullPassword) => {
+    return User.encryptPassword(fullPassword, this.salt() === this.password())
+}
+
+const setSaltAndPassword = (user, options) => {
+    if (user.changed('email')) {
+        user.isValidated = false
+    }
+
+    if (user.changed('password')) {
+        user.salt = User.generateSalt()
+        user.password = User.encryptPassword(user.password(), user.salt())
+    }
+}
+
+User.beforeCreate('setSaltAndPassword', setSaltAndPassword)
+User.beforeUpdate('refreshSaltAndPassword', setSaltAndPassword)
 
 module.exports = User

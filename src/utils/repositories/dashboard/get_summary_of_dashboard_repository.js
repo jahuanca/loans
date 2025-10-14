@@ -31,7 +31,7 @@ const getLoansInfo = async () => {
 const getAmountsInfo = async () => {
     const { amountPending } = (await Quota.findAll({
         attributes: [
-            [ sequelize.fn('SUM', sequelize.col('amount')), 'amountPending'],
+            [ sequelize.fn('SUM', sequelize.literal('COALESCE(amount, 0) - COALESCE(ganancy, 0)')), 'amountPending'],
         ],
         where: {id_state_quota: 1},
         raw: true,
@@ -39,7 +39,7 @@ const getAmountsInfo = async () => {
 
     const { amountComplete } = (await Quota.findAll({
         attributes: [
-            [ sequelize.fn('SUM', sequelize.col('amount')), 'amountComplete'],
+            [ sequelize.fn('SUM', sequelize.literal('COALESCE(amount, 0) - COALESCE(ganancy, 0)')), 'amountComplete'],
         ],
         where: {id_state_quota: 2},
         raw: true,
@@ -75,6 +75,5 @@ const getGanancyInfo = async () => {
         'pendiente': (ganacyPending ?? 0).toFixed(2),
     }
 }
-
 
 module.exports = getSummaryOfDashboardRepository
