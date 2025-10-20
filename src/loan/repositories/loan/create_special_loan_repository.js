@@ -19,17 +19,6 @@ const createSpecialLoanRepository = async ({
     number_of_installments,
     days_between_installments,
 }) => {
-    console.log(
-        id_customer,
-        id_payment_frequency,
-        id_payment_method,
-        amount,
-        percentage,
-        ganancy,
-        id_state_loan,
-        number_of_installments,
-        days_between_installments,
-    )
     try {
         const result = await sequelize.transaction(async t => {
             const loan = await Loan.create({

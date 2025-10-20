@@ -4,12 +4,21 @@ const createSpecialLoanController = require("./loan/create_special_loan");
 const getLoansController = require("./loan/get_loans");
 const updateLoanController = require("./loan/update_loan");
 const deleteLoanController = require("./loan/delete_loan");
+const getRenewalsController = require("./renewal/get_renewals");
+const getLoanController = require("./loan/get_loan");
+const payAndRenewalController = require("./renewal/pay_and_renewal");
 
 module.exports = {
+    //loan
+    getLoanController,
     getLoansController,
     validateLoanController,
     createLoanController,
     createSpecialLoanController,
     updateLoanController,
     deleteLoanController,
+
+    //renewal
+    getRenewalsController,
+    payAndRenewalController,
 }
