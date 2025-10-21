@@ -3,10 +3,15 @@ const { sequelize } = require('../../utils/db/connection');
 const Loan = require("./loan_model");
 const { typeRenewal } = require("../../utils/core/default_values");
 const User = require("../../user/db/user_model");
+const Customer = require("../../customer/db/customer_model");
 
 class Renewal extends Model { }
 
 Renewal.init({
+    id_customer: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
     id_user: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -47,6 +52,13 @@ Renewal.init({
 
 const sync = async () => await Renewal.sync({ alter: false })
 sync()
+
+Renewal.belongsTo(Customer, {
+    foreignKey: {
+        name: 'id_customer',
+        allowNull: false,
+    }
+})
 
 Renewal.belongsTo(User, {
     foreignKey: {

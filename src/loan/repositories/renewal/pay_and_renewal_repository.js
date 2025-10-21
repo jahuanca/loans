@@ -31,7 +31,6 @@ const payAndRenewalRepository = async ({
             t,
         })
 
-        // FIXME: falta el paidDate en la cuota que se pago, aparece como nula.
 
         const loan = await createLoan({
             id_customer,
@@ -60,6 +59,7 @@ const payAndRenewalRepository = async ({
         if (variation_in_amount < 0) { id_type_renewal = typeRenewal.DECREASE }
 
         const renewal = await Renewal.create({
+            id_customer,
             id_user: idUser,
             id_previous_loan: idLast,
             id_new_loan: dataValues.id,
