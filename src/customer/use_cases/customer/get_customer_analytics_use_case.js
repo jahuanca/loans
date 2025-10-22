@@ -1,4 +1,4 @@
-const { getCustomerAnalyticsRepository } = require("../repositories");
+const { getCustomerAnalyticsRepository } = require("./../../repositories");
 
 const getAnalyticsCustomerUseCaseExecute = ({
     id_customer

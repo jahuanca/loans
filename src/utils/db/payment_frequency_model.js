@@ -1,6 +1,7 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../../utils/db/connection');
 const { defaultPaymentFrequency } = require('../core/default_values');
+const TypeCustomer = require('../../customer/db/type_customer_model');
 
 class PaymentFrequency extends Model { }
 
@@ -26,6 +27,11 @@ PaymentFrequency.init(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        id_type_customer: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 1,
+        },
     },
     {
         paranoid: true,
@@ -34,8 +40,8 @@ PaymentFrequency.init(
     },
 );
 
-(async () => {
-    await PaymentFrequency.sync({ force: false,  })
+const sync = async () => {
+    await PaymentFrequency.sync({ alter: false,  })
         .then(async () => {
             const size= await PaymentFrequency.count()
             if(size > 0) return;
@@ -43,6 +49,16 @@ PaymentFrequency.init(
                 defaultPaymentFrequency
             )
         })
-})();
+}
+
+sync()
+
+PaymentFrequency.belongsTo(TypeCustomer, {
+    foreignKey: {
+        name: 'id_type_customer',
+        allowNull: false,
+        defaultValue: 1,
+    }
+})
 
 module.exports = PaymentFrequency

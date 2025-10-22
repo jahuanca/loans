@@ -3,28 +3,13 @@ const createRenewalUseCaseExecute = require("../../use_cases/renewal/create_rene
 
 const createRenewalController = async (req, res) => {
 
-    const {
-        id_customer,
-        id_new_loan,
-        id_previous_loan,
-        date,
-        variation_in_amount,
-        id_type_renewal,
-        observation,
-    } = req.body
+    const {value, idUser} = req
+    value.id_user = idUser
 
     const [err, renewal] = await getPromise(
-        createRenewalUseCaseExecute({
-            id_customer,
-            id_new_loan,
-            id_previous_loan,
-            date,
-            variation_in_amount,
-            id_type_renewal,
-            observation,
-        })
+        createRenewalUseCaseExecute(value)
     )
-    if (err) return res.status(500).json({message: err})
+    if (err) return res.status(500).json({message: err.toString()})
     if (renewal == null) return res.status(404).json({message: 'Renewal nulo.'})
     res.status(200).json(renewal)
 }

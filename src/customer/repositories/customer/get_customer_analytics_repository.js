@@ -1,6 +1,6 @@
-const Loan = require("../../loan/db/loan_model");
-const Quota = require("../../quota/db/quota_model");
-const { sequelize } = require("../../utils/db/connection");
+const Loan = require("../../../loan/db/loan_model");
+const Quota = require("../../../quota/db/quota_model");
+const { sequelize } = require("../../../utils/db/connection");
 
 const getCustomersRepository = async ({id_customer}) => {
     id_customer = parseInt(id_customer)

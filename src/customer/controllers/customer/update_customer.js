@@ -1,5 +1,5 @@
-const { getPromise } = require("../../utils/core/helpers")
-const updateCustomerExecute = require("../use_cases/update_customer_use_case")
+const { getPromise } = require("../../../utils/core/helpers")
+const updateCustomerExecute = require("../../use_cases/customer/update_customer_use_case")
 
 const updateCustomerController = async (req, res) => {
     const {

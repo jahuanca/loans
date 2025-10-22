@@ -5,10 +5,11 @@ const joiId = Joi.number().integer()
 const squema = Joi.object({
     id_customer: joiId.required(),
     id_new_loan: joiId.required(),
-    id_previous_loan: joiId.required(),
+    date: Joi.date().required(),
+    id_previous_loan: joiId.optional().allow(null),
     id_type_renewal: Joi.string().required(),
     variation_in_amount: Joi.number().required(),    
-    observation: Joi.string().optional(),
+    observation: Joi.string().optional().allow(null),
 })
 
 const createRenewalValidation = (req, res, next) => {
@@ -23,5 +24,5 @@ const createRenewalValidation = (req, res, next) => {
 }
 
 module.exports = {
-    payAndRenewalValidation: createRenewalValidation,
+    createRenewalValidation,
 }

@@ -1,4 +1,4 @@
-const { createCustomerRepository } = require("../repositories");
+const { createCustomerRepository } = require("../../repositories");
 
 const createCustomerUseCaseExecute = ({
     alias,

@@ -10,6 +10,17 @@ const defaultUsers = [
     }
 ]
 
+const defaultCustomers = [
+    {
+        name: 'Nuevo',
+        description: 'Cliente nuevo',
+    },
+    {
+        name: 'Antiguo',
+        description: 'Cliente rentable',
+    },
+]
+
 const defaultTypesDocument = [
     {
         name: 'DNI',
@@ -94,12 +105,25 @@ const operationsOfLog = Object.freeze({
     COMPLETE_LOAN: 'COMPLETE_LOAN',
 })
 
+const idLoanStates = Object.freeze({
+    PENDING: 1,
+    COMPLETE: 2,
+})
+
+const idQuotaStates = Object.freeze({
+    PENDING: 1,
+    COMPLETE: 2,
+})
+
 module.exports = {
     defaultTypesDocument,
     defaultPaymentFrequency,
     defaultPaymentMethod,
     defaultUsers,
+    defaultCustomers,
     typeOperationLog,
     operationsOfLog,
     typeRenewal,
+    idLoanStates,
+    idQuotaStates,
 }

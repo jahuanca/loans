@@ -1,5 +1,5 @@
-const { operationsOfLog } = require("../../utils/core/default_values");
-const Customer = require("../db/customer_model");
+const { operationsOfLog } = require("../../../utils/core/default_values");
+const Customer = require("../../db/customer_model");
 
 const createCustomerRepository = ({
     alias,

@@ -1,8 +1,8 @@
-const getCustomersController = require("./get_customers");
-const getCustomerAnalyticsController = require("./get_customer_analytics");
-const createCustomerController = require("./create_customer");
-const updateCustomerController = require("./update_customer");
-const deleteCustomerController = require("./delete_customer");
+const getCustomersController = require("./customer/get_customers");
+const getCustomerAnalyticsController = require("./customer/get_customer_analytics");
+const createCustomerController = require("./customer/create_customer");
+const updateCustomerController = require("./customer/update_customer");
+const deleteCustomerController = require("./customer/delete_customer");
 
 module.exports = {
     getCustomersController,

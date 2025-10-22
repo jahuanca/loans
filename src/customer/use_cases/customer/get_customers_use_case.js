@@ -1,4 +1,4 @@
-const { getCustomersRepository } = require("../repositories");
+const { getCustomersRepository } = require("./../../repositories");
 
 const getCustomersUseCaseExecute = ()=> getCustomersRepository()
 

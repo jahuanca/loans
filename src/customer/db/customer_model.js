@@ -2,11 +2,17 @@ const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../../utils/db/connection');
 const { typeOperationLog } = require('../../utils/core/default_values');
 const { setLog } = require('../../utils/db/utils');
+const TypeCustomer = require('./type_customer_model');
 
 class Customer extends Model { }
 
 Customer.init(
     {
+        id_type_customer: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 1,
+        },
         alias: {
             type: DataTypes.STRING(50),
             allowNull: true,
@@ -50,9 +56,15 @@ Customer.init(
     },
 );
 
-(async () => {
-    await Customer.sync({alter: false,})
-})();
+const sync = async () => await Customer.sync({alter: false,})
+sync()
+
+Customer.belongsTo(TypeCustomer, {
+    foreignKey: {
+        name: 'id_type_customer',
+        allowNull: false,
+    }
+})
 
 Customer.afterCreate((record, options)=> {
     const { dataValues } = record

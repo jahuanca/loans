@@ -1,5 +1,5 @@
-const { getPromise } = require("../../utils/core/helpers")
-const deleteCustomerExecute = require("../use_cases/delete_customer_use_case")
+const { getPromise } = require("../../../utils/core/helpers")
+const deleteCustomerExecute = require("../../use_cases/customer/delete_customer_use_case")
 
 const deleteCustomerController = async (req, res) => {
     const {id} = req.params

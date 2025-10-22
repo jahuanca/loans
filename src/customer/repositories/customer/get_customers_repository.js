@@ -1,4 +1,4 @@
-const Customer = require("../db/customer_model");
+const Customer = require("../../db/customer_model");
 
 const getCustomersRepository = () => Customer.findAll()
 

@@ -1,5 +1,5 @@
-const { getPromise } = require("../../utils/core/helpers")
-const getCustomersAnalyticsUseCaseExecute = require("../use_cases/get_customer_analytics_use_case")
+const { getPromise } = require("../../../utils/core/helpers")
+const getCustomersAnalyticsUseCaseExecute = require("../../use_cases/customer/get_customer_analytics_use_case")
 
 const getAnalyticsCustomersController = async (req, res)=> {
     const { id_customer } = req.query

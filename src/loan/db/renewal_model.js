@@ -36,9 +36,6 @@ Renewal.init({
     id_type_renewal: {
         type: DataTypes.CHAR(1),
         allowNull: false,
-        validate: {
-            isIn: Object.values(typeRenewal),
-        },
     },
     observation: {
         type: DataTypes.STRING(200),

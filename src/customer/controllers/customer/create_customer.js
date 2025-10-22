@@ -1,5 +1,5 @@
-const { getPromise } = require("../../utils/core/helpers")
-const createCustomerUseCaseExecute = require("../use_cases/create_customer_use_case")
+const { getPromise } = require("../../../utils/core/helpers")
+const createCustomerUseCaseExecute = require("../../use_cases/customer/create_customer_use_case")
 
 const createCustomerController = async (req, res) => {
     const { idUser } = req

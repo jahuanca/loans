@@ -3,6 +3,7 @@ const Loan = require("../../../loan/db/loan_model")
 const { sequelize } = require("../../db/connection")
 const Quota = require("../../../quota/db/quota_model")
 const { getFormatDate } = require("../../core/formats")
+const { idLoanStates, idQuotaStates } = require("../../core/default_values")
 
 const getSummaryOfDashboardRepository = async () => {
 
@@ -18,8 +19,8 @@ const getSummaryOfDashboardRepository = async () => {
 }
 
 const getLoansInfo = async () => {
-    const pendings = await Loan.count({ where: { id_state_loan: 1} })
-    const completes = await Loan.count({ where: { id_state_loan: 2 } })
+    const pendings = await Loan.count({ where: { id_state_loan: idLoanStates.PENDING} })
+    const completes = await Loan.count({ where: { id_state_loan: idLoanStates.COMPLETE } })
     
     return {
         'todas': pendings + completes,
@@ -41,7 +42,7 @@ const getAmountsInfo = async () => {
         attributes: [
             [ sequelize.fn('SUM', sequelize.literal('COALESCE(amount, 0) - COALESCE(ganancy, 0)')), 'amountComplete'],
         ],
-        where: {id_state_quota: 2},
+        where: {id_state_quota: idQuotaStates.COMPLETE},
         raw: true,
     }))[0]
 
@@ -65,7 +66,7 @@ const getGanancyInfo = async () => {
         attributes: [
             [ sequelize.fn('SUM', sequelize.col('ganancy')), 'ganancyComplete'],
         ],
-        where: {id_state_quota: 2},
+        where: {id_state_quota: idQuotaStates.COMPLETE},
         raw: true,
     }))[0]
 

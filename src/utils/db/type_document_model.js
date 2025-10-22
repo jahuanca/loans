@@ -23,7 +23,7 @@ TypeDocument.init(
 );
 
 (async () => {
-    await TypeDocument.sync({ force: false, })
+    await TypeDocument.sync({ alter: false, })
         .then(async () => {
             const size = await TypeDocument.count()
             if (size > 0) return;

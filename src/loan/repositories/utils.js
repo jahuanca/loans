@@ -1,6 +1,6 @@
 const { Op } = require("sequelize")
 const Quota = require("../../quota/db/quota_model")
-const { operationsOfLog } = require("../../utils/core/default_values")
+const { operationsOfLog, idQuotaStates, idLoanStates } = require("../../utils/core/default_values")
 const { addDays } = require("../../utils/core/helpers")
 const PaymentFrequency = require("../../utils/db/payment_frequency_model")
 const Loan = require("../db/loan_model")
@@ -14,7 +14,7 @@ const payQuota = async ({
     const quota = await Quota.findByPk(id_of_quota, { transaction: t })
     const { id_loan, date_to_pay } = quota
     await _validatePendings({ id_loan, date_to_pay, t })
-    quota.id_state_quota = 2
+    quota.id_state_quota = idQuotaStates.COMPLETE
     quota.paid_date = paid_date
     quota.description_operation = operationsOfLog.PAY_QUOTA
     quota.idUser = idUser
@@ -34,7 +34,7 @@ const _setLoanComplete = async ({
     })
     if (count == 0) {
         const loan = await Loan.findByPk(id_loan, { transaction: t })
-        loan.id_state_loan = 2
+        loan.id_state_loan = idLoanStates.COMPLETE
         loan.description_operation = operationsOfLog.COMPLETE_LOAN
         loan.idUser = idUser
         await loan.save({ transaction: t })

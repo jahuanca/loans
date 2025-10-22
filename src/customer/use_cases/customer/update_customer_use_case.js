@@ -1,4 +1,4 @@
-const { updateCustomerRepository } = require('./../repositories')
+const { updateCustomerRepository } = require('./../../repositories')
 
 const updateCustomerExecute = ({
     id,

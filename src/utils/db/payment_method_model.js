@@ -23,7 +23,7 @@ PaymentMethod.init(
 );
 
 (async () => {
-    await PaymentMethod.sync({ force: false, })
+    await PaymentMethod.sync({ alter: false, })
         .then(async () => {
             const size = await PaymentMethod.count()
             if (size > 0) return;
