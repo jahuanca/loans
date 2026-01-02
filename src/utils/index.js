@@ -7,7 +7,7 @@ const activityLogRoutes = require("./routes/activity_log_routes")
 
 const setModuleUtils = (server)=> {
     server.use(checkTokenController)
-    server.use('/utils' , typeCustomerRoutes)
+    server.use('/utils', typeCustomerRoutes)
     server.use('/utils', paymentFrequencyRoutes)
     server.use('/utils', paymentsMethodRoutes)
     server.use('/utils', summaryRoutes)

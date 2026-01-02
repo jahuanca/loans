@@ -12,10 +12,10 @@ const getQuotasByDateRepository = ({
     const where = {}
     if (from_date && until_date) {
         where.date_to_pay = {
-                [Op.between]: [
-                    from_date, until_date
-                ]
-            }
+            [Op.between]: [
+                from_date, until_date
+            ]
+        }
     } else {
         if (until_date) {
             where.date_to_pay = {
@@ -37,6 +37,13 @@ const getQuotasByDateRepository = ({
         attributes: [
             'id',
             'name',
+            'Loan.id_payment_frequency',
+            [
+                Sequelize.literal(
+                    'CASE WHEN id_payment_frequency = 5 THEN true ELSE false END'
+                ),
+                'is_special'
+            ],
             [
                 Sequelize.fn('CONCAT',
                     Sequelize.col('Loan.Customer.name'),
@@ -54,7 +61,7 @@ const getQuotasByDateRepository = ({
             'paid_date',
         ],
         order: [
-            ['date_to_pay','ASC']
+            ['date_to_pay', 'ASC']
         ]
     })
 }

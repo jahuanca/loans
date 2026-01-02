@@ -4,10 +4,12 @@ const getCustomersRepository = require("./customer/get_customers_repository");
 const getCustomerAnalyticsRepository = require("./customer/get_customer_analytics_repository");
 const updateCustomerRepository = require("./customer/update_customer_repository");
 const getTypesCustomerRepository = require("./type_customer/get_types_customer_repository");
+const getAllCustomersAnalyticsRepository = require("./customer/get_all_customer_analytic_repository");
 
 module.exports = {
     // customer
     getCustomersRepository,
+    getAllCustomersAnalyticsRepository,
     getCustomerAnalyticsRepository,
     createCustomerRepository,
     updateCustomerRepository,

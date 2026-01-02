@@ -2,19 +2,46 @@ const Loan = require("../../../loan/db/loan_model");
 const Quota = require("../../../quota/db/quota_model");
 const { idLoanStates } = require("../../../utils/core/default_values");
 const { sequelize } = require("../../../utils/db/connection");
+const Customer = require("../../db/customer_model");
 
-const getCustomerAnalyticsRepository = async ({ id_customer }) => {
-    id_customer = parseInt(id_customer)
+const getAllCustomersAnalyticsRepository = async () => {
 
-    const ganancy = await _getGanancy({ id_customer })
+    const customers = await Customer.findAll()
+    let data = []
 
-    const loans = await Loan.findAll({
+    for (let i = 0; i < customers.length; i++) {
+        const { id: id_customer, alias, name, lastName } = customers[i].dataValues;
+        const ganancy = await _getGanancy({ id_customer })
+
+        const amount_of_loans = await Loan.count({
+            where: {
+                id_customer: id_customer,
+            }
+        })
+
+        const start_date = await _getStartDate({ id_customer })
+        const loansInProgress = await _getLoansInProgress({ id_customer })
+        const amountInProgress = await _getAmountInProgress({ id_customer })
+
+        data.push({
+            name: `${alias ?? ''}: ${name}, ${lastName}`,
+            id_customer,
+            ganancy: ganancy ?? 0,
+            amount_of_loans,
+            start_date,
+            loans_in_progress: loansInProgress.length,
+            amount_in_progress: amountInProgress,
+        })
+    }
+    return data
+
+    /*const ganancy = await _getGanancy({ id_customer })
+
+    const amount_of_loans = await Loan.count({
         where: {
             id_customer: id_customer,
         }
     })
-
-    const amount_of_loans = loans.length
 
     const start_date = await _getStartDate({ id_customer })
     const loansInProgress = await _getLoansInProgress({ id_customer })
@@ -27,8 +54,7 @@ const getCustomerAnalyticsRepository = async ({ id_customer }) => {
         start_date,
         loans_in_progress: loansInProgress.length,
         amount_in_progress: amountInProgress,
-        loans: loans,
-    }
+    }*/
 }
 
 const _getGanancy = async ({
@@ -95,4 +121,4 @@ const _getAmountInProgress = async ({
     return amountInProgress
 }
 
-module.exports = getCustomerAnalyticsRepository
+module.exports = getAllCustomersAnalyticsRepository

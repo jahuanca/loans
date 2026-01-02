@@ -1,7 +1,7 @@
 const { getPromise } = require("../../../utils/core/helpers")
 const getCustomersAnalyticsUseCaseExecute = require("../../use_cases/customer/get_customer_analytics_use_case")
 
-const getAnalyticsCustomersController = async (req, res)=> {
+const getCustomerAnalyticsController = async (req, res)=> {
     const { id_customer } = req.query
     const [err, customers] = await getPromise(getCustomersAnalyticsUseCaseExecute({
         id_customer
@@ -10,4 +10,4 @@ const getAnalyticsCustomersController = async (req, res)=> {
     return res.status(200).json(customers)
 }
 
-module.exports = getAnalyticsCustomersController
+module.exports = getCustomerAnalyticsController
