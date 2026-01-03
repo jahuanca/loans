@@ -44,6 +44,11 @@ Quota.init(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        is_last: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false,
+        },
         description_operation: {
             type: DataTypes.VIRTUAL,
         },

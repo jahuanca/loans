@@ -43,6 +43,14 @@ Loan.init(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        number_of_installments: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        days_between_installments: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
         observation: {
             type: DataTypes.STRING(200),
             allowNull: true,

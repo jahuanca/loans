@@ -35,6 +35,9 @@ const createSpecialLoanRepository = async ({
                 evidence: 'ruta desconocida',
                 description_operation: operationsOfLog.CREATE_SPECIAL_LOAN,
                 idUser: id_user,
+
+                number_of_installments: number_of_installments,
+                days_between_installments: days_between_installments,
             }, { transaction: t })
 
             const allAmount = amount * (percentage / 100 + 1)
@@ -66,6 +69,7 @@ const createQuotas = async ({
     t,
 }) => {
     for (let i = 0; i < number_of_installments; i++) {
+        const isLast = (i == number_of_installments -1)
         await Quota.create({
             name: `${(i + 1)}/${number_of_installments}`,
             description: '',
@@ -74,6 +78,7 @@ const createQuotas = async ({
             amount: allAmount / number_of_installments,
             date_to_pay: addDays(start_date, days_between_installments * (i + 1)),
             id_state_quota: 1,
+            is_last: isLast,
         }, { transaction: t })
     }
 }

@@ -2,9 +2,9 @@ const { typeRenewal } = require("../../../utils/core/default_values")
 const { sequelize } = require("../../../utils/db/connection")
 const Loan = require("../../db/loan_model")
 const Renewal = require("../../db/renewal_model")
-const { payQuota, createLoan } = require("../utils")
+const { payQuota, createLoanSpecial } = require("../utils")
 
-const payAndRenewalRepository = async ({
+const payAndRenewalSpecialRepository = async ({
     id_loan_to_renew,
 
     id_of_quota,
@@ -21,7 +21,8 @@ const payAndRenewalRepository = async ({
     observation,
     id_state_loan,
     evidence,
-
+    number_of_installments,
+    days_between_installments,
 }) => {
     const valueToReturn = await sequelize.transaction(async t => {
         const quotaPaid = await payQuota({
@@ -31,7 +32,7 @@ const payAndRenewalRepository = async ({
             t,
         })
 
-        const loan = await createLoan({
+        const loan = await createLoanSpecial({
             id_customer,
             id_user: idUser,
             id_payment_frequency,
@@ -43,6 +44,8 @@ const payAndRenewalRepository = async ({
             observation,
             id_state_loan,
             evidence,
+            number_of_installments,
+            days_between_installments,
             t,
         })
 
@@ -92,4 +95,4 @@ const _createRenewal = async ({
     }, { transaction: t })
 }
 
-module.exports = payAndRenewalRepository
+module.exports = payAndRenewalSpecialRepository

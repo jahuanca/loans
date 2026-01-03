@@ -1,17 +1,17 @@
 const { getPromise } = require("../../../utils/core/helpers")
-const payAndRenewalUseCaseExecute = require("../../use_cases/renewal/pay_and_renewal_use_case")
+const payAndRenewalSpecialUseCaseExecute = require("../../use_cases/renewal/pay_and_renewal_special_use_case")
 
-const payAndRenewalController = async (req, res) => {
+const payAndRenewalSpecialController = async (req, res) => {
 
     const { idUser, value } = req
     value.idUser = idUser
 
     const [err, data] = await getPromise(
-        payAndRenewalUseCaseExecute(value)
+        payAndRenewalSpecialUseCaseExecute(value)
     )
     if (err) return res.status(500).json({ message: err })
     if (data == null) return res.status(404).json({ message: 'Datos nulos' })
     res.status(200).json(data)
 }
 
-module.exports = payAndRenewalController
+module.exports = payAndRenewalSpecialController

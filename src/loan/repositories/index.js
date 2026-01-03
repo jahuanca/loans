@@ -8,6 +8,7 @@ const getLoanRepository  = require("./loan/get_loan_repository");
 const getRenewalsRepository = require("./renewal/get_renewals_repository");
 const payAndRenewalRepository = require("./renewal/pay_and_renewal_repository");
 const createRenewalRepository = require("./renewal/create_renewal_repository");
+const payAndRenewalSpecialRepository = require("./renewal/pay_and_renewal_special_repository");
 
 module.exports = {
     //  Loan
@@ -23,4 +24,5 @@ module.exports = {
     getRenewalsRepository,
     createRenewalRepository,
     payAndRenewalRepository,
+    payAndRenewalSpecialRepository,
 }

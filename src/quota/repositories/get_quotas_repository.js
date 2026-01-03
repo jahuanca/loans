@@ -36,7 +36,7 @@ const getQuotasRepository = ({
     return Quota.findAll({
         where: where,
         order: [
-            ['name', 'ASC']
+            ['date_to_pay', 'ASC']
         ]
     })
 }
