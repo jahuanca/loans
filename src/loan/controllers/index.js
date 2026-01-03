@@ -7,6 +7,7 @@ const deleteLoanController = require("./loan/delete_loan");
 const getRenewalsController = require("./renewal/get_renewals");
 const getLoanController = require("./loan/get_loan");
 const payAndRenewalController = require("./renewal/pay_and_renewal");
+const payAndRenewalSpecialController = require("./renewal/pay_and_renewal_special");
 const createRenewalController = require("./renewal/create_renewal_controller");
 
 module.exports = {
@@ -23,4 +24,5 @@ module.exports = {
     getRenewalsController,
     createRenewalController,
     payAndRenewalController,
+    payAndRenewalSpecialController,
 }

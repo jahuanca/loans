@@ -35,6 +35,9 @@ const createSpecialLoanRepository = async ({
                 evidence: 'ruta desconocida',
                 description_operation: operationsOfLog.CREATE_SPECIAL_LOAN,
                 idUser: id_user,
+
+                number_of_installments: number_of_installments,
+                days_between_installments: days_between_installments,
             }, { transaction: t })
 
             const allAmount = amount * (percentage / 100 + 1)
