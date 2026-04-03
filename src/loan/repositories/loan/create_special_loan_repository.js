@@ -69,7 +69,7 @@ const createQuotas = async ({
     t,
 }) => {
     for (let i = 0; i < number_of_installments; i++) {
-        const isLast = (i == number_of_installments -1)
+        const isLast = i == (number_of_installments - 1)
         await Quota.create({
             name: `${(i + 1)}/${number_of_installments}`,
             description: '',

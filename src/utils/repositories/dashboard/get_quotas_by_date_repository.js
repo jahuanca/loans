@@ -37,6 +37,7 @@ const getQuotasByDateRepository = ({
         attributes: [
             'id',
             'name',
+            'is_last',
             'Loan.id_payment_frequency',
             [
                 Sequelize.literal(

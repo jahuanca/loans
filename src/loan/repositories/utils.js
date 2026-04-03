@@ -128,7 +128,7 @@ const _createQuotas = async ({
         monthly_installments,
     } = frequency
     for (let i = 0; i < monthly_installments; i++) {
-        const isLast = (i == monthly_installments -1)
+        const isLast = i == (monthly_installments -1)
         const q = {
             name: `${(i + 1)}/${monthly_installments}`,
             description: '',
@@ -206,6 +206,8 @@ const _createQuotasSpecial = async ({
 }) => {
 
     for (let i = 0; i < number_of_installments; i++) {
+        const isLast = i == (monthly_installments -1)
+
         const q = {
             name: `${(i + 1)}/${number_of_installments}`,
             description: '',
@@ -214,6 +216,7 @@ const _createQuotasSpecial = async ({
             amount: allAmount / number_of_installments,
             date_to_pay: addDays(start_date, days_between_installments * (i + 1)),
             id_state_quota: 1,
+            is_last: isLast,
         }
         await Quota.create(q, { transaction: t })
     }
