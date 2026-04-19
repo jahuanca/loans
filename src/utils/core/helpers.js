@@ -17,7 +17,7 @@ const timeInUnix = (date = new Date()) => Math.floor(date.getTime() / 1000)
 const initialOfDay = (date = Date.now()) => new Date(date).setHours(0, 0, 0)
 const finalOfDay = (date = Date.now()) => new Date(date).setHours(23, 59, 59)
 
-const startOfTheWeek = (date = Date.now()) => {
+const startOfTheWeek = (date = new Date()) => {
   const diff = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1);
   return new Date(date.setDate(diff));
 }

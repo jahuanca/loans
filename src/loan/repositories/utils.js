@@ -206,7 +206,7 @@ const _createQuotasSpecial = async ({
 }) => {
 
     for (let i = 0; i < number_of_installments; i++) {
-        const isLast = i == (monthly_installments -1)
+        const isLast = i == (number_of_installments -1)
 
         const q = {
             name: `${(i + 1)}/${number_of_installments}`,

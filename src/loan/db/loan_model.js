@@ -80,6 +80,13 @@ Loan.init(
 const sync = async () => await Loan.sync({ alter: false })
 sync()
 
+/*Loan.hasMany(Quota, {
+    foreignKey: {
+        name: 'id_loan',
+        allowNull: false,
+    }
+})*/
+
 Loan.belongsTo(User, {
     foreignKey: {
         name: 'id_user',
