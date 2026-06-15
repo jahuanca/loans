@@ -3,7 +3,10 @@ const Loan = require("../../../loan/db/loan_model")
 const { sequelize } = require("../../db/connection")
 const Quota = require("../../../quota/db/quota_model")
 const { idLoanStates, idQuotaStates } = require("../../core/default_values")
-const { Sequelize } = require("sequelize")
+const { Sequelize, Op } = require("sequelize")
+const { col, fn } = sequelize
+const Renewal = require("../../../loan/db/renewal_model")
+const { initialDayOfMonth, finalDayOfMonth } = require("../../core/helpers")
 
 const getSummaryOfDashboardRepository = async () => {
 
@@ -11,12 +14,14 @@ const getSummaryOfDashboardRepository = async () => {
     const amountsInfo = await getAmountsInfo()
     const ganancyInfo = await getGanancyInfo()
     const renovar = await getRenovar()
+    const injection = await currentInjection()
 
     return {
         'amounts': amountsInfo,
         'ganancy': ganancyInfo,
         'loans': loansInfo,
         'renovar': renovar,
+        'injection': injection,
     }
 }
 
@@ -59,7 +64,7 @@ const getRenovar = async () => {
 const getAmountsInfo = async () => {
     const { amountPending } = (await Quota.findAll({
         attributes: [
-            [sequelize.fn('SUM', sequelize.literal('COALESCE(amount, 0) - COALESCE(ganancy, 0)')), 'amountPending'],
+            [fn('SUM', sequelize.literal('COALESCE(amount, 0) - COALESCE(ganancy, 0)')), 'amountPending'],
         ],
         where: { id_state_quota: 1 },
         raw: true,
@@ -72,7 +77,7 @@ const getAmountsInfo = async () => {
 const getGanancyInfo = async () => {
     const { ganacyPending } = (await Quota.findAll({
         attributes: [
-            [sequelize.fn('SUM', sequelize.col('ganancy')), 'ganacyPending'],
+            [fn('SUM', col('ganancy')), 'ganacyPending'],
         ],
         where: { id_state_quota: 1 },
         raw: true,
@@ -82,4 +87,46 @@ const getGanancyInfo = async () => {
 
 }
 
+const currentInjection = async () => {
+    const data = await Renewal.findAll({
+        attributes: [
+            [ fn('SUM', col('variation_in_amount')), 'inversion' ],
+            [ fn('DATE_TRUNC', 'month', col('date')), 'periodo' ],
+        ],
+        group: [
+            fn('DATE_TRUNC', 'month', col('date')),
+        ],
+        order: [
+            [ fn('DATE_TRUNC', 'month', col('date')), 'DESC']
+        ],
+        where: {
+            date: {
+                [Op.between]: [initialDayOfMonth(), finalDayOfMonth()],
+            }
+        }
+    })
+
+    if (data.length == 0) { return 0 } 
+    const { dataValues } = data[0]
+    const { inversion } = dataValues
+    return inversion
+}
+
+/*
+const getInjections = async () => {
+    const data = await Renewal.findAll({
+        attributes: [
+            [ fn('SUM', col('variation_in_amount')), 'inversion' ],
+            [ fn('DATE_TRUNC', 'month', col('date')), 'periodo' ],
+        ],
+        group: [
+            fn('DATE_TRUNC', 'month', col('date')),
+        ],
+        order: [
+            [ fn('DATE_TRUNC', 'month', col('date')), 'DESC']
+        ]
+    })
+    return data
+}
+*/
 module.exports = getSummaryOfDashboardRepository

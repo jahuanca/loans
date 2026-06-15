@@ -6,6 +6,7 @@ const {
 const createLoanController = async (req, res) => {
     const {
         id_customer,
+        id_loan_to_renew,
         id_payment_frequency,
         id_payment_method,
         amount,
@@ -19,6 +20,7 @@ const createLoanController = async (req, res) => {
     const { idUser } = req
     const [err, loan] = await getPromise(createLoanUseCaseExecute({
         id_customer,
+        id_loan_to_renew,
         id_user: idUser,
         id_payment_frequency,
         id_payment_method,

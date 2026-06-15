@@ -3,6 +3,7 @@ const getSummaryOfCalendarRepository = require("./get_summary_of_calendar_reposi
 const getSummaryMonthsRepository = require("./get_summary_months_repository");
 const getQuotasByDateRepository = require("./get_quotas_by_date_repository");
 const getNextRenewalRepository = require("./get_next_renewal_repository");
+const getInjectionsRepository = require("./get_injections_repository");
 
 module.exports = {
     getSummaryOfDashboardRepository,
@@ -10,4 +11,5 @@ module.exports = {
     getSummaryMonthsRepository,
     getQuotasByDateRepository,
     getNextRenewalRepository,
+    getInjectionsRepository,
 }

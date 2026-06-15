@@ -6,7 +6,6 @@ const { initialOfDay, addDays, startOfTheWeek, finalOfDay } = require("../../cor
 const Customer = require("../../../customer/db/customer_model")
 
 const getNextRenewalRepository = async () => {
-
     const ids = await getIds()
 
     const quotas = await Quota.findAll({
@@ -31,6 +30,7 @@ const getNextRenewalRepository = async () => {
                 'customer_name'
             ],
             'Loan.Customer.alias',
+            [Sequelize.col('Loan.Customer.id'), 'id_customer'],
             [Sequelize.col('Loan.amount'), 'amount_of_loan'],
             'id_loan',
             'amount',
@@ -47,12 +47,13 @@ const getNextRenewalRepository = async () => {
             }
         },
         include: [
-            {   model: Loan, 
-                include: [{ model: Customer, attributes: [] }], 
+            {
+                model: Loan,
+                include: [{ model: Customer, attributes: [] }],
                 attributes: [],
                 where: {
                     id_payment_frequency: {
-                        [Op.not] : 5,
+                        [Op.not]: 5,
                     }
                 }
             }
@@ -60,6 +61,23 @@ const getNextRenewalRepository = async () => {
         order: [['date_to_pay', 'ASC']],
     })
 
+    return _addLastLoan(quotas)
+}
+
+const _addLastLoan = async (quotas = []) => {
+    for (let i = 0; i < quotas.length; i++) {
+        const e = quotas[i];
+        const { id_customer } = e
+
+        const loan = await Loan.findOne({
+            where: {
+                id_customer: id_customer,
+                id_state_loan: idLoanStates.COMPLETE,
+            },
+            order: [['start_date', 'DESC']]
+        })
+        quotas[i].amount_of_last_loan = (loan?.amount ?? 0)
+    }
     return quotas
 }
 

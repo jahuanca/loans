@@ -2,6 +2,7 @@ const { createLoanRepository } = require("./../../repositories/index");
 
 const createLoanUseCaseExecute = ({
     id_customer,
+    id_loan_to_renew,
     id_user,
     id_payment_frequency,
     id_payment_method,
@@ -14,6 +15,7 @@ const createLoanUseCaseExecute = ({
     evidence,
 })=> createLoanRepository({
     id_customer,
+    id_loan_to_renew,
     id_user,
     id_payment_frequency,
     id_payment_method,

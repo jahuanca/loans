@@ -2,7 +2,7 @@ const { typeRenewal } = require("../../../utils/core/default_values")
 const { sequelize } = require("../../../utils/db/connection")
 const Loan = require("../../db/loan_model")
 const Renewal = require("../../db/renewal_model")
-const { payQuota, createLoan } = require("../utils")
+const { payQuota, createLoan, createRenewal } = require("../utils")
 
 const payAndRenewalRepository = async ({
     id_loan_to_renew,
@@ -46,7 +46,7 @@ const payAndRenewalRepository = async ({
             t,
         })
 
-        await _createRenewal({
+        await createRenewal({
             loan,
             id_loan_to_renew,
             amount,
@@ -61,35 +61,6 @@ const payAndRenewalRepository = async ({
         }
     })
     return valueToReturn
-}
-
-const _createRenewal = async ({
-    loan,
-    id_loan_to_renew,
-    amount,
-    id_customer,
-    idUser,
-    t,
-}) => {
-    const { dataValues } = loan
-
-    const loanToRenew = await Loan.findByPk(id_loan_to_renew)
-    const { id: idLast, amount: amountLast, } = loanToRenew.dataValues
-
-    const variation_in_amount = amount - amountLast
-
-    let id_type_renewal = typeRenewal.SAME_AMOUNT
-    if (variation_in_amount > 0) { id_type_renewal = typeRenewal.INCREASE }
-    if (variation_in_amount < 0) { id_type_renewal = typeRenewal.DECREASE }
-
-    await Renewal.create({
-        id_customer,
-        id_user: idUser,
-        id_previous_loan: idLast,
-        id_new_loan: dataValues.id,
-        variation_in_amount: variation_in_amount,
-        id_type_renewal: id_type_renewal,
-    }, { transaction: t })
 }
 
 module.exports = payAndRenewalRepository

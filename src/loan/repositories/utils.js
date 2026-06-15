@@ -1,9 +1,10 @@
 const { Op } = require("sequelize")
 const Quota = require("../../quota/db/quota_model")
-const { operationsOfLog, idQuotaStates, idLoanStates } = require("../../utils/core/default_values")
+const { operationsOfLog, idQuotaStates, idLoanStates, typeRenewal } = require("../../utils/core/default_values")
 const { addDays } = require("../../utils/core/helpers")
 const PaymentFrequency = require("../../utils/db/payment_frequency_model")
 const Loan = require("../db/loan_model")
+const Renewal = require("../db/renewal_model")
 
 const payQuota = async ({
     id_of_quota,
@@ -222,8 +223,43 @@ const _createQuotasSpecial = async ({
     }
 }
 
+const createRenewal = async ({
+    loan,
+    id_loan_to_renew,
+    amount,
+    id_customer,
+    idUser,
+    t,
+}) => {
+    const { dataValues } = loan
+
+    // ver como se hace cuando el prestamo es nuevo
+    // entonces id_loan_to_renew seria nulo
+    // loanToRenew tambien
+    // id y monto tambien, ver para enviarlos nulos.
+
+    const loanToRenew = await Loan.findByPk(id_loan_to_renew)
+    const { id: idLast, amount: amountLast, } = loanToRenew?.dataValues
+
+    const variation_in_amount = amount - amountLast
+
+    let id_type_renewal = typeRenewal.SAME_AMOUNT
+    if (variation_in_amount > 0) { id_type_renewal = typeRenewal.INCREASE }
+    if (variation_in_amount < 0) { id_type_renewal = typeRenewal.DECREASE }
+
+    await Renewal.create({
+        id_customer,
+        id_user: idUser,
+        id_previous_loan: idLast,
+        id_new_loan: dataValues.id,
+        variation_in_amount: variation_in_amount,
+        id_type_renewal: id_type_renewal,
+    }, { transaction: t })
+}
+
 module.exports = {
     payQuota,
     createLoan,
     createLoanSpecial,
+    createRenewal,
 }
