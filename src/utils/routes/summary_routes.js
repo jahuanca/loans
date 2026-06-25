@@ -8,6 +8,7 @@ const {
     getQuotasByDateController,
     getNextRenewalController,
     getInjectionsController,
+    getCustomersWithoutLoanController,
 } = require('../controllers/dashboard')
 
 
@@ -16,6 +17,7 @@ summaryRoutes.get('/summary-of-calendar', getSummaryOfCalendarController)
 summaryRoutes.get('/quotasOfDate', getQuotasByDateController)
 summaryRoutes.get('/summary-months', getSummaryMonthsController)
 summaryRoutes.get('/injections', getInjectionsController)
+summaryRoutes.get('/customers-without-loan', getCustomersWithoutLoanController)
 summaryRoutes.get('/next-renewal', getNextRenewalController)
 
 module.exports = summaryRoutes

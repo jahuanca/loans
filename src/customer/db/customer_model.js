@@ -3,6 +3,7 @@ const { sequelize } = require('../../utils/db/connection');
 const { typeOperationLog } = require('../../utils/core/default_values');
 const { setLog } = require('../../utils/db/utils');
 const TypeCustomer = require('./type_customer_model');
+const Loan = require('../../loan/db/loan_model');
 
 class Customer extends Model { }
 
@@ -28,6 +29,10 @@ Customer.init(
         address: {
             type: DataTypes.STRING(100),
             allowNull: false,
+        },
+        phone: {
+            type: DataTypes.STRING(9),
+            allowNull: true,
         },
         latitude: {
             type: DataTypes.STRING(100),
@@ -57,7 +62,7 @@ Customer.init(
 );
 
 const sync = async () => await Customer.sync({alter: false,})
-sync()
+// sync()
 
 Customer.belongsTo(TypeCustomer, {
     foreignKey: {
@@ -66,9 +71,23 @@ Customer.belongsTo(TypeCustomer, {
     }
 })
 
-Customer.afterCreate((record, options)=> {
+Customer.hasMany(Loan, {
+    foreignKey: {
+        name: 'id_customer',
+        allowNull: false,
+    }
+})
+
+Loan.belongsTo(Customer, { 
+    foreignKey: {
+        name: 'id_customer',
+        allowNull: false,
+    }
+})
+
+Customer.afterCreate(async (record, options) => {
     const { dataValues } = record
-    setLog({
+    await setLog({
         tableName: Customer.tableName,
         newValues: dataValues,
         oldValues: null,
@@ -76,6 +95,7 @@ Customer.afterCreate((record, options)=> {
         descriptionOperation: dataValues.description_operation,
         idUser: dataValues.idUser,
     })
+    // TODO: poner esto en un try catch
 })
 
 module.exports = Customer

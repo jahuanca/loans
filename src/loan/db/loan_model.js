@@ -78,7 +78,7 @@ Loan.init(
 );
 
 const sync = async () => await Loan.sync({ alter: false })
-sync()
+// sync()
 
 /*Loan.hasMany(Quota, {
     foreignKey: {
@@ -93,12 +93,7 @@ Loan.belongsTo(User, {
         allowNull: false,
     }
 })
-Loan.belongsTo(Customer, { 
-    foreignKey: {
-        name: 'id_customer',
-        allowNull: false,
-    }
-})
+
 Loan.belongsTo(PaymentFrequency, { 
     foreignKey: {
         name: 'id_payment_frequency',

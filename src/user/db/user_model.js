@@ -1,7 +1,8 @@
+const crypto = require('node:crypto')
+const { secretSalt } = process.env
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../../utils/db/connection');
 const { defaultUsers } = require('../../utils/core/default_values');
-const crypto = require('crypto')
 
 class User extends Model { }
 
@@ -21,7 +22,10 @@ User.init(
         },
         password: {
             type: DataTypes.STRING(200),
-            allowNull: false,
+            allowNull: false, 
+            get() {
+                return () => this.getDataValue('password')
+            }
         },
         phoneNumber: {
             type: DataTypes.STRING(9),
@@ -29,7 +33,14 @@ User.init(
         },
         salt: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
+            get() {
+                return () => this.getDataValue('salt')
+            }
+        },
+        validationCode: {
+            type: DataTypes.STRING,
+            allowNull: true,
         },
         isValidated: {
             type: DataTypes.BOOLEAN,
@@ -41,11 +52,16 @@ User.init(
         paranoid: true,
         sequelize,
         modelName: 'User',
+        defaultScope: {
+            attributes: {
+                exclude: ['password', 'validationCode']
+            }
+        }
     },
 );
 
 const sync = async () => {
-    await User.sync({ alter: false, })
+    await User.sync({ alter: true, })
         .then(async () => {
             const size = await User.count()
             if (size > 0) return
@@ -57,16 +73,17 @@ sync()
 
 User.generateSalt = () => crypto.randomBytes(16).toString('base64')
 
-User.encryptPassword = (plaintText, salt) => crypto.createHash('RSA-SHA256')
-    .update(plaintText)
+User.encryptPassword = (newPassword, salt) => crypto.createHash('RSA-SHA256')
+    .update(newPassword)
+    .update(secretSalt)
     .update(salt)
     .digest('hex')
 
-User.prototype.correctPassword = (fullPassword) => {
-    return User.encryptPassword(fullPassword, this.salt() === this.password())
+User.prototype.correctPassword = function(valueToCheck) {
+    return User.encryptPassword(valueToCheck, this.salt()) === this.password()
 }
 
-const setSaltAndPassword = (user, options) => {
+const setValuesOfBeforeCreateOrUpdate = (user, options) => {
     if (user.changed('email')) {
         user.isValidated = false
     }
@@ -77,7 +94,7 @@ const setSaltAndPassword = (user, options) => {
     }
 }
 
-User.beforeCreate('setSaltAndPassword', setSaltAndPassword)
-User.beforeUpdate('refreshSaltAndPassword', setSaltAndPassword)
+User.beforeCreate('setSaltAndPassword', setValuesOfBeforeCreateOrUpdate)
+User.beforeUpdate('refreshSaltAndPassword', setValuesOfBeforeCreateOrUpdate)
 
 module.exports = User

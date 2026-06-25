@@ -8,6 +8,7 @@ const setModuleLoan = require('./loan')
 const setModuleQuota = require('./quota')
 const setModuleUtils = require('./utils')
 const setModuleAuth = require('./auth')
+const setModuleVideo = require('./video')
 
 const app = express()
 
@@ -19,5 +20,6 @@ setModuleCustomer(app)
 setModuleLoan(app)
 setModuleQuota(app)
 setModuleUtils(app)
+setModuleVideo(app)
 
 module.exports = app
