@@ -115,6 +115,11 @@ const idQuotaStates = Object.freeze({
     COMPLETE: 2,
 })
 
+const keysCache = Object.freeze({
+    CUSTOMER_KEY: 'customer_key',
+    
+})
+
 module.exports = {
     defaultTypesDocument,
     defaultPaymentFrequency,
@@ -126,4 +131,5 @@ module.exports = {
     typeRenewal,
     idLoanStates,
     idQuotaStates,
+    keysCache,
 }

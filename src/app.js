@@ -9,6 +9,7 @@ const setModuleQuota = require('./quota')
 const setModuleUtils = require('./utils')
 const setModuleAuth = require('./auth')
 const setModuleVideo = require('./video')
+const setModuleChat = require('./chat')
 
 const app = express()
 
@@ -21,5 +22,6 @@ setModuleLoan(app)
 setModuleQuota(app)
 setModuleUtils(app)
 setModuleVideo(app)
+setModuleChat(app)
 
 module.exports = app

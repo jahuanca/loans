@@ -13,14 +13,18 @@
   "type": "commonjs",
   "description": "",
   "dependencies": {
+    "@cacheable/node-cache": "^3.0.1",
+    "cron": "^4.4.0",
     "date-fns": "^4.1.0",
     "express": "^4.21.2",
     "joi": "^18.0.1",
     "jwt-simple": "^0.5.6",
+    "mongoose": "^9.7.2",
     "morgan": "^1.10.0",
     "my_cli": "file:C:/Users/huanc/Desktop/my_cli",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.37.5"
+    "sequelize": "^6.37.5",
+    "socket.io": "^4.8.3"
   }
 }
