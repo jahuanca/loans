@@ -4,9 +4,7 @@ const localNodeCache = new NodeCache({
     stdTTL: 120,
 })
 
-const removeLocalCollection = ({
-    collectionKey,
-}) => {
+const removeLocalCollection = (collectionKey) => {
     const valuesSaved = localNodeCache.get(collectionKey)
     if (valuesSaved) {
         localNodeCache.del(collectionKey)

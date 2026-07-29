@@ -6,8 +6,6 @@ const { setLog } = require('../../utils/db/utils');
 class Loan extends Model {
     static associate(models) {
 
-        console.log(models)
-
         Loan.belongsTo(models.User, {
             foreignKey: {
                 name: 'id_user',
@@ -27,6 +25,13 @@ class Loan extends Model {
         Loan.hasMany(models.Quota, {
             foreignKey: {
                 name: 'id_loan',
+                allowNull: false,
+            }
+        })
+
+        Loan.belongsTo(models.Customer, {
+            foreignKey: {
+                name: 'id_customer',
                 allowNull: false,
             }
         })

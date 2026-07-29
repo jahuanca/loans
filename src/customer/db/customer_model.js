@@ -2,10 +2,24 @@ const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../../utils/db/connection');
 const { typeOperationLog } = require('../../utils/core/default_values');
 const { setLog } = require('../../utils/db/utils');
-const TypeCustomer = require('./type_customer_model');
-const Loan = require('../../loan/db/loan_model');
 
-class Customer extends Model { }
+class Customer extends Model {
+    static associate(models) {
+        Customer.belongsTo(models.Type_Customer, {
+            foreignKey: {
+                name: 'id_type_customer',
+                allowNull: false,
+            }
+        })
+
+        Customer.hasMany(models.Loan, {
+            foreignKey: {
+                name: 'id_customer',
+                allowNull: false,
+            }
+        })
+    }
+}
 
 Customer.init(
     {
@@ -60,27 +74,6 @@ Customer.init(
         modelName: 'Customer',
     },
 )
-
-Customer.belongsTo(TypeCustomer, {
-    foreignKey: {
-        name: 'id_type_customer',
-        allowNull: false,
-    }
-})
-
-Customer.hasMany(Loan, {
-    foreignKey: {
-        name: 'id_customer',
-        allowNull: false,
-    }
-})
-
-Loan.belongsTo(Customer, { 
-    foreignKey: {
-        name: 'id_customer',
-        allowNull: false,
-    }
-})
 
 Customer.afterCreate(async (record, options) => {
     const { dataValues } = record

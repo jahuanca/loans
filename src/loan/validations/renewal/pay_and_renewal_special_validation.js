@@ -13,8 +13,8 @@ const squema = Joi.object({
     start_date: Joi.date().required(),
     paid_date: Joi.date().required(),
     ganancy: Joi.number().required(),
-    observation: Joi.string().optional(),
-    evidence: Joi.string().optional(),
+    observation: Joi.string().allow(null),
+    evidence: Joi.string().allow(null),
     number_of_installments: Joi.number().required(),
     days_between_installments: Joi.number().required(),
 })

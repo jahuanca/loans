@@ -1,6 +1,6 @@
 const Joi = require('joi')
-
-const joiId = Joi.number().integer()
+const validateSquema = require('../../../utils/validations/validation')
+const { joiId, joiString } = require('../../../utils/validations/joi_values')
 
 const squema = Joi.object({
     id_loan_to_renew: joiId.required(),
@@ -13,20 +13,11 @@ const squema = Joi.object({
     start_date: Joi.date().required(),
     paid_date: Joi.date().required(),
     ganancy: Joi.number().required(),
-    observation: Joi.string().optional(),
-    evidence: Joi.string().optional(),
+    observation: joiString(100).allow(null),
+    evidence: joiString(100).allow(null),
 })
 
-const payAndRenewalValidation = (req, res, next) => {
-    const { value, error } = squema.validate(req.body)
-    if (error) {
-        const { details } = error
-        console.log(details)
-        return res.status(500).json({message: 'Error in validation'})
-    }
-    req.value = value
-    next()
-}
+const payAndRenewalValidation = (req, res, next) => validateSquema(req, res, next, squema)
 
 module.exports = {
     payAndRenewalValidation,
