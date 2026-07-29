@@ -1,3 +1,6 @@
+const { typeRenewal } = require("../../../utils/core/default_values");
+const Loan = require("../../db/loan_model");
+const Renewal = require("../../db/renewal_model");
 const { createLoan, createRenewal } = require("../utils");
 const { sequelize } = require("./../../../utils/db/connection");
 
@@ -32,7 +35,7 @@ const createLoanRepository = async ({
                 t,
             })
 
-            
+
             if (id_loan_to_renew) {
                 await createRenewal({
                     loan,
@@ -43,9 +46,22 @@ const createLoanRepository = async ({
                     t,
                 })
             } else {
-                // preguntar si es que viene vacio.
-                // consultar si no existen prestamos anteriores, en caso de que no 
-                // crear una renovacion con valor previous null y new el creado
+                const count = await Loan.count({
+                    where: {
+                        id_customer: id_customer
+                    }
+                }, { transaction: t })
+                if (count == 0) {
+                    const { dataValues } = loan
+                    await Renewal.create({
+                        id_customer,
+                        id_user: id_user,
+                        id_previous_loan: null,
+                        id_new_loan: dataValues.id,
+                        variation_in_amount: amount,
+                        id_type_renewal: typeRenewal.INCREASE,
+                    }, { transaction: t })
+                }
             }
 
             return loan

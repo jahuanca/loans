@@ -15,6 +15,7 @@ const getSummaryOfDashboardRepository = async () => {
     const ganancyInfo = await getGanancyInfo()
     const renovar = await getRenovar()
     const injection = await currentInjection()
+    const cesaron = await countCesaron()
 
     return {
         'amounts': amountsInfo,
@@ -22,6 +23,7 @@ const getSummaryOfDashboardRepository = async () => {
         'loans': loansInfo,
         'renovar': renovar,
         'injection': injection,
+        'cesaron': cesaron,
     }
 }
 
@@ -110,6 +112,27 @@ const currentInjection = async () => {
     const { dataValues } = data[0]
     const { inversion } = dataValues
     return inversion
+}
+
+const countCesaron = async () => {
+    return await Customer.count({
+        include: [
+            {
+                model: Loan,
+                attributes: [],
+                where: {
+                    id_state_loan: 1
+                },
+                required: false
+            }
+        ],
+        where: {
+            '$Loans.id$': null
+        },
+        order: [
+            [col("id"), "DESC"]
+        ]
+    })
 }
 
 /*

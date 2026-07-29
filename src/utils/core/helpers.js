@@ -22,9 +22,15 @@ const startOfTheWeek = (date = new Date()) => {
   return new Date(date.setDate(diff));
 }
 
-const initialDayOfMonth = (date = new Date()) => new Date(date.getFullYear(), date.getMonth(), 1)
+const initialDayOfMonth = (date = new Date()) => {
+  const value = new Date(date.getFullYear(), date.getMonth(), 1)
+  return initialOfDay(value)
+}
 
-const finalDayOfMonth = (date = new Date()) => new Date(date.getFullYear(), date.getMonth() + 1, 0)
+const finalDayOfMonth = (date = new Date()) => {
+  const value = new Date(date.getFullYear(), date.getMonth() + 1, 0)
+  return finalOfDay(value)
+}
 
 module.exports = {
   getPromise,

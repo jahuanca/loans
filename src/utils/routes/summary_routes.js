@@ -19,5 +19,6 @@ summaryRoutes.get('/summary-months', getSummaryMonthsController)
 summaryRoutes.get('/injections', getInjectionsController)
 summaryRoutes.get('/customers-without-loan', getCustomersWithoutLoanController)
 summaryRoutes.get('/next-renewal', getNextRenewalController)
+summaryRoutes.get('/customer-without-loan', getCustomersWithoutLoanController)
 
 module.exports = summaryRoutes
