@@ -117,7 +117,7 @@ const idQuotaStates = Object.freeze({
 
 const keysCache = Object.freeze({
     CUSTOMER_KEY: 'customer_key',
-    
+    LOANS_KEY: 'loans_key',
 })
 
 module.exports = {

@@ -60,17 +60,6 @@ User.init(
     },
 );
 
-const sync = async () => {
-    await User.sync({ alter: true, })
-        .then(async () => {
-            const size = await User.count()
-            if (size > 0) return
-            await User.bulkCreate(defaultUsers)
-        })
-}
-
-sync()
-
 User.generateSalt = () => crypto.randomBytes(16).toString('base64')
 
 User.encryptPassword = (newPassword, salt) => crypto.createHash('RSA-SHA256')

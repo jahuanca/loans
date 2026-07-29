@@ -2,7 +2,7 @@
 const express = require('express')
 const activityLogRoutes = express.Router()
 const { getActivityLastsController } = require('../controllers/activity_log/')
-const ActivityLog = require('../db/activity_log_model')
+const ActivityLog = require('../db/models/activity_log_model')
 const Loan = require('../../loan/db/loan_model')
 
 activityLogRoutes.get('/log', getActivityLastsController)

@@ -47,9 +47,6 @@ Renewal.init({
     modelName: 'Renewal',
 })
 
-const sync = async () => await Renewal.sync({ alter: false })
-sync()
-
 Renewal.belongsTo(Customer, {
     foreignKey: {
         name: 'id_customer',

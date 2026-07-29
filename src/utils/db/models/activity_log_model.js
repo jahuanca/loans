@@ -1,8 +1,17 @@
 const { DataTypes, Model } = require('sequelize');
-const { sequelize } = require('../../utils/db/connection');
-const User = require('../../user/db/user_model');
+const { sequelize } = require('./../connection');
+const User = require('../../../user/db/user_model');
 
-class ActivityLog extends Model { }
+class ActivityLog extends Model {
+    static associate(models) {
+        ActivityLog.belongsTo(models.User, {
+            foreignKey: {
+                name: 'id_user',
+                allowNull: false,
+            }
+        })
+    }
+}
 
 ActivityLog.init(
     {
@@ -31,16 +40,5 @@ ActivityLog.init(
         modelName: 'Activity_Log',
     }
 )
-
-ActivityLog.belongsTo(User, {
-    foreignKey: {
-        name: 'id_user',
-        allowNull: false,
-    }
-})
-
-const sync = async () => await ActivityLog.sync({ alter: false, })
-
-sync()
 
 module.exports = ActivityLog

@@ -19,15 +19,4 @@ TypeCustomer.init({
     modelName: 'Type_Customer',
 })
 
-const sync = (async () => {
-    await TypeCustomer.sync({ alter: false, })
-        .then(async () => {
-            const size = await TypeCustomer.count()
-            if (size > 0) return
-            await TypeCustomer.bulkCreate(defaultCustomers)
-        })
-});
-
-sync()
-
 module.exports = TypeCustomer

@@ -1,4 +1,4 @@
-const PaymentFrequency = require("../../db/payment_frequency_model")
+const PaymentFrequency = require("../../db/models/payment_frequency_model")
 
 const createPaymentFrequencyRepository = ({
     name,

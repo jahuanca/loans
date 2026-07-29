@@ -59,10 +59,7 @@ Customer.init(
         sequelize,
         modelName: 'Customer',
     },
-);
-
-const sync = async () => await Customer.sync({alter: false,})
-// sync()
+)
 
 Customer.belongsTo(TypeCustomer, {
     foreignKey: {

@@ -1,7 +1,6 @@
 const { Sequelize, Op } = require("sequelize");
-const Customer = require("../../../customer/db/customer_model");
-const Loan = require("../../../loan/db/loan_model");
 const Quota = require("../../../quota/db/quota_model");
+const { models } = require("../../db/index");
 
 const getQuotasByDateRepository = ({
     id_state_quota,
@@ -30,9 +29,10 @@ const getQuotasByDateRepository = ({
 
     return Quota.findAll({
         raw: true,
+        nest: true,
         where: where,
         include: [
-            { model: Loan, include: [{ model: Customer, attributes: [] }], attributes: [] }
+            { model: models.Loan, include: [{ model: models.Customer, attributes: [] }], attributes: [] }
         ],
         attributes: [
             'id',

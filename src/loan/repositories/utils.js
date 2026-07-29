@@ -2,7 +2,7 @@ const { Op } = require("sequelize")
 const Quota = require("../../quota/db/quota_model")
 const { operationsOfLog, idQuotaStates, idLoanStates, typeRenewal } = require("../../utils/core/default_values")
 const { addDays } = require("../../utils/core/helpers")
-const PaymentFrequency = require("../../utils/db/payment_frequency_model")
+const PaymentFrequency = require("../../utils/db/models/payment_frequency_model")
 const Loan = require("../db/loan_model")
 const Renewal = require("../db/renewal_model")
 

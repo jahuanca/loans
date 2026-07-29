@@ -1,10 +1,10 @@
 const { DataTypes, Model } = require('sequelize');
-const { sequelize } = require('../../utils/db/connection');
-const { defaultPaymentMethod } = require('../core/default_values');
+const { sequelize } = require('../connection');
+const { defaultTypesDocument } = require('../../core/default_values');
 
-class PaymentMethod extends Model { }
+class TypeDocument extends Model { }
 
-PaymentMethod.init(
+TypeDocument.init(
     {
         name: {
             type: DataTypes.STRING(100),
@@ -18,19 +18,19 @@ PaymentMethod.init(
     {
         paranoid: true,
         sequelize,
-        modelName: 'Payment_Method',
+        modelName: 'Type_Document',
     },
 );
 
 (async () => {
-    await PaymentMethod.sync({ alter: false, })
+    await TypeDocument.sync({ alter: false, })
         .then(async () => {
-            const size = await PaymentMethod.count()
+            const size = await TypeDocument.count()
             if (size > 0) return;
-            await PaymentMethod.bulkCreate(
-                defaultPaymentMethod
+            await TypeDocument.bulkCreate(
+                defaultTypesDocument
             )
         })
 })();
 
-module.exports = PaymentMethod
+module.exports = TypeDocument

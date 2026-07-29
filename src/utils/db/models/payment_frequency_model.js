@@ -1,9 +1,20 @@
 const { DataTypes, Model } = require('sequelize');
-const { sequelize } = require('../../utils/db/connection');
-const { defaultPaymentFrequency } = require('../core/default_values');
-const TypeCustomer = require('../../customer/db/type_customer_model');
+const { sequelize } = require('../connection');
+const { defaultPaymentFrequency } = require('../../core/default_values');
+const TypeCustomer = require('../../../customer/db/type_customer_model');
 
-class PaymentFrequency extends Model { }
+class PaymentFrequency extends Model {
+
+    static associate(models) {
+        PaymentFrequency.belongsTo(models.Type_Customer, {
+            foreignKey: {
+                name: 'id_type_customer',
+                allowNull: false,
+                defaultValue: 1,
+            }
+        })
+    }
+}
 
 PaymentFrequency.init(
     {
@@ -38,27 +49,6 @@ PaymentFrequency.init(
         sequelize,
         modelName: 'Payment_Frequency',
     },
-);
-
-const sync = async () => {
-    await PaymentFrequency.sync({ alter: false,  })
-        .then(async () => {
-            const size= await PaymentFrequency.count()
-            if(size > 0) return;
-            await PaymentFrequency.bulkCreate(
-                defaultPaymentFrequency
-            )
-        })
-}
-
-sync()
-
-PaymentFrequency.belongsTo(TypeCustomer, {
-    foreignKey: {
-        name: 'id_type_customer',
-        allowNull: false,
-        defaultValue: 1,
-    }
-})
+)
 
 module.exports = PaymentFrequency

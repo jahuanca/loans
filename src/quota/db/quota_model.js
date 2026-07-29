@@ -4,7 +4,17 @@ const Loan = require('../../loan/db/loan_model');
 const { typeOperationLog } = require('../../utils/core/default_values');
 const { setLog } = require('../../utils/db/utils');
 
-class Quota extends Model { }
+class Quota extends Model {
+
+    static associate(models) {
+        Quota.belongsTo(models.Loan, {
+            foreignKey: {
+                name: 'id_loan',
+                allowNull: false,
+            },
+        })
+    }
+}
 
 Quota.init(
     {
@@ -62,16 +72,6 @@ Quota.init(
         modelName: 'Quota',
     },
 );
-
-const sync = async () => await Quota.sync({ alter: false, })
-sync()
-
-Quota.belongsTo(Loan, { 
-    foreignKey: {
-        name: 'id_loan',
-        allowNull: false,
-    },
-})
 
 Quota.afterUpdate((record, options) => {
     const {

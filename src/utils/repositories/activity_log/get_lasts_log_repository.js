@@ -1,4 +1,4 @@
-const ActivityLog = require("../../db/activity_log_model")
+const ActivityLog = require("../../db/models/activity_log_model")
 
 const getLastsRepository = () => ActivityLog.findAll({
     order: [['createdAt', 'DESC']],

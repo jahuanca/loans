@@ -1,4 +1,4 @@
-const ActivityLog = require("./activity_log_model")
+const ActivityLog = require("./models/activity_log_model")
 
 const setLog = ({
     tableName,

@@ -1,13 +1,37 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../../utils/db/connection');
-const User = require('../../user/db/user_model');
-const Customer = require('../../customer/db/customer_model');
-const PaymentFrequency = require('../../utils/db/payment_frequency_model');
-const PaymentMethod = require('../../utils/db/payment_method_model');
 const { typeOperationLog } = require('../../utils/core/default_values');
 const { setLog } = require('../../utils/db/utils');
 
-class Loan extends Model { }
+class Loan extends Model {
+    static associate(models) {
+
+        console.log(models)
+
+        Loan.belongsTo(models.User, {
+            foreignKey: {
+                name: 'id_user',
+                allowNull: false,
+            }
+        })
+
+        Loan.belongsTo(models.Payment_Frequency, {
+            foreignKey: {
+                name: 'id_payment_frequency',
+                allowNull: false,
+            }
+        })
+
+        Loan.belongsTo(models.Payment_Method, { foreignKey: 'id_payment_method', })
+
+        Loan.hasMany(models.Quota, {
+            foreignKey: {
+                name: 'id_loan',
+                allowNull: false,
+            }
+        })
+    }
+}
 
 Loan.init(
     {
@@ -75,32 +99,7 @@ Loan.init(
         sequelize,
         modelName: 'Loan',
     },
-);
-
-const sync = async () => await Loan.sync({ alter: false })
-// sync()
-
-/*Loan.hasMany(Quota, {
-    foreignKey: {
-        name: 'id_loan',
-        allowNull: false,
-    }
-})*/
-
-Loan.belongsTo(User, {
-    foreignKey: {
-        name: 'id_user',
-        allowNull: false,
-    }
-})
-
-Loan.belongsTo(PaymentFrequency, { 
-    foreignKey: {
-        name: 'id_payment_frequency',
-        allowNull: false,
-    }
-})
-Loan.belongsTo(PaymentMethod, { foreignKey: 'id_payment_method', })
+)
 
 Loan.afterCreate(async (record, options) => {
     const { dataValues } = record
