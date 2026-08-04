@@ -18,7 +18,7 @@ const getLoansRepository = async ({
 
     const valuesSaved = localNodeCache.get(LOANS_KEY)
 
-    if (!valuesSaved) {
+    if (!valuesSaved || id_customer) {
         return await _getInDB(where)
     }
     return valuesSaved
@@ -36,8 +36,9 @@ const _getInDB = async (where) => {
         raw: true,
         nest: true,
     })
-
-    localNodeCache.set(LOANS_KEY, loans)
+    //TODO: este servicio se usa para listar prestamos de uno solo o de todos
+    // solo trabajar con cache aquellos que son de todos.
+    // localNodeCache.set(LOANS_KEY, loans)
     return loans
 }
 

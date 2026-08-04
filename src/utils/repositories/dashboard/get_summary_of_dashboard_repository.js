@@ -49,10 +49,10 @@ const getRenovar = async () => {
                     ]
                 ]
             },
-            where: {id_state_loan: idLoanStates.PENDING}
+            where: { id_state_loan: idLoanStates.PENDING }
         }
     )
-    
+
     let count = 0
     pendings.forEach(e => {
         const { dataValues } = e
@@ -92,14 +92,14 @@ const getGanancyInfo = async () => {
 const currentInjection = async () => {
     const data = await Renewal.findAll({
         attributes: [
-            [ fn('SUM', col('variation_in_amount')), 'inversion' ],
-            [ fn('DATE_TRUNC', 'month', col('date')), 'periodo' ],
+            [fn('SUM', col('variation_in_amount')), 'inversion'],
+            [fn('DATE_TRUNC', 'month', col('date')), 'periodo'],
         ],
         group: [
             fn('DATE_TRUNC', 'month', col('date')),
         ],
         order: [
-            [ fn('DATE_TRUNC', 'month', col('date')), 'DESC']
+            [fn('DATE_TRUNC', 'month', col('date')), 'DESC']
         ],
         where: {
             date: {
@@ -108,7 +108,10 @@ const currentInjection = async () => {
         }
     })
 
-    if (data.length == 0) { return 0 } 
+    console.log(initialDayOfMonth())
+    console.log(finalDayOfMonth())
+
+    if (data.length == 0) { return 0 }
     const { dataValues } = data[0]
     const { inversion } = dataValues
     return inversion

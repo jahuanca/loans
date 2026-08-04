@@ -22,15 +22,4 @@ PaymentMethod.init(
     },
 );
 
-(async () => {
-    await PaymentMethod.sync({ alter: false, })
-        .then(async () => {
-            const size = await PaymentMethod.count()
-            if (size > 0) return;
-            await PaymentMethod.bulkCreate(
-                defaultPaymentMethod
-            )
-        })
-})();
-
 module.exports = PaymentMethod

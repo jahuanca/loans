@@ -2,7 +2,13 @@ const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../connection');
 const { defaultTypesDocument } = require('../../core/default_values');
 
-class TypeDocument extends Model { }
+class TypeDocument extends Model {
+    static associate(models) {
+        TypeDocument.hasMany(models.User, {
+            foreignKey: 'idTypeDocument'
+        })
+    }
+}
 
 TypeDocument.init(
     {
@@ -20,17 +26,6 @@ TypeDocument.init(
         sequelize,
         modelName: 'Type_Document',
     },
-);
-
-(async () => {
-    await TypeDocument.sync({ alter: false, })
-        .then(async () => {
-            const size = await TypeDocument.count()
-            if (size > 0) return;
-            await TypeDocument.bulkCreate(
-                defaultTypesDocument
-            )
-        })
-})();
+)
 
 module.exports = TypeDocument
