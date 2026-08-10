@@ -4,9 +4,9 @@ const { defaultTypesDocument } = require('../../core/default_values');
 
 class TypeDocument extends Model {
     static associate(models) {
-        TypeDocument.hasMany(models.User, {
+        /*TypeDocument.hasMany(models.User, {
             foreignKey: 'idTypeDocument'
-        })
+        })*/
     }
 }
 

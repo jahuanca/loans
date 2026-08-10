@@ -10,6 +10,7 @@ const setModuleUtils = require('./utils')
 const setModuleAuth = require('./auth')
 const setModuleVideo = require('./video')
 const setModuleChat = require('./chat')
+const setModuleError = require('./utils/error')
 
 const app = express()
 
@@ -20,8 +21,9 @@ setModuleUser(app)
 setModuleCustomer(app)
 setModuleLoan(app)
 setModuleQuota(app)
-setModuleUtils(app)
 setModuleVideo(app)
 setModuleChat(app)
+setModuleUtils(app)
+setModuleError(app)
 
 module.exports = app

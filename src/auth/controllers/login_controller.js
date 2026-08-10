@@ -1,16 +1,21 @@
+const { enIE } = require("date-fns/locale")
+const { ErrorServer } = require("../../utils/core/error/errors")
 const { getPromise } = require("../../utils/core/helpers")
 const createTokenExecute = require("../../utils/use_cases/app/create_token_use_case")
 const loginUseCaseExecute = require("../use_cases/login_use_case")
+const ErrorApi = require("../../utils/core/error/error_api")
 
-const loginController = async (req, res) => {
+const loginController = async (req, res, next) => {
     const { email, password } = req.body
     const [err, user] = await getPromise(
         loginUseCaseExecute({ email, password })
     )
-    if (err) return res.status(500).json({ message: err.message })
+    if (err) {
+        return next(new ErrorServer(404, 'Valide los datos de entrada'))
+        return next(new ErrorServer(500, err))
+    }
     if (user == null) {
-        console.log('Valide los datos de entrada')
-        return res.status(404).json({ message: 'Valide los datos de entrada' })
+        return next(new ErrorServer(404, 'Valide los datos de entrada'))
     }
 
     const token = createTokenExecute(user)
