@@ -3,7 +3,7 @@ const {
     createSpecialLoanUseCaseExecute
 } = require("./../../use_cases/")
 
-const createSpecialLoanController = async (req, res) => {
+const createSpecialLoanController = async (req, res, next) => {
     const {
         id_customer,
         id_payment_frequency,
@@ -34,8 +34,9 @@ const createSpecialLoanController = async (req, res) => {
         number_of_installments,
         days_between_installments,
     }))
-    if (err) return res.status(500).json({ message: err.message })
-    if (loan == null) res.status(404).json({ message: 'El préstamo no se pudo procesar' })
+    if (err) {
+        return next(err)
+    }
     return res.status(200).json(loan)
 }
 

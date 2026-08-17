@@ -1,7 +1,7 @@
 const { getPromise } = require("./../../utils/core/helpers")
 const createUserUseCaseExecute = require("../use_cases/create_user_use_case")
 
-const createUserController = async (req, res) => {
+const createUserController = async (req, res, next) => {
     const {
         name,
         password,
@@ -16,7 +16,9 @@ const createUserController = async (req, res) => {
         email,
         phoneNumber,
     }))
-    if (err) return res.status(500).json({message: err.message})
+    if (err) {
+        return next(err)
+    }
     return res.status(200).json(user)
 }
 

@@ -1,7 +1,7 @@
 const { getPromise } = require("../../utils/core/helpers")
 const updatePasswordUseCase = require("../use_cases/update_password_use_case")
 
-const updatePasswordController = async (req, res) => {
+const updatePasswordController = async (req, res, next) => {
     const {
         currentPassword,
         newPassword,
@@ -12,7 +12,9 @@ const updatePasswordController = async (req, res) => {
         currentPassword,
         newPassword,
     }))
-    if (err) return res.status(500).json({ message: err.message })
+    if (err) {
+        return next(err)
+    }
     return res.status(200).json(user)
 }
 

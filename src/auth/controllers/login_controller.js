@@ -11,17 +11,12 @@ const loginController = async (req, res, next) => {
         loginUseCaseExecute({ email, password })
     )
     if (err) {
-        return next(new ErrorServer(404, 'Valide los datos de entrada'))
-        return next(new ErrorServer(500, err))
-    }
-    if (user == null) {
-        return next(new ErrorServer(404, 'Valide los datos de entrada'))
+        return next(err)
     }
 
     const token = createTokenExecute(user)
     if (token == null) {
-        console.log('No se pudo crear el token')
-        return res.status(404).json({ message: 'No se pudo crear el token' })
+        return next(ErrorServer(404, 'No se pudo crear el token.'))
     }
     user.dataValues.token = token
     return res.status(200).json(user)

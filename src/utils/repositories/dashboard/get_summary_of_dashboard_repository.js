@@ -108,9 +108,6 @@ const currentInjection = async () => {
         }
     })
 
-    console.log(initialDayOfMonth())
-    console.log(finalDayOfMonth())
-
     if (data.length == 0) { return 0 }
     const { dataValues } = data[0]
     const { inversion } = dataValues

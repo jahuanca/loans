@@ -3,12 +3,14 @@ const {
     getLoanUseCaseExecute
 } = require("../../use_cases")
 
-const getLoanController = async (req, res)=> {
+const getLoanController = async (req, res, next)=> {
     const {
         id,
     } = req.params
     const [err, loan] = await getPromise(getLoanUseCaseExecute({id}))
-    if (err) return res.status(500).json({message: err.message})
+    if (err) {
+        return next(err)
+    }
     res.status(200).json(loan)
 }
 

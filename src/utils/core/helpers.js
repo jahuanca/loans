@@ -1,11 +1,14 @@
+const { ErrorServer } = require("./error/errors")
 const { logger } = require("./winston")
 
 const getPromise = (promise) =>
   promise.then(data => {
+    if (data == null) {
+      return new ErrorServer(404, 'Datos nulos.')
+    }
     return [null, data]
   }).catch(err => {
-    
-    return [err]
+    new [ErrorServer(500, err)]
   })
 
 const addDays = (date, numberDays) => {

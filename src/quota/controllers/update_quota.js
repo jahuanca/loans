@@ -1,7 +1,7 @@
 const { getPromise } = require("../../utils/core/helpers")
 const updateQuotaExecute = require("../use_cases/update_quota_use_case")
 
-const updateQuotaController = async (req, res) => {
+const updateQuotaController = async (req, res, next) => {
     const {
         id,
         name,
@@ -15,7 +15,9 @@ const updateQuotaController = async (req, res) => {
         description,
         date,
     }))
-    if (err) return res.status(500).json({message: err.message})
+    if (err) {
+        return next(err)
+    }
     return res.status(200).json(quota)
 }
 

@@ -1,10 +1,12 @@
 const { getPromise } = require("../../../utils/core/helpers")
 const deleteCustomerExecute = require("../../use_cases/customer/delete_customer_use_case")
 
-const deleteCustomerController = async (req, res) => {
+const deleteCustomerController = async (req, res, next) => {
     const {id} = req.params
     const [err, customer] = await getPromise(deleteCustomerExecute({id}))
-    if (err) return res.status(500).json({message: err.message})
+    if (err) {
+        return next(err)
+    }
     return res.status(200).json(customer)
 }
 

@@ -3,7 +3,7 @@ const {
     updateLoanUseCaseExecute
 } = require("./../../use_cases/")
 
-const updateLoanController = async (req, res) => {
+const updateLoanController = async (req, res, next) => {
     const {
         id,
         name,
@@ -17,7 +17,9 @@ const updateLoanController = async (req, res) => {
         description,
         start_date,
     }))
-    if (err) return res.status(500).json({message: err.message})
+    if (err) {
+        return next(err)
+    }
     return res.status(200).json(loan)
 }
 

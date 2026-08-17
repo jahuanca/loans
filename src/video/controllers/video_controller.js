@@ -1,7 +1,7 @@
 
 const getVideoUseCase = require('../use_cases/get_video_use_case');
 
-const getVideoController = (req, res) => {
+const getVideoController = (req, res, next) => {
 
     const { range } = req.headers
 

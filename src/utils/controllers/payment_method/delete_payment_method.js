@@ -1,7 +1,7 @@
 const { getPromise } = require("../../core/helpers")
 const deletePaymentMethodUseCaseExecute = require("../../use_cases/payment_method/delete_payment_method_use_case")
 
-const deletePaymentMethodController = async (req, res) => {
+const deletePaymentMethodController = async (req, res, next) => {
 
     const {
         id
@@ -10,8 +10,9 @@ const deletePaymentMethodController = async (req, res) => {
     const [err, paymentMethod] = await getPromise(
         deletePaymentMethodUseCaseExecute({ id })
     )
-    if (err) return res.status(500).json({ message: err.message })
-    if (paymentMethod == null) return res.status(404).json({ message: 'No se encontro dato.' })
+    if (err) {
+        return next(err)
+    }
     return res.status(200).json(paymentMethod)
 }
 

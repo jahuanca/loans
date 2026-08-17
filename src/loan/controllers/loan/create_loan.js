@@ -3,7 +3,7 @@ const {
     createLoanUseCaseExecute
 } = require("./../../use_cases/")
 
-const createLoanController = async (req, res) => {
+const createLoanController = async (req, res, next) => {
     const {
         id_customer,
         id_loan_to_renew,
@@ -32,8 +32,9 @@ const createLoanController = async (req, res) => {
         id_state_loan,
         evidence,
     }))
-    if (err) return res.status(500).json({ message: err.message })
-    if (loan == null) return res.status(404).json({ message: 'No se pudo crear el prestamo' })
+    if (err) {
+        return next(err)
+    }
     return res.status(200).json(loan)
 }
 

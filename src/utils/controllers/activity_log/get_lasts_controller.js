@@ -7,8 +7,9 @@ const getActivityLastsController = async (req , res) => {
     } = req.query
 
     const [err, logs] = await getPromise(getLastsLogUseCaseExecute())
-    if (err) return res.status(500).json({ message: err.message })
-    if (logs == null) return res.status(404).json({ message: 'No se encontraron los logs' })
+    if (err) {
+        return next(err)
+    }
     res.status(200).json(logs)
 
 }

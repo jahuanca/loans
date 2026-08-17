@@ -6,7 +6,7 @@ const ActivityLog = require('../db/models/activity_log_model')
 const Loan = require('../../loan/db/loan_model')
 
 activityLogRoutes.get('/log', getActivityLastsController)
-activityLogRoutes.get('/run', async (req, res) => {
+activityLogRoutes.get('/run', async (req, res, next) => {
     const logs = await ActivityLog.findAll({
         where: {
             description_operation: 'CREATE_SPECIAL_LOAN'
