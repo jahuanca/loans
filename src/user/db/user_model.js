@@ -2,12 +2,20 @@ const crypto = require('node:crypto')
 const { secretSalt } = process.env
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../../utils/db/connection');
-const { defaultUsers } = require('../../utils/core/default_values');
+const TypeUser = require('./type_user_model');
 
-class User extends Model { }
+class User extends Model {
+    static associate() {
+        User.belongsTo(TypeUser, {foreignKey: 'id'})
+    }
+}
 
 User.init(
     {
+        idTypeUser: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
         name: {
             type: DataTypes.STRING(100),
             allowNull: false,

@@ -7,7 +7,7 @@ const checkTokenController = async (req, res, next) => {
     } = req.headers
 
     const [err, payload] = await getPromise(decodeTokenExecute(authorization))
-    if (err) return res.status(err.status).json({ message: err.message })
+    if (err) return res.status(422).json({ message: err.message })
     req.idUser = payload.sub
     next()
 }

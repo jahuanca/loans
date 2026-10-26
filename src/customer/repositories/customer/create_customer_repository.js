@@ -5,6 +5,7 @@ const Customer = require("../../db/customer_model");
 const createCustomerRepository = ({
     alias,
     name,
+    phone,
     lastName,
     address,
     latitude,
@@ -17,6 +18,7 @@ const createCustomerRepository = ({
     return Customer.create({
         alias,
         name,
+        phone,
         lastName,
         address,
         latitude,

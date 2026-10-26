@@ -14,6 +14,7 @@ const updateCustomerRepository = async ({
     latitude,
     longitude,
     document,
+    phone,
 }) => {
     const customerToUpdate = await Customer.findByPk(id)
     if (customerToUpdate == null) {
@@ -30,6 +31,7 @@ const updateCustomerRepository = async ({
         longitude,
         document,
         customer: customerToUpdate,
+        phone,
     })
 
     await customerToUpdate.save()
@@ -48,6 +50,7 @@ const updateCustomer = ({
     longitude,
     document,
     customer,
+    phone,
 }) => {
     customer.id_type_document = id_type_document
     customer.id_type_customer = id_type_customer
@@ -58,6 +61,7 @@ const updateCustomer = ({
     customer.latitude = latitude
     customer.longitude = longitude
     customer.document = document
+    customer.phone = phone
     return customer
 }
 

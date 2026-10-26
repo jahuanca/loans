@@ -8,10 +8,12 @@ const {
     getAllCustomersAnalyticsController,
 } = require("../controllers")
 const { createCustomerValidation, updateCustomerValidation } = require("../validations/customer_validation")
+const { actionUser } = require("../../utils/core/action_user_middleware")
+const { defaultActions } = require("../../utils/core/default_values")
 
 const customerRoutes = Router()
 
-customerRoutes.get('/', getCustomersController)
+customerRoutes.get('/', actionUser(defaultActions.CUSTOMER_GET_ALL), getCustomersController)
 customerRoutes.get('/all-analytics', getAllCustomersAnalyticsController)
 customerRoutes.get('/analytics', getCustomerAnalyticsController)
 customerRoutes.post('/create', createCustomerValidation, createCustomerController)

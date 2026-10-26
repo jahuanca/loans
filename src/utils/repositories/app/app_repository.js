@@ -22,10 +22,7 @@ const decodeTokenRepository = (token) => {
             const value = jwt.decode(token, secretToken)
             resolve(value)
         } catch (err) {
-            reject({
-                status: 422,
-                message: err.toString()
-            })
+            reject(err)
         }
     })
 

@@ -3,9 +3,19 @@ const TypeCustomer = require("../../customer/db/type_customer_model");
 const Loan = require("../../loan/db/loan_model");
 const Renewal = require("../../loan/db/renewal_model");
 const Quota = require("../../quota/db/quota_model");
+const Action = require("../../user/db/action_model");
+const TypeUserAction = require("../../user/db/type_user_action_model");
+const TypeUser = require("../../user/db/type_user_model");
 const User = require("../../user/db/user_model");
-const { defaultUsers, defaultCustomers, defaultPaymentFrequency, defaultPaymentMethod } = require("../core/default_values");
-const ActivityLog = require("./activity_log_model");
+const Activity_Log = require("../../utils/db/models/activity_log_model");
+const {
+    defaultUsers,
+    defaultCustomers,
+    defaultPaymentFrequency,
+    defaultPaymentMethod,
+    defaultTypeUsers,
+    defaultActions,
+} = require("../core/default_values");
 const PaymentFrequency = require("./models/payment_frequency_model");
 const PaymentMethod = require("./models/payment_method_model");
 const TypeDocument = require("./models/type_document_model");
@@ -34,6 +44,16 @@ const syncUser = async () => {
             if (size > 0) return
             await User.bulkCreate(defaultUsers)
         })
+    User.associate()
+}
+
+const syncTypeUser = async () => {
+    await TypeUser.sync({ alter: true })
+        .then(async () => {
+            const size = await TypeUser.count()
+            if (size > 0) return
+            await TypeUser.bulkCreate(defaultTypeUsers)
+        })
 }
 
 const syncActivityLog = async () => await ActivityLog.sync({ alter: false })
@@ -49,8 +69,8 @@ const syncPaymentFrequency = async () => {
         })
 }
 
-const syncPaymentMethod = async () => {
-    await PaymentMethod.sync({ alter: false, })
+const syncPaymentMethod = () => {
+    PaymentMethod.sync({ alter: false, })
         .then(async () => {
             const size = await PaymentMethod.count()
             if (size > 0) return;
@@ -60,8 +80,8 @@ const syncPaymentMethod = async () => {
         })
 }
 
-const syncTypeDocument = async () => {
-    await TypeDocument.sync({ alter: false, })
+const syncTypeDocument = () => {
+    TypeDocument.sync({ alter: false, })
         .then(async () => {
             const size = await TypeDocument.count()
             if (size > 0) return;
@@ -71,13 +91,64 @@ const syncTypeDocument = async () => {
         })
 }
 
-syncTypeDocument()
-syncPaymentMethod()
-syncPaymentFrequency()
-syncActivityLog()
-syncUser()
-syncQuota()
-syncRenewal()
-syncLoan()
-syncTypeCustomer()
-syncCustomer()
+const syncAction = () => Action.sync({ alter: true, })
+    .then(async () => {
+        const size = await Action.count()
+        if (size > 0) return;
+        const values = Object.values(defaultActions)
+        const actions = []
+        for (let i = 0; i < values.length; i++) {
+            const e = values[i];
+            actions.push({ name: e })
+        }
+        await Action.bulkCreate(actions)
+    })
+
+const syncTypeUserCustomer = () => {
+    TypeUserAction.sync({ alter: true })
+        .then(async () => {
+
+            const size = await TypeUserAction.count()
+            if (size > 0) return;
+
+            const actions = await Action.findAll({ raw: true })
+            const typeUsers = await TypeUser.findAll({ raw: true })
+            
+            const data = []
+            const { id: idSuperAdmin } = typeUsers[0]
+            const { id: idAdmin } = typeUsers[1]
+
+            for (let i = 0; i < actions.length; i++) {
+                const { id: idAction, name } = actions[i];
+                data.push({
+                    idTypeUser: idSuperAdmin,
+                    idAction: idAction,
+                })
+
+                if (name.includes('get')) {
+                    data.push({
+                        idTypeUser: idAdmin,
+                        idAction: idAction,
+                    })
+                }
+
+            }
+
+            await TypeUserAction.bulkCreate(data)
+
+        })
+}
+
+// syncTypeDocument()
+// syncPaymentMethod()
+// syncPaymentFrequency()
+// syncActivityLog()
+// syncTypeUser()
+// syncUser()
+// syncQuota()
+// syncRenewal()
+// syncLoan()
+// syncTypeCustomer()
+// syncCustomer()
+// syncAction()
+syncTypeUserCustomer()

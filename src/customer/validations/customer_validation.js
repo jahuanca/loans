@@ -9,7 +9,7 @@ const _squemaCustomer = {
     name: joiString(100).required(),
     lastName: joiString(100).required(),
     address: joiString(100).required(),
-    phone: joiPhone.allow(null),
+    phone: joiPhone.required(),
     latitude: joiLatLong.allow(null),
     longitude: joiLatLong.allow(null),
     document: joiString(200).required(),

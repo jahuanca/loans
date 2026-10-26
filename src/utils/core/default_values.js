@@ -1,5 +1,16 @@
 'use_strict'
 
+const defaultTypeUsers = [
+    {
+        name: 'Super-Admin',
+        description: 'Puede hacer casi el 100%',
+    },
+    {
+        name: 'Administrador',
+        description: 'Puede hacer casi el 80%',
+    }
+]
+
 const defaultUsers = [
     {
         name: 'José Antonio',
@@ -7,6 +18,7 @@ const defaultUsers = [
         email: 'huancaancajima@gmail.com',
         password: '123456',
         phoneNumber: '989743471',
+        idTypeUser: 1,
     }
 ]
 
@@ -120,7 +132,21 @@ const keysCache = Object.freeze({
     LOANS_KEY: 'loans_key',
 })
 
+const defaultActions = Object.freeze({
+    CUSTOMER_GET_ALL: 'CUSTOMER.get',
+    CUSTOMER_CREATE: 'CUSTOMER.create',
+    CUSTOMER_UPDATE: 'CUSTOMER.update',
+    CUSTOMER_DELETE: 'CUSTOMER.delete',
+
+    LOAN_GET_ALL: 'LOAN.get',
+    LOAN_CREATE: 'LOAN.create',
+    LOAN_UPDATE: 'LOAN.update',
+    LOAN_DELETE: 'LOAN.delete',
+})
+
 module.exports = {
+    defaultActions,
+    defaultTypeUsers,
     defaultTypesDocument,
     defaultPaymentFrequency,
     defaultPaymentMethod,

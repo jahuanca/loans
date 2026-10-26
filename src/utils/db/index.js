@@ -9,11 +9,23 @@ const PaymentFrequency = require('./models/payment_frequency_model');
 const User = require('../../user/db/user_model');
 const Customer = require('../../customer/db/customer_model');
 const TypeCustomer = require('../../customer/db/type_customer_model');
+const TypeUser = require('../../user/db/type_user_model');
+const Action = require('../../user/db/action_model');
+const TypeUserAction = require('../../user/db/type_user_action_model');
+
+const { Model } = require('sequelize');
+
+/**
+ * @type {Object.<string, typeof Model>}
+ */
 const db = {};
 
-const listOfModels = [
+[
   Loan,
+  Action,
+  TypeUser,
   User,
+  TypeUserAction,
   PaymentFrequency,
   PaymentMethod,
   ActivityLog,
