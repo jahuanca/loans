@@ -3,6 +3,8 @@ const http = require('http')
 const { Server } = require('socket.io')
 const express = require('express')
 const { CronJob } = require('cron')
+const langchainRoutes = require('./routes/langchain_routes')
+
 const app = express()
 const { socketPort } = process.env
 const server = http.createServer(app)
@@ -36,8 +38,8 @@ server.listen(socketPort, () => {
     console.log(`IO server corriendo en el puerto ${socketPort}`)
 })
 
-const setModuleChat = (server) => {
-
+const setModuleChat = (app) => {
+    app.use('/ask', langchainRoutes)
 }
 
 module.exports = setModuleChat
