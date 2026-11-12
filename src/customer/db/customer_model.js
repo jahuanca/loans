@@ -77,13 +77,14 @@ Customer.init(
 
 Customer.afterCreate(async (record, options) => {
     const { dataValues } = record
+    console.log(dataValues)
     await setLog({
         tableName: Customer.tableName,
         newValues: dataValues,
         oldValues: null,
         typeOperation: typeOperationLog.INSERT,
         descriptionOperation: dataValues.description_operation,
-        idUser: dataValues.idUser,
+        idUser: 1,
     })
     // TODO: poner esto en un try catch
 })
