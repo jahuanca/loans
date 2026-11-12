@@ -17,6 +17,8 @@ TypeCustomer.init({
     paranoid: true,
     sequelize,
     modelName: 'Type_Customer',
+    tableName: 'type_customers',
+    underscored: true,
 })
 
 module.exports = TypeCustomer

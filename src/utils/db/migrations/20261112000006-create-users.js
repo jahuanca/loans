@@ -4,17 +4,17 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('users', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      idTypeUser: {
+      id_type_user: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'TypeUsers', key: 'id' },
+        references: { model: 'type_users', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT',
       },
@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.STRING(100),
         allowNull: false,
       },
-      lastName: {
+      last_name: {
         type: Sequelize.STRING(100),
         allowNull: false,
       },
@@ -34,7 +34,7 @@ module.exports = {
         type: Sequelize.STRING(200),
         allowNull: false,
       },
-      phoneNumber: {
+      phone_number: {
         type: Sequelize.STRING(9),
         allowNull: false,
       },
@@ -42,24 +42,24 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      validationCode: {
+      validation_code: {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      isValidated: {
+      is_validated: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE,
         allowNull: true,
       },
@@ -67,6 +67,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('users');
   },
 };

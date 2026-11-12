@@ -4,7 +4,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Loans', {
+    await queryInterface.createTable('loans', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -14,21 +14,21 @@ module.exports = {
       id_customer: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'Customers', key: 'id' },
+        references: { model: 'customers', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT',
       },
       id_user: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'Users', key: 'id' },
+        references: { model: 'users', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT',
       },
       id_payment_frequency: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'Payment_Frequencies', key: 'id' },
+        references: { model: 'payment_frequencies', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT',
       },
@@ -51,7 +51,7 @@ module.exports = {
       id_payment_method: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'Payment_Methods', key: 'id' },
+        references: { model: 'payment_methods', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT',
       },
@@ -75,15 +75,15 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE,
         allowNull: true,
       },
@@ -91,6 +91,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('Loans');
+    await queryInterface.dropTable('loans');
   },
 };

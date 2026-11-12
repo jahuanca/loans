@@ -72,6 +72,8 @@ Customer.init(
         paranoid: true,
         sequelize,
         modelName: 'Customer',
+        tableName: 'customers',
+        underscored: true,
     },
 )
 

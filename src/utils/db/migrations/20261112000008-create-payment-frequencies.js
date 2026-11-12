@@ -4,7 +4,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Payment_Frequencies', {
+    await queryInterface.createTable('payment_frequencies', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -35,19 +35,19 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 1,
-        references: { model: 'Type_Customers', key: 'id' },
+        references: { model: 'type_customers', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT',
       },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE,
         allowNull: true,
       },
@@ -55,6 +55,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('Payment_Frequencies');
+    await queryInterface.dropTable('payment_frequencies');
   },
 };

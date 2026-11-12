@@ -4,8 +4,8 @@ const { sequelize } = require('../../utils/db/connection');
 
 class TypeUserAction extends Model {
     static associate(models) {
-        TypeUserAction.hasMany(models.TypeUser, {foreignKey: 'id'})
-        TypeUserAction.hasMany(models.Action, {foreignKey: 'id'})
+        TypeUserAction.belongsTo(models.TypeUser, { foreignKey: 'idTypeUser' })
+        TypeUserAction.belongsTo(models.Action, { foreignKey: 'idAction' })
     }
 }
 
@@ -28,6 +28,8 @@ TypeUserAction.init(
         paranoid: true,
         sequelize,
         modelName: 'TypeUserAction',
+        tableName: 'type_user_actions',
+        underscored: true,
     },
 )
 

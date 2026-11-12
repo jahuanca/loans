@@ -49,7 +49,7 @@ const getQuotasByDateRepository = ({
                 Sequelize.fn('CONCAT',
                     Sequelize.col('Loan.Customer.name'),
                     ' ',
-                    Sequelize.col('Loan.Customer.lastName')
+                    Sequelize.col('Loan.Customer.last_name')
                 ),
                 'customer_name'
             ],

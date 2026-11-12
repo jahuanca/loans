@@ -19,6 +19,8 @@ PaymentMethod.init(
         paranoid: true,
         sequelize,
         modelName: 'Payment_Method',
+        tableName: 'payment_methods',
+        underscored: true,
     },
 );
 

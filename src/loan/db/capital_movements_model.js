@@ -59,7 +59,8 @@ CapitalMovements.init({
     paranoid: true,
     sequelize,
     modelName: 'CapitalMovements',
-    tableName: 'Capital_Movements',
+        tableName: 'capital_movements',
+        underscored: true,
 })
 
 module.exports = CapitalMovements

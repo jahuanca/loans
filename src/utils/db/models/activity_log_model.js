@@ -37,7 +37,8 @@ ActivityLog.init(
         paranoid: true,
         sequelize,
         modelName: 'ActivityLog',
-        tableName: 'Activity_Logs'
+        tableName: 'activity_logs',
+        underscored: true,
     }
 )
 

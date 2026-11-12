@@ -23,6 +23,8 @@ TypeUser.init(
         paranoid: true,
         sequelize,
         modelName: 'TypeUser',
+        tableName: 'type_users',
+        underscored: true,
     },
 )
 

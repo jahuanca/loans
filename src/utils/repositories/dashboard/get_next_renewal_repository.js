@@ -25,7 +25,7 @@ const getNextRenewalRepository = async () => {
                 Sequelize.fn('CONCAT',
                     Sequelize.col('Loan.Customer.name'),
                     ' ',
-                    Sequelize.col('Loan.Customer.lastName')
+                    Sequelize.col('Loan.Customer.last_name')
                 ),
                 'customer_name'
             ],
@@ -91,7 +91,7 @@ const getIds = async () => {
                     [
                         Sequelize.literal(`(
           SELECT COUNT(*)
-          FROM "Quota" AS q
+          FROM "quotas" AS q
           WHERE q."id_loan" = "Loan"."id" AND q."id_state_quota" = ${idQuotaStates.PENDING}
         )`),
                         'quotaCount'

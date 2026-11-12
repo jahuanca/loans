@@ -2,10 +2,9 @@
 
 /** Migración generada a partir de payment_method_model.js */
 /** @type {import('sequelize-cli').Migration} */
-
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Payment_Methods', {
+    await queryInterface.createTable('payment_methods', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -20,15 +19,15 @@ module.exports = {
         type: Sequelize.STRING(200),
         allowNull: true,
       },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE,
         allowNull: true,
       },
@@ -36,6 +35,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('Payment_Methods');
+    await queryInterface.dropTable('payment_methods');
   },
 };

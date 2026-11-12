@@ -70,6 +70,8 @@ Quota.init(
         paranoid: true,
         sequelize,
         modelName: 'Quota',
+        tableName: 'quotas',
+        underscored: true,
     },
 );
 

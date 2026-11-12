@@ -45,6 +45,8 @@ Renewal.init({
     paranoid: true,
     sequelize,
     modelName: 'Renewal',
+        tableName: 'renewals',
+        underscored: true,
 })
 
 Renewal.belongsTo(Customer, {

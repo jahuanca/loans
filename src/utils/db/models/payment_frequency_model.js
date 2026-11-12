@@ -48,6 +48,8 @@ PaymentFrequency.init(
         paranoid: true,
         sequelize,
         modelName: 'Payment_Frequency',
+        tableName: 'payment_frequencies',
+        underscored: true,
     },
 )
 

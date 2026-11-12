@@ -103,6 +103,8 @@ Loan.init(
         paranoid: true,
         sequelize,
         modelName: 'Loan',
+        tableName: 'loans',
+        underscored: true,
     },
 )
 

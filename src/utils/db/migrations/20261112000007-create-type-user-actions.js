@@ -4,24 +4,24 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('TypeUserActions', {
+    await queryInterface.createTable('type_user_actions', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      idTypeUser: {
+      id_type_user: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'TypeUsers', key: 'id' },
+        references: { model: 'type_users', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT',
       },
-      idAction: {
+      id_action: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'Actions', key: 'id' },
+        references: { model: 'actions', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT',
       },
@@ -29,15 +29,15 @@ module.exports = {
         type: Sequelize.STRING(200),
         allowNull: true,
       },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE,
         allowNull: true,
       },
@@ -45,6 +45,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('TypeUserActions');
+    await queryInterface.dropTable('type_user_actions');
   },
 };

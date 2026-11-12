@@ -23,6 +23,8 @@ Action.init(
         paranoid: true,
         sequelize,
         modelName: 'Action',
+        tableName: 'actions',
+        underscored: true,
     },
 )
 

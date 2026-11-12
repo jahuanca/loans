@@ -4,7 +4,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Renewals', {
+    await queryInterface.createTable('renewals', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -14,28 +14,28 @@ module.exports = {
       id_customer: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'Customers', key: 'id' },
+        references: { model: 'customers', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT',
       },
       id_user: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'Users', key: 'id' },
+        references: { model: 'users', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT',
       },
       id_previous_loan: {
         type: Sequelize.INTEGER,
         allowNull: true,
-        references: { model: 'Loans', key: 'id' },
+        references: { model: 'loans', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       },
       id_new_loan: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'Loans', key: 'id' },
+        references: { model: 'loans', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT',
       },
@@ -56,15 +56,15 @@ module.exports = {
         type: Sequelize.STRING(200),
         allowNull: true,
       },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE,
         allowNull: true,
       },
@@ -72,6 +72,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('Renewals');
+    await queryInterface.dropTable('renewals');
   },
 };

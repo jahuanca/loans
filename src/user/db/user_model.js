@@ -6,7 +6,7 @@ const TypeUser = require('./type_user_model');
 
 class User extends Model {
     static associate() {
-        User.belongsTo(TypeUser, {foreignKey: 'id'})
+        User.belongsTo(TypeUser, { foreignKey: 'idTypeUser' })
     }
 }
 
@@ -60,6 +60,8 @@ User.init(
         paranoid: true,
         sequelize,
         modelName: 'User',
+        tableName: 'users',
+        underscored: true,
         defaultScope: {
             attributes: {
                 exclude: ['password', 'validationCode']

@@ -4,7 +4,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Quota', {
+    await queryInterface.createTable('quotas', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -22,7 +22,7 @@ module.exports = {
       id_loan: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'Loans', key: 'id' },
+        references: { model: 'loans', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT',
       },
@@ -55,15 +55,15 @@ module.exports = {
         allowNull: false,
         defaultValue: false,
       },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE,
         allowNull: true,
       },
@@ -71,6 +71,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('Quota');
+    await queryInterface.dropTable('quotas');
   },
 };

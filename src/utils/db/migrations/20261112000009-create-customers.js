@@ -4,7 +4,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Customers', {
+    await queryInterface.createTable('customers', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 1,
-        references: { model: 'Type_Customers', key: 'id' },
+        references: { model: 'type_customers', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT',
       },
@@ -27,7 +27,7 @@ module.exports = {
         type: Sequelize.STRING(100),
         allowNull: false,
       },
-      lastName: {
+      last_name: {
         type: Sequelize.STRING(100),
         allowNull: false,
       },
@@ -50,7 +50,7 @@ module.exports = {
       id_type_document: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'Type_Documents', key: 'id' },
+        references: { model: 'type_documents', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT',
       },
@@ -58,15 +58,15 @@ module.exports = {
         type: Sequelize.STRING(200),
         allowNull: false,
       },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE,
         allowNull: true,
       },
@@ -74,6 +74,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('Customers');
+    await queryInterface.dropTable('customers');
   },
 };

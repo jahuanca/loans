@@ -42,7 +42,7 @@ const getRenovar = async () => {
                     [
                         Sequelize.literal(`(
           SELECT COUNT(*)
-          FROM "Quota" AS q
+          FROM "quotas" AS q
           WHERE q."id_loan" = "Loan"."id" AND q."id_state_quota" = ${idQuotaStates.PENDING}
         )`),
                         'quotaCount'

@@ -4,7 +4,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Capital_Movements', {
+    await queryInterface.createTable('capital_movements', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -14,14 +14,14 @@ module.exports = {
       id_user: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'Users', key: 'id' },
+        references: { model: 'users', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT',
       },
       id_loan: {
         type: Sequelize.INTEGER,
         allowNull: true,
-        references: { model: 'Loans', key: 'id' },
+        references: { model: 'loans', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       },
@@ -46,15 +46,15 @@ module.exports = {
         allowNull: false,
         defaultValue: Sequelize.fn('NOW'),
       },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE,
         allowNull: true,
       },
@@ -62,6 +62,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('Capital_Movements');
+    await queryInterface.dropTable('capital_movements');
   },
 };

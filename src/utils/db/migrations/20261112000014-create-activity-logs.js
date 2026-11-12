@@ -4,7 +4,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Activity_Logs', {
+    await queryInterface.createTable('activity_logs', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -14,7 +14,7 @@ module.exports = {
       id_user: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'Users', key: 'id' },
+        references: { model: 'users', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT',
       },
@@ -38,15 +38,15 @@ module.exports = {
         type: Sequelize.JSON,
         allowNull: true,
       },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE,
         allowNull: true,
       },
@@ -54,6 +54,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('Activity_Logs');
+    await queryInterface.dropTable('activity_logs');
   },
 };
