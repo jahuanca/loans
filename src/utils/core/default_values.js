@@ -132,6 +132,11 @@ const keysCache = Object.freeze({
     LOANS_KEY: 'loans_key',
 })
 
+const typeMovements = Object.freeze({
+    INCOME: 'I',
+    OUT: 'O',
+})
+
 const defaultActions = Object.freeze({
     CUSTOMER_GET_ALL: 'CUSTOMER.get',
     CUSTOMER_CREATE: 'CUSTOMER.create',
@@ -142,6 +147,10 @@ const defaultActions = Object.freeze({
     LOAN_CREATE: 'LOAN.create',
     LOAN_UPDATE: 'LOAN.update',
     LOAN_DELETE: 'LOAN.delete',
+})
+
+const nameOfModelsAI = Object.freeze({
+    GEMINI: 'google:gemini-3.5-flash-lite',
 })
 
 module.exports = {
@@ -158,4 +167,6 @@ module.exports = {
     idLoanStates,
     idQuotaStates,
     keysCache,
+    nameOfModelsAI,
+    typeMovements,
 }

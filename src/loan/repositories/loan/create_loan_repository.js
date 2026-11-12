@@ -1,4 +1,6 @@
-const { typeRenewal } = require("../../../utils/core/default_values");
+const { typeRenewal, typeMovements } = require("../../../utils/core/default_values");
+const { models } = require("../../../utils/db");
+const { CapitalMovements } = models
 const Loan = require("../../db/loan_model");
 const Renewal = require("../../db/renewal_model");
 const { createLoan, createRenewal } = require("../utils");
@@ -33,6 +35,20 @@ const createLoanRepository = async ({
                 id_state_loan,
                 evidence,
                 t,
+            })
+
+            const { dataValues } = loan
+            const { id_loan } = dataValues
+
+            await CapitalMovements.create({
+                type: typeMovements.OUT,
+                description: `SALIDA de capital ${amount}, para préstamo P#${id_loan}.`,
+                amount: -amount,
+                ganancy: 0,
+                id_loan: id_loan,
+                id_user: id_user,
+            }, {
+                transaction: t,
             })
 
 

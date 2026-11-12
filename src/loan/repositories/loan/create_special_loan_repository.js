@@ -51,8 +51,24 @@ const createSpecialLoanRepository = async ({
                 amount,
                 t,
             })
+
+            const { dataValues } = loan
+            const { id_loan } = dataValues
+
+            await CapitalMovements.create({
+                type: typeMovements.OUT,
+                description: `SALIDA de capital ${amount}, para préstamo P#${id_loan}.`,
+                amount: -amount,
+                ganancy: 0,
+                id_loan: id_loan,
+                id_user: id_user,
+            }, {
+                transaction: t,
+            })
+
             return loan
         });
+        
         return result
     } catch (error) {
         console.log(error)

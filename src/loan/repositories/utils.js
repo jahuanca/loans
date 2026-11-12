@@ -1,10 +1,12 @@
 const { Op } = require("sequelize")
 const Quota = require("../../quota/db/quota_model")
-const { operationsOfLog, idQuotaStates, idLoanStates, typeRenewal } = require("../../utils/core/default_values")
+const { operationsOfLog, idQuotaStates, idLoanStates, typeRenewal, typeMovements } = require("../../utils/core/default_values")
 const { addDays } = require("../../utils/core/helpers")
 const PaymentFrequency = require("../../utils/db/models/payment_frequency_model")
 const Loan = require("../db/loan_model")
 const Renewal = require("../db/renewal_model")
+const { models } = require("../../utils/db")
+const { CapitalMovements } = models
 
 const payQuota = async ({
     id_of_quota,
@@ -13,13 +15,23 @@ const payQuota = async ({
     t,
 }) => {
     const quota = await Quota.findByPk(id_of_quota, { transaction: t })
-    const { id_loan, date_to_pay } = quota
-    await _validatePendings({ id_loan, date_to_pay, t })
+    const { id_loan, date_to_pay, amount, ganancy } = quota
+    const countOfpendingQuotas = await _validatePendings({ id_loan, date_to_pay, t })
+    if (countOfpendingQuotas > 0) {
+        throw Error('Existen cuotas pendientes que debe pagar antes que esta cuota.')
+    }
     quota.id_state_quota = idQuotaStates.COMPLETE
     quota.paid_date = paid_date
     quota.description_operation = operationsOfLog.PAY_QUOTA
     quota.idUser = idUser
+    
     await quota.save({ transaction: t })
+    await createIncome({
+        id_loan: id_loan,
+        amount: amount,
+        ganancy: ganancy,
+        transaction: t,
+    })
     await _setLoanComplete({ id_loan, idUser, t })
     return quota
 }
@@ -57,9 +69,26 @@ const _validatePendings = async ({
         },
         transaction: t,
     })
-    if (countOfpendingQuotas > 0) {
-        throw Error('Existen cuotas pendientes que debe pagar antes que esta cuota.')
-    }
+    return countOfpendingQuotas
+}
+
+const createIncome = async ({
+    id_loan,
+    amount,
+    ganancy,
+    transaction,
+}) => {
+    const total = amount + ganancy
+    await CapitalMovements.create({
+        type: typeMovements.INCOME,
+        description: `INGRESO de capital ${amount} y ganancia ${ganancy}. TOTAL = ${total}, por préstamo P#${id_loan}.`,
+        amount: amount,
+        ganancy: ganancy,
+        id_loan: id_loan,
+        id_user: 1,
+    }, {
+        transaction: transaction,
+    })
 }
 
 const createLoan = async ({

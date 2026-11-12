@@ -1,6 +1,5 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('./../connection');
-const User = require('../../../user/db/user_model');
 
 class ActivityLog extends Model {
     static associate(models) {
@@ -37,7 +36,8 @@ ActivityLog.init(
     {
         paranoid: true,
         sequelize,
-        modelName: 'Activity_Log',
+        modelName: 'ActivityLog',
+        tableName: 'Activity_Logs'
     }
 )
 

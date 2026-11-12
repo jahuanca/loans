@@ -14,6 +14,7 @@ const Action = require('../../user/db/action_model');
 const TypeUserAction = require('../../user/db/type_user_action_model');
 
 const { Model } = require('sequelize');
+const CapitalMovements = require('../../loan/db/capital_movements_model');
 
 /**
  * @type {Object.<string, typeof Model>}
@@ -23,6 +24,7 @@ const db = {};
 [
   Loan,
   Action,
+  CapitalMovements, 
   TypeUser,
   User,
   TypeUserAction,
@@ -34,7 +36,7 @@ const db = {};
   Quota,
   Customer,
 ].forEach(model => {
-    db[model.name] = model;
+    db[model.options.modelName ?? model.name] = model;
   });
 
 Object.keys(db).forEach(modelName => {
@@ -42,6 +44,7 @@ Object.keys(db).forEach(modelName => {
     db[modelName].associate(db);
   }
 })
+
 
 module.exports = {
   models: db,

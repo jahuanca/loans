@@ -2,3 +2,8 @@
 .env
 /logs
 package-lock.json
+# Claude - configuración personal
+CLAUDE.local.md
+
+# Archivos locales de Claude
+.claude/settings.local.json
