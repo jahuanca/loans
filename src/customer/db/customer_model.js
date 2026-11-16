@@ -1,6 +1,7 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../../utils/db/connection');
 const { typeOperationLog } = require('../../utils/core/default_values');
+const { INSERT, UPDATE, } = typeOperationLog
 const { setLog } = require('../../utils/db/utils');
 
 class Customer extends Model {
@@ -8,6 +9,13 @@ class Customer extends Model {
         Customer.belongsTo(models.Type_Customer, {
             foreignKey: {
                 name: 'id_type_customer',
+                allowNull: false,
+            }
+        })
+
+        Customer.belongsTo(models.User, {
+            foreignKey: {
+                name: 'idAssignedUser',
                 allowNull: false,
             }
         })
@@ -64,6 +72,10 @@ Customer.init(
             type: DataTypes.STRING(200),
             allowNull: false,
         },
+        idAssignedUser: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
         descriptionOperation: {
             type: DataTypes.VIRTUAL,
         },
@@ -87,7 +99,7 @@ Customer.afterCreate(async (record, options) => {
         tableName: Customer.tableName,
         newValues: dataValues,
         oldValues: null,
-        typeOperation: typeOperationLog.INSERT,
+        typeOperation: INSERT,
         descriptionOperation: descriptionOperation,
         idUser: idUser,
     })
@@ -101,7 +113,7 @@ Customer.afterUpdate(async (record, options) => {
         tableName: Customer.tableName,
         newValues: dataValues,
         oldValues: _previousDataValues,
-        typeOperation: typeOperationLog.UPDATE,
+        typeOperation: UPDATE,
         descriptionOperation: descriptionOperation,
         idUser: idUser,
     }) 

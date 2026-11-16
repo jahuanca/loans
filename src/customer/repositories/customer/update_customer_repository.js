@@ -16,6 +16,7 @@ const updateCustomerRepository = async ({
     document,
     phone,
     idUser,
+    idAssignedUser,
 }) => {
     const customerToUpdate = await Customer.findByPk(id)
     if (customerToUpdate == null) {
