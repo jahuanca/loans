@@ -1,32 +1,32 @@
 const Renewal = require("../../db/renewal_model")
 
 const createRenewalRepository = async ({
-    id_user,
-    id_customer,
-    id_new_loan,
-    id_previous_loan,
+    idUser,
+    idCustomer,
+    idNewLoan,
+    idPreviousLoan,
     date,
-    variation_in_amount,
-    id_type_renewal,
+    variationInAmount,
+    idTypeRenewal,
     observation,
 }) => {
 
     const loan = await Renewal.findOne({
         where: {
-            id_previous_loan, id_new_loan,
+            idPreviousLoan, idNewLoan,
         }
     })
 
     if (loan != null) throw Error('Esta relación ya ha sido creada.')
 
     const renewal = await Renewal.create({
-        id_user,
-        id_customer,
-        id_new_loan,
-        id_previous_loan,
+        idUser,
+        idCustomer,
+        idNewLoan,
+        idPreviousLoan,
         date,
-        variation_in_amount,
-        id_type_renewal,
+        variationInAmount,
+        idTypeRenewal,
         observation,
     })
     return renewal

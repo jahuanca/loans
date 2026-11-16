@@ -3,15 +3,15 @@ const { createPaymentFrequencyRepository } = require("../../repositories/payment
 const createPaymentFrequencyUseCaseExecute = ({
     name,
     description,
-    recommended_percentage,
-    monthly_installments,
-    days_installment,
+    recommendedPercentage,
+    monthlyInstallments,
+    daysInstallment,
 })=> createPaymentFrequencyRepository({
     name,
     description,
-    recommended_percentage,
-    monthly_installments,
-    days_installment,
+    recommendedPercentage,
+    monthlyInstallments,
+    daysInstallment,
 })
 
 module.exports = createPaymentFrequencyUseCaseExecute

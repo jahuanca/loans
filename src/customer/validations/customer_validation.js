@@ -3,9 +3,9 @@ const { joiString, joiId, joiPhone, joiLatLong } = require("../../utils/validati
 const validateSquema = require("../../utils/validations/validation")
 
 const _squemaCustomer = {
-    id_type_customer: joiId.required(),
+    idTypeCustomer: joiId.required(),
     idAssignedUser: joiId.required(),
-    id_type_document: joiId.required(),
+    idTypeDocument: joiId.required(),
     alias: joiString(50).allow(null),
     name: joiString(100).required(),
     lastName: joiString(100).required(),

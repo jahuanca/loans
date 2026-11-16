@@ -3,10 +3,10 @@ const getQuotasUseCaseExecute = require("../use_cases/get_quotas_use_case")
 
 const getQuotasController = async (req, res, next) => {
     const {
-        id_loan,
+        idLoan,
     } = req.query
     const [err, quotas] = await getPromise(getQuotasUseCaseExecute({
-        id_loan,
+        idLoan,
     }))
     if (err) {
         return next(err)

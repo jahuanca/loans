@@ -1,9 +1,9 @@
 const { getQuotasRepository } = require("../repositories");
 
 const getQuotasUseCaseExecute = ({
-    id_loan,
+    idLoan,
 }) => getQuotasRepository({
-    id_loan,
+    idLoan,
 })
 
 module.exports = getQuotasUseCaseExecute

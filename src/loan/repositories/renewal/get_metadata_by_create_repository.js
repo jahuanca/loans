@@ -3,24 +3,24 @@ const Loan = require("../../db/loan_model")
 const Renewal = require("../../db/renewal_model")
 
 const getMetadataByCreateRepository = async ({
-    id_customer,
+    idCustomer,
 }) => {
     const loansByCustomer = await Loan.findAll({
         where: {
-            id_customer: id_customer
+            idCustomer: idCustomer
         },
         include: [{ all: true }],
-        order: [['start_date', 'DESC']],
+        order: [['startDate', 'DESC']],
     })
 
     const loansNews = [...loansByCustomer]
     const loansPrevious = [...loansByCustomer.filter((e) => {
-        const { id_state_loan } = e.dataValues
-        return id_state_loan == idLoanStates.COMPLETE
+        const { idStateLoan } = e.dataValues
+        return idStateLoan == idLoanStates.COMPLETE
     })];
 
     const renews = await Renewal.findAll({
-        where: { id_customer: id_customer }
+        where: { idCustomer: idCustomer }
     })
 
     const previous = _getPrevious({
@@ -34,8 +34,8 @@ const getMetadataByCreateRepository = async ({
     })
 
     return {
-        previous_loans: previous,
-        new_loans: news,
+        previousLoans: previous,
+        newLoans: news,
     }
 }
 
@@ -45,11 +45,11 @@ const _getPrevious = ({
 }) => {
     const previous = [...allLoans]
     for (let i = 0; i < renews.length; i++) {
-        const { id_previous_loan } = renews[i].dataValues
+        const { idPreviousLoan } = renews[i].dataValues
         for (let j = 0; j < previous.length; j++) {
             const { id } = previous[j].dataValues;
 
-            if (id_previous_loan == id) {
+            if (idPreviousLoan == id) {
                 previous.splice(j, 1)
                 break;
             }
@@ -64,10 +64,10 @@ const _getNews = ({
 }) => {
     const news = [...allLoans]
     for (let i = 0; i < renews.length; i++) {
-        const { id_new_loan } = renews[i].dataValues
+        const { idNewLoan } = renews[i].dataValues
         for (let j = 0; j < news.length; j++) {
             const { id } = news[j].dataValues;
-            if (id_new_loan == id) {
+            if (idNewLoan == id) {
                 news.splice(j, 1)
                 break;
             }

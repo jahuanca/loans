@@ -28,7 +28,7 @@ const getSummaryOfDashboardRepository = async () => {
 }
 
 const getLoansInfo = async () => {
-    const pendings = await Loan.count({ where: { id_state_loan: idLoanStates.PENDING } })
+    const pendings = await Loan.count({ where: { idStateLoan: idLoanStates.PENDING } })
 
     return (pendings).toString()
 }
@@ -49,7 +49,7 @@ const getRenovar = async () => {
                     ]
                 ]
             },
-            where: { id_state_loan: idLoanStates.PENDING }
+            where: { idStateLoan: idLoanStates.PENDING }
         }
     )
 
@@ -68,7 +68,7 @@ const getAmountsInfo = async () => {
         attributes: [
             [fn('SUM', sequelize.literal('COALESCE(amount, 0) - COALESCE(ganancy, 0)')), 'amountPending'],
         ],
-        where: { id_state_quota: 1 },
+        where: { idStateQuota: 1 },
         raw: true,
     }))[0]
 
@@ -81,7 +81,7 @@ const getGanancyInfo = async () => {
         attributes: [
             [fn('SUM', col('ganancy')), 'ganacyPending'],
         ],
-        where: { id_state_quota: 1 },
+        where: { idStateQuota: 1 },
         raw: true,
     }))[0]
 
@@ -121,7 +121,7 @@ const countCesaron = async () => {
                 model: Loan,
                 attributes: [],
                 where: {
-                    id_state_loan: 1
+                    idStateLoan: 1
                 },
                 required: false
             }

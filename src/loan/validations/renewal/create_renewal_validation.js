@@ -3,12 +3,12 @@ const Joi = require('joi')
 const joiId = Joi.number().integer()
 
 const squema = Joi.object({
-    id_customer: joiId.required(),
-    id_new_loan: joiId.required(),
+    idCustomer: joiId.required(),
+    idNewLoan: joiId.required(),
     date: Joi.date().required(),
-    id_previous_loan: joiId.allow(null),
-    id_type_renewal: Joi.string().required(),
-    variation_in_amount: Joi.number().required(),    
+    idPreviousLoan: joiId.allow(null),
+    idTypeRenewal: Joi.string().required(),
+    variationInAmount: Joi.number().required(),    
     observation: Joi.string().allow(null),
 })
 

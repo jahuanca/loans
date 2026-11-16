@@ -2,14 +2,14 @@ const { sequelize } = require("../../utils/db/connection")
 const { payQuota } = require("../../loan/repositories/utils")
 
 const payQuotaRepository = async ({
-    id_of_quota,
-    paid_date,
+    idOfQuota,
+    paidDate,
     idUser,
 }) => {
     const valueToReturn = await sequelize.transaction(async t => {
         return await payQuota({
-            id_of_quota,
-            paid_date,
+            idOfQuota,
+            paidDate,
             idUser,
             t,
         })

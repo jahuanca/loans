@@ -16,7 +16,7 @@ TypeCustomer.init({
 }, {
     paranoid: true,
     sequelize,
-    modelName: 'Type_Customer',
+    modelName: 'TypeCustomer',
     tableName: 'type_customers',
     underscored: true,
 })

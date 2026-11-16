@@ -13,13 +13,13 @@ const getNextRenewalRepository = async () => {
         attributes: [
             'id',
             'name',
-            'is_last',
-            'Loan.id_payment_frequency',
+            'isLast',
+            [Sequelize.col('Loan.id_payment_frequency'), 'idPaymentFrequency'],
             [
                 Sequelize.literal(
                     'CASE WHEN id_payment_frequency = 5 THEN true ELSE false END'
                 ),
-                'is_special'
+                'isSpecial'
             ],
             [
                 Sequelize.fn('CONCAT',
@@ -27,22 +27,22 @@ const getNextRenewalRepository = async () => {
                     ' ',
                     Sequelize.col('Loan.Customer.last_name')
                 ),
-                'customer_name'
+                'customerName'
             ],
             'Loan.Customer.alias',
-            [Sequelize.col('Loan.Customer.id'), 'id_customer'],
-            [Sequelize.col('Loan.amount'), 'amount_of_loan'],
-            'id_loan',
+            [Sequelize.col('Loan.Customer.id'), 'idCustomer'],
+            [Sequelize.col('Loan.amount'), 'amountOfLoan'],
+            'idLoan',
             'amount',
             'ganancy',
-            'id_state_quota',
-            'date_to_pay',
-            'paid_date',
+            'idStateQuota',
+            'dateToPay',
+            'paidDate',
         ],
         where: {
-            is_last: true,
-            id_state_quota: idQuotaStates.PENDING,
-            id_loan: {
+            isLast: true,
+            idStateQuota: idQuotaStates.PENDING,
+            idLoan: {
                 [Op.in]: ids
             }
         },
@@ -52,13 +52,13 @@ const getNextRenewalRepository = async () => {
                 include: [{ model: Customer, attributes: [] }],
                 attributes: [],
                 where: {
-                    id_payment_frequency: {
+                    idPaymentFrequency: {
                         [Op.not]: 5,
                     }
                 }
             }
         ],
-        order: [['date_to_pay', 'ASC']],
+        order: [['dateToPay', 'ASC']],
     })
 
     return _addLastLoan(quotas)
@@ -67,16 +67,16 @@ const getNextRenewalRepository = async () => {
 const _addLastLoan = async (quotas = []) => {
     for (let i = 0; i < quotas.length; i++) {
         const e = quotas[i];
-        const { id_customer } = e
+        const { idCustomer } = e
 
         const loan = await Loan.findOne({
             where: {
-                id_customer: id_customer,
-                id_state_loan: idLoanStates.COMPLETE,
+                idCustomer: idCustomer,
+                idStateLoan: idLoanStates.COMPLETE,
             },
-            order: [['start_date', 'DESC']]
+            order: [['startDate', 'DESC']]
         })
-        quotas[i].amount_of_last_loan = (loan?.amount ?? 0)
+        quotas[i].amountOfLastLoan = (loan?.amount ?? 0)
     }
     return quotas
 }
@@ -99,8 +99,8 @@ const getIds = async () => {
                 ]
             },
             include: [{ all: true }],
-            order: [['start_date', 'DESC']],
-            where: { id_state_loan: idLoanStates.PENDING }
+            order: [['startDate', 'DESC']],
+            where: { idStateLoan: idLoanStates.PENDING }
         }
     )
 

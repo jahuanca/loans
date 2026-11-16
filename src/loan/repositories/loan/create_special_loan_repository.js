@@ -5,63 +5,63 @@ const { sequelize } = require("./../../../utils/db/connection");
 const Loan = require("./../../db/loan_model");
 
 const createSpecialLoanRepository = async ({
-    id_customer,
-    id_user,
-    id_payment_frequency,
-    id_payment_method,
+    idCustomer,
+    idUser,
+    idPaymentFrequency,
+    idPaymentMethod,
     amount,
     percentage,
-    start_date,
+    startDate,
     ganancy,
     observation,
-    id_state_loan,
+    idStateLoan,
     evidence,
-    number_of_installments,
-    days_between_installments,
+    numberOfInstallments,
+    daysBetweenInstallments,
 }) => {
     try {
         const result = await sequelize.transaction(async t => {
             const loan = await Loan.create({
-                id_customer,
-                id_user,
-                id_payment_frequency,
-                id_payment_method,
+                idCustomer,
+                idUser,
+                idPaymentFrequency,
+                idPaymentMethod,
                 percentage,
                 amount,
-                start_date,
+                startDate,
                 ganancy,
                 observation,
-                id_state_loan: 1,
+                idStateLoan: 1,
                 evidence: 'ruta desconocida',
                 descriptionOperation: operationsOfLog.CREATE_SPECIAL_LOAN,
-                idUser: id_user,
+                idUser: idUser,
 
-                number_of_installments: number_of_installments,
-                days_between_installments: days_between_installments,
+                numberOfInstallments: numberOfInstallments,
+                daysBetweenInstallments: daysBetweenInstallments,
             }, { transaction: t })
 
             const allAmount = amount * (percentage / 100 + 1)
 
             await createQuotas({
-                number_of_installments,
-                days_between_installments,
-                id_loan: loan.id,
-                start_date,
+                numberOfInstallments,
+                daysBetweenInstallments,
+                idLoan: loan.id,
+                startDate,
                 allAmount,
                 amount,
                 t,
             })
 
             const { dataValues } = loan
-            const { id_loan } = dataValues
+            const { idLoan } = dataValues
 
             await CapitalMovements.create({
                 type: typeMovements.OUT,
-                description: `SALIDA de capital ${amount}, para préstamo P#${id_loan}.`,
+                description: `SALIDA de capital ${amount}, para préstamo P#${idLoan}.`,
                 amount: -amount,
                 ganancy: 0,
-                id_loan: id_loan,
-                id_user: id_user,
+                idLoan: idLoan,
+                idUser: idUser,
             }, {
                 transaction: t,
             })
@@ -76,25 +76,25 @@ const createSpecialLoanRepository = async ({
 }
 
 const createQuotas = async ({
-    number_of_installments,
-    days_between_installments,
-    id_loan,
-    start_date,
+    numberOfInstallments,
+    daysBetweenInstallments,
+    idLoan,
+    startDate,
     allAmount,
     amount,
     t,
 }) => {
-    for (let i = 0; i < number_of_installments; i++) {
-        const isLast = i == (number_of_installments - 1)
+    for (let i = 0; i < numberOfInstallments; i++) {
+        const isLast = i == (numberOfInstallments - 1)
         await Quota.create({
-            name: `${(i + 1)}/${number_of_installments}`,
+            name: `${(i + 1)}/${numberOfInstallments}`,
             description: '',
-            id_loan,
-            ganancy: (allAmount - amount) / number_of_installments,
-            amount: allAmount / number_of_installments,
-            date_to_pay: addDays(start_date, days_between_installments * (i + 1)),
-            id_state_quota: 1,
-            is_last: isLast,
+            idLoan,
+            ganancy: (allAmount - amount) / numberOfInstallments,
+            amount: allAmount / numberOfInstallments,
+            dateToPay: addDays(startDate, daysBetweenInstallments * (i + 1)),
+            idStateQuota: 1,
+            isLast: isLast,
         }, { transaction: t })
     }
 }

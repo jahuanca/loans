@@ -1,11 +1,11 @@
 const { getLoansRepository } = require("./../../repositories");
 
 const getLoansUseCaseExecute = ({
-        id_customer,
-        id_state_loan,
+        idCustomer,
+        idStateLoan,
     })=> getLoansRepository({
-        id_customer,
-        id_state_loan,
+        idCustomer,
+        idStateLoan,
     })
 
 module.exports = getLoansUseCaseExecute

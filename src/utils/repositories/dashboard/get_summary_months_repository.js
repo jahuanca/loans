@@ -23,7 +23,7 @@ const getSummaryMonthsRepository = async () => {
         attributes: [
             [fn('SUM', col('Quota.ganancy')), 'ganancy'],
             [fn('SUM', col('Quota.amount')), 'amount'],
-            'id_state_quota',
+            'idStateQuota',
             [fn('EXTRACT', literal('MONTH FROM COALESCE(paid_date, date_to_pay)')), 'month'],
             [fn('EXTRACT', literal('YEAR FROM COALESCE(paid_date, date_to_pay)')), 'year'],
         ],

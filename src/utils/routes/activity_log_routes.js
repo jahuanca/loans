@@ -15,15 +15,15 @@ activityLogRoutes.get('/run', async (req, res, next) => {
 
     for (let i = 0; i < logs.length; i++) {
         const e = logs[i];
-        const { new_registry } = e
-        const { id } = new_registry
+        const { newRegistry } = e
+        const { id } = newRegistry
 
         const loan = await Loan.findByPk(id)
         if (loan == null) continue;
         const { dataValues } = loan
         
         await e.update({
-            new_registry: dataValues
+            newRegistry: dataValues
         })
         await e.save()
     }

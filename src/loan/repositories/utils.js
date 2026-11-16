@@ -9,45 +9,45 @@ const { models } = require("../../utils/db")
 const { CapitalMovements } = models
 
 const payQuota = async ({
-    id_of_quota,
-    paid_date,
+    idOfQuota,
+    paidDate,
     idUser,
     t,
 }) => {
-    const quota = await Quota.findByPk(id_of_quota, { transaction: t })
-    const { id_loan, date_to_pay, amount, ganancy } = quota
-    const countOfpendingQuotas = await _validatePendings({ id_loan, date_to_pay, t })
+    const quota = await Quota.findByPk(idOfQuota, { transaction: t })
+    const { idLoan, dateToPay, amount, ganancy } = quota
+    const countOfpendingQuotas = await _validatePendings({ idLoan, dateToPay, t })
     if (countOfpendingQuotas > 0) {
         throw Error('Existen cuotas pendientes que debe pagar antes que esta cuota.')
     }
-    quota.id_state_quota = idQuotaStates.COMPLETE
-    quota.paid_date = paid_date
+    quota.idStateQuota = idQuotaStates.COMPLETE
+    quota.paidDate = paidDate
     quota.descriptionOperation = operationsOfLog.PAY_QUOTA
     quota.idUser = idUser
     
     await quota.save({ transaction: t })
     await createIncome({
-        id_loan: id_loan,
+        idLoan: idLoan,
         amount: amount,
         ganancy: ganancy,
         transaction: t,
     })
-    await _setLoanComplete({ id_loan, idUser, t })
+    await _setLoanComplete({ idLoan, idUser, t })
     return quota
 }
 
 const _setLoanComplete = async ({
-    id_loan,
+    idLoan,
     idUser,
     t,
 }) => {
     const count = await Quota.count({
-        where: { id_loan: id_loan, id_state_quota: 1 },
+        where: { idLoan: idLoan, idStateQuota: 1 },
         transaction: t,
     })
     if (count == 0) {
-        const loan = await Loan.findByPk(id_loan, { transaction: t })
-        loan.id_state_loan = idLoanStates.COMPLETE
+        const loan = await Loan.findByPk(idLoan, { transaction: t })
+        loan.idStateLoan = idLoanStates.COMPLETE
         loan.descriptionOperation = operationsOfLog.COMPLETE_LOAN
         loan.idUser = idUser
         await loan.save({ transaction: t })
@@ -55,16 +55,16 @@ const _setLoanComplete = async ({
 }
 
 const _validatePendings = async ({
-    id_loan,
-    date_to_pay,
+    idLoan,
+    dateToPay,
     t
 }) => {
     const countOfpendingQuotas = await Quota.count({
         where: {
-            id_loan: id_loan,
-            id_state_quota: 1,
-            date_to_pay: {
-                [Op.lt]: date_to_pay,
+            idLoan: idLoan,
+            idStateQuota: 1,
+            dateToPay: {
+                [Op.lt]: dateToPay,
             }
         },
         transaction: t,
@@ -73,7 +73,7 @@ const _validatePendings = async ({
 }
 
 const createIncome = async ({
-    id_loan,
+    idLoan,
     amount,
     ganancy,
     transaction,
@@ -81,62 +81,62 @@ const createIncome = async ({
     const total = amount + ganancy
     await CapitalMovements.create({
         type: typeMovements.INCOME,
-        description: `INGRESO de capital ${amount} y ganancia ${ganancy}. TOTAL = ${total}, por préstamo P#${id_loan}.`,
+        description: `INGRESO de capital ${amount} y ganancia ${ganancy}. TOTAL = ${total}, por préstamo P#${idLoan}.`,
         amount: amount,
         ganancy: ganancy,
-        id_loan: id_loan,
-        id_user: 1,
+        idLoan: idLoan,
+        idUser: 1,
     }, {
         transaction: transaction,
     })
 }
 
 const createLoan = async ({
-    id_customer,
-    id_user,
-    id_payment_frequency,
-    id_payment_method,
+    idCustomer,
+    idUser,
+    idPaymentFrequency,
+    idPaymentMethod,
     amount,
     percentage,
-    start_date,
+    startDate,
     ganancy,
     observation,
-    id_state_loan,
+    idStateLoan,
     evidence,
     t,
 }) => {
 
-    const frequency = await PaymentFrequency.findByPk(id_payment_frequency)
+    const frequency = await PaymentFrequency.findByPk(idPaymentFrequency)
     const {
-        monthly_installments,
-        days_installment,
+        monthlyInstallments,
+        daysInstallment,
     } = frequency
 
     const loan = await Loan.create({
-        id_customer,
-        id_user,
-        id_payment_frequency,
-        id_payment_method,
+        idCustomer,
+        idUser,
+        idPaymentFrequency,
+        idPaymentMethod,
         percentage,
         amount,
-        start_date,
+        startDate,
         ganancy,
         observation,
-        id_state_loan: 1,
+        idStateLoan: 1,
         evidence: 'ruta desconocida',
         descriptionOperation: operationsOfLog.CREATE_LOAN,
-        idUser: id_user,
+        idUser: idUser,
 
-        number_of_installments: monthly_installments,
-        days_between_installments: days_installment,
+        numberOfInstallments: monthlyInstallments,
+        daysBetweenInstallments: daysInstallment,
     }, { transaction: t })
 
     const allAmount = amount * (percentage / 100 + 1)
 
     await _createQuotas({
         frequency,
-        id_loan: loan.id,
-        start_date,
+        idLoan: loan.id,
+        startDate,
         allAmount,
         amount,
         t,
@@ -146,28 +146,28 @@ const createLoan = async ({
 
 const _createQuotas = async ({
     frequency,
-    id_loan,
-    start_date,
+    idLoan,
+    startDate,
     allAmount,
     amount,
     t,
 }) => {
 
     const {
-        days_installment,
-        monthly_installments,
+        daysInstallment,
+        monthlyInstallments,
     } = frequency
-    for (let i = 0; i < monthly_installments; i++) {
-        const isLast = i == (monthly_installments -1)
+    for (let i = 0; i < monthlyInstallments; i++) {
+        const isLast = i == (monthlyInstallments -1)
         const q = {
-            name: `${(i + 1)}/${monthly_installments}`,
+            name: `${(i + 1)}/${monthlyInstallments}`,
             description: '',
-            id_loan,
-            ganancy: (allAmount - amount) / monthly_installments,
-            amount: allAmount / monthly_installments,
-            date_to_pay: addDays(start_date, days_installment * (i + 1)),
-            id_state_quota: 1,
-            is_last: isLast,
+            idLoan,
+            ganancy: (allAmount - amount) / monthlyInstallments,
+            amount: allAmount / monthlyInstallments,
+            dateToPay: addDays(startDate, daysInstallment * (i + 1)),
+            idStateQuota: 1,
+            isLast: isLast,
         }
         await Quota.create(q, { transaction: t })
     }
@@ -175,49 +175,49 @@ const _createQuotas = async ({
 
 
 const createLoanSpecial = async ({
-    id_customer,
-    id_user,
-    id_payment_frequency,
-    id_payment_method,
+    idCustomer,
+    idUser,
+    idPaymentFrequency,
+    idPaymentMethod,
     amount,
     percentage,
-    start_date,
+    startDate,
     ganancy,
     observation,
-    id_state_loan,
+    idStateLoan,
     evidence,
 
-    number_of_installments,
-    days_between_installments,
+    numberOfInstallments,
+    daysBetweenInstallments,
     t,
 }) => {
 
     const loan = await Loan.create({
-        id_customer,
-        id_user,
-        id_payment_frequency,
-        id_payment_method,
+        idCustomer,
+        idUser,
+        idPaymentFrequency,
+        idPaymentMethod,
         percentage,
         amount,
-        start_date,
+        startDate,
         ganancy,
         observation,
-        id_state_loan: 1,
+        idStateLoan: 1,
         evidence: 'ruta desconocida',
         descriptionOperation: operationsOfLog.CREATE_LOAN,
-        idUser: id_user,
+        idUser: idUser,
 
-        number_of_installments: number_of_installments,
-        days_between_installments: days_between_installments,
+        numberOfInstallments: numberOfInstallments,
+        daysBetweenInstallments: daysBetweenInstallments,
     }, { transaction: t })
 
     const allAmount = amount * (percentage / 100 + 1)
 
     await _createQuotasSpecial({
-        number_of_installments,
-        days_between_installments,
-        id_loan: loan.id,
-        start_date,
+        numberOfInstallments,
+        daysBetweenInstallments,
+        idLoan: loan.id,
+        startDate,
         allAmount,
         amount,
         t,
@@ -226,27 +226,27 @@ const createLoanSpecial = async ({
 }
 
 const _createQuotasSpecial = async ({
-    number_of_installments,
-    days_between_installments,
-    id_loan,
-    start_date,
+    numberOfInstallments,
+    daysBetweenInstallments,
+    idLoan,
+    startDate,
     allAmount,
     amount,
     t,
 }) => {
 
-    for (let i = 0; i < number_of_installments; i++) {
-        const isLast = i == (number_of_installments -1)
+    for (let i = 0; i < numberOfInstallments; i++) {
+        const isLast = i == (numberOfInstallments -1)
 
         const q = {
-            name: `${(i + 1)}/${number_of_installments}`,
+            name: `${(i + 1)}/${numberOfInstallments}`,
             description: '',
-            id_loan,
-            ganancy: (allAmount - amount) / number_of_installments,
-            amount: allAmount / number_of_installments,
-            date_to_pay: addDays(start_date, days_between_installments * (i + 1)),
-            id_state_quota: 1,
-            is_last: isLast,
+            idLoan,
+            ganancy: (allAmount - amount) / numberOfInstallments,
+            amount: allAmount / numberOfInstallments,
+            dateToPay: addDays(startDate, daysBetweenInstallments * (i + 1)),
+            idStateQuota: 1,
+            isLast: isLast,
         }
         await Quota.create(q, { transaction: t })
     }
@@ -254,35 +254,35 @@ const _createQuotasSpecial = async ({
 
 const createRenewal = async ({
     loan,
-    id_loan_to_renew,
+    idLoanToRenew,
     amount,
-    id_customer,
+    idCustomer,
     idUser,
     t,
 }) => {
     const { dataValues } = loan
 
     // ver como se hace cuando el prestamo es nuevo
-    // entonces id_loan_to_renew seria nulo
+    // entonces idLoanToRenew seria nulo
     // loanToRenew tambien
     // id y monto tambien, ver para enviarlos nulos.
 
-    const loanToRenew = await Loan.findByPk(id_loan_to_renew)
+    const loanToRenew = await Loan.findByPk(idLoanToRenew)
     const { id: idLast, amount: amountLast, } = loanToRenew?.dataValues
 
-    const variation_in_amount = amount - amountLast
+    const variationInAmount = amount - amountLast
 
-    let id_type_renewal = typeRenewal.SAME_AMOUNT
-    if (variation_in_amount > 0) { id_type_renewal = typeRenewal.INCREASE }
-    if (variation_in_amount < 0) { id_type_renewal = typeRenewal.DECREASE }
+    let idTypeRenewal = typeRenewal.SAME_AMOUNT
+    if (variationInAmount > 0) { idTypeRenewal = typeRenewal.INCREASE }
+    if (variationInAmount < 0) { idTypeRenewal = typeRenewal.DECREASE }
 
     await Renewal.create({
-        id_customer,
-        id_user: idUser,
-        id_previous_loan: idLast,
-        id_new_loan: dataValues.id,
-        variation_in_amount: variation_in_amount,
-        id_type_renewal: id_type_renewal,
+        idCustomer,
+        idUser: idUser,
+        idPreviousLoan: idLast,
+        idNewLoan: dataValues.id,
+        variationInAmount: variationInAmount,
+        idTypeRenewal: idTypeRenewal,
     }, { transaction: t })
 }
 

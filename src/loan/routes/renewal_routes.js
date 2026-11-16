@@ -16,7 +16,7 @@ const renewalRoutes = Router()
 renewalRoutes.get('/', getRenewalsController)
 renewalRoutes.get('/metadata', getMetadataRenewalController)
 renewalRoutes.post('/create', createRenewalValidation, createRenewalController)
-renewalRoutes.post('/pay_and_renewal', payAndRenewalValidation , payAndRenewalController)
-renewalRoutes.post('/pay_and_renewal_special', payAndRenewalSpecialValidation , payAndRenewalSpecialController)
+renewalRoutes.post('/payAndRenewal', payAndRenewalValidation , payAndRenewalController)
+renewalRoutes.post('/payAndRenewalSpecial', payAndRenewalSpecialValidation , payAndRenewalSpecialController)
 
 module.exports = renewalRoutes

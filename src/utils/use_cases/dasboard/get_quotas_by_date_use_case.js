@@ -1,13 +1,13 @@
 const { getQuotasByDateRepository } = require("./../../repositories/dashboard");
 
 const getQuotasUseCaseExecute = ({
-    id_state_quota,
-    from_date,
-    until_date,
+    idStateQuota,
+    fromDate,
+    untilDate,
 })=> getQuotasByDateRepository({
-    id_state_quota,
-    from_date,
-    until_date,
+    idStateQuota,
+    fromDate,
+    untilDate,
 })
 
 module.exports = getQuotasUseCaseExecute

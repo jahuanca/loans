@@ -8,8 +8,8 @@ const getSummaryOfCalendarRepository = async () => {
 
     const overduePayments = await Quota.count({
         where: {
-            id_state_quota: idOfPendingQuota,
-            date_to_pay: {
+            idStateQuota: idOfPendingQuota,
+            dateToPay: {
                 [Op.lte]: finalOfDay()
             }
         }
@@ -19,7 +19,7 @@ const getSummaryOfCalendarRepository = async () => {
     const endWeek = endOfWeek(new Date())
     const paymentsOfToday = await Quota.count({
         where: {
-            date_to_pay: {
+            dateToPay: {
                 [Op.between]: [
                     startWeek,
                     endWeek,
@@ -29,8 +29,8 @@ const getSummaryOfCalendarRepository = async () => {
     })
 
     return {
-        'overdue_payments': overduePayments,
-        'payments_of_today': paymentsOfToday, 
+        'overduePayments': overduePayments,
+        'paymentsOfToday': paymentsOfToday, 
     }
 }
 

@@ -6,18 +6,18 @@ const updatePaymentFrequencyController = async (req, res, next) => {
         id,
         name,
         description,
-        recommended_percentage,
-        monthly_installments,
-        days_installment,
+        recommendedPercentage,
+        monthlyInstallments,
+        daysInstallment,
     } = req.body
     const [err, paymentFrequency] = await getPromise(
         updatePaymentFrequencyUseCaseExecute({
             id,
             name,
             description,
-            recommended_percentage,
-            monthly_installments,
-            days_installment,
+            recommendedPercentage,
+            monthlyInstallments,
+            daysInstallment,
         })
     )
     if (err) {

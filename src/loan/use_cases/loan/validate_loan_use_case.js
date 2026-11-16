@@ -1,17 +1,17 @@
 const { validateLoanRepository } = require("./../../repositories");
 
 const validateLoanUseCaseExecute = ({
-    id_customer,
-    id_payment_frequency,
+    idCustomer,
+    idPaymentFrequency,
     amount,
     percentage,
-    start_date,
+    startDate,
 }) => validateLoanRepository({
-    id_customer,
-    id_payment_frequency,
+    idCustomer,
+    idPaymentFrequency,
     amount,
     percentage,
-    start_date,
+    startDate,
 })
 
 module.exports = validateLoanUseCaseExecute

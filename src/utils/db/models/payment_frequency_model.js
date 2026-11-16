@@ -6,9 +6,9 @@ const TypeCustomer = require('../../../customer/db/type_customer_model');
 class PaymentFrequency extends Model {
 
     static associate(models) {
-        PaymentFrequency.belongsTo(models.Type_Customer, {
+        PaymentFrequency.belongsTo(models.TypeCustomer, {
             foreignKey: {
-                name: 'id_type_customer',
+                name: 'idTypeCustomer',
                 allowNull: false,
                 defaultValue: 1,
             }
@@ -26,19 +26,19 @@ PaymentFrequency.init(
             type: DataTypes.STRING(200),
             allowNull: true,
         },
-        recommended_percentage: {
+        recommendedPercentage: {
             type: DataTypes.DOUBLE,
             allowNull: false,
         },
-        monthly_installments: {
+        monthlyInstallments: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        days_installment: {
+        daysInstallment: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        id_type_customer: {
+        idTypeCustomer: {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 1,
@@ -47,7 +47,7 @@ PaymentFrequency.init(
     {
         paranoid: true,
         sequelize,
-        modelName: 'Payment_Frequency',
+        modelName: 'PaymentFrequency',
         tableName: 'payment_frequencies',
         underscored: true,
     },

@@ -6,9 +6,9 @@ const { setLog } = require('../../utils/db/utils');
 
 class Customer extends Model {
     static associate(models) {
-        Customer.belongsTo(models.Type_Customer, {
+        Customer.belongsTo(models.TypeCustomer, {
             foreignKey: {
-                name: 'id_type_customer',
+                name: 'idTypeCustomer',
                 allowNull: false,
             }
         })
@@ -22,7 +22,7 @@ class Customer extends Model {
 
         Customer.hasMany(models.Loan, {
             foreignKey: {
-                name: 'id_customer',
+                name: 'idCustomer',
                 allowNull: false,
             }
         })
@@ -31,7 +31,7 @@ class Customer extends Model {
 
 Customer.init(
     {
-        id_type_customer: {
+        idTypeCustomer: {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 1,
@@ -64,7 +64,7 @@ Customer.init(
             type: DataTypes.STRING(100),
             allowNull: true,
         },
-        id_type_document: {
+        idTypeDocument: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
@@ -79,7 +79,7 @@ Customer.init(
         descriptionOperation: {
             type: DataTypes.VIRTUAL,
         },
-        idUser: {
+        idUserOfOperation: {
             type: DataTypes.VIRTUAL,
         },
     },
@@ -94,28 +94,28 @@ Customer.init(
 
 Customer.afterCreate(async (record, options) => {
     const { dataValues } = record
-    const { idUser, descriptionOperation } = dataValues
+    const { idUserOfOperation, descriptionOperation } = dataValues
     await setLog({
         tableName: Customer.tableName,
         newValues: dataValues,
         oldValues: null,
         typeOperation: INSERT,
         descriptionOperation: descriptionOperation,
-        idUser: idUser,
+        idUserOfOperation: idUserOfOperation,
     })
     // TODO: poner esto en un try catch
 })
 
 Customer.afterUpdate(async (record, options) => {
     const { dataValues, _previousDataValues } = record
-    const { idUser, descriptionOperation } = dataValues
+    const { idUserOfOperation, descriptionOperation } = dataValues
     await setLog({
         tableName: Customer.tableName,
         newValues: dataValues,
         oldValues: _previousDataValues,
         typeOperation: UPDATE,
         descriptionOperation: descriptionOperation,
-        idUser: idUser,
+        idUserOfOperation: idUserOfOperation,
     }) 
     // TODO: poner esto en un try catch
 })

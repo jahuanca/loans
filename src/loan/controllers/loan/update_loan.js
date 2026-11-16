@@ -8,14 +8,14 @@ const updateLoanController = async (req, res, next) => {
         id,
         name,
         description,
-        start_date,
+        startDate,
     } = req.body
 
     const [err, loan] = await getPromise(updateLoanUseCaseExecute({
         id,
         name,
         description,
-        start_date,
+        startDate,
     }))
     if (err) {
         return next(err)

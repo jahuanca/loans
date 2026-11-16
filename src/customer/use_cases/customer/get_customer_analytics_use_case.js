@@ -1,9 +1,9 @@
 const { getCustomerAnalyticsRepository } = require("./../../repositories");
 
 const getCustomerAnalyticsUseCaseExecute = ({
-    id_customer
+    idCustomer
 })=> getCustomerAnalyticsRepository({
-    id_customer
+    idCustomer
 })
 
 module.exports = getCustomerAnalyticsUseCaseExecute

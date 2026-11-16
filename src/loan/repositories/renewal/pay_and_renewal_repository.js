@@ -5,52 +5,52 @@ const Renewal = require("../../db/renewal_model")
 const { payQuota, createLoan, createRenewal } = require("../utils")
 
 const payAndRenewalRepository = async ({
-    id_loan_to_renew,
+    idLoanToRenew,
 
-    id_of_quota,
-    paid_date,
+    idOfQuota,
+    paidDate,
     idUser,
 
-    id_customer,
-    id_payment_frequency,
-    id_payment_method,
+    idCustomer,
+    idPaymentFrequency,
+    idPaymentMethod,
     amount,
     percentage,
-    start_date,
+    startDate,
     ganancy,
     observation,
-    id_state_loan,
+    idStateLoan,
     evidence,
 
 }) => {
     const valueToReturn = await sequelize.transaction(async t => {
         const quotaPaid = await payQuota({
-            id_of_quota,
-            paid_date,
+            idOfQuota,
+            paidDate,
             idUser,
             t,
         })
 
         const loan = await createLoan({
-            id_customer,
-            id_user: idUser,
-            id_payment_frequency,
-            id_payment_method,
+            idCustomer,
+            idUser: idUser,
+            idPaymentFrequency,
+            idPaymentMethod,
             amount,
             percentage,
-            start_date,
+            startDate,
             ganancy,
             observation,
-            id_state_loan,
+            idStateLoan,
             evidence,
             t,
         })
 
         await createRenewal({
             loan,
-            id_loan_to_renew,
+            idLoanToRenew,
             amount,
-            id_customer,
+            idCustomer,
             idUser,
             t,
         })

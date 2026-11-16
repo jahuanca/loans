@@ -10,7 +10,7 @@ const createCustomerRepository = ({
     address,
     latitude,
     longitude,
-    id_type_document,
+    idTypeDocument,
     document,
     idAssignedUser,
     idUser,
@@ -25,9 +25,9 @@ const createCustomerRepository = ({
         latitude,
         longitude,
         idAssignedUser,
-        id_type_document: id_type_document,
+        idTypeDocument: idTypeDocument,
         document,
-        idUser,
+        idUserOfOperation: idUser,
         descriptionOperation: operationsOfLog.CREATE_CUSTOMER,
     })
 }

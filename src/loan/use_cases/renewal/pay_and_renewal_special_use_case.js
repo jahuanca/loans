@@ -1,44 +1,44 @@
 const { payAndRenewalSpecialRepository } = require("../../repositories")
 
 const payAndRenewalSpecialUseCaseExecute = ({
-    id_loan_to_renew,
+    idLoanToRenew,
 
-    id_of_quota,
-    paid_date,
+    idOfQuota,
+    paidDate,
     idUser,
 
-    id_customer,
-    id_payment_frequency,
-    id_payment_method,
+    idCustomer,
+    idPaymentFrequency,
+    idPaymentMethod,
     amount,
     percentage,
-    start_date,
+    startDate,
     ganancy,
     observation,
-    id_state_loan,
+    idStateLoan,
     evidence,
-    number_of_installments,
-    days_between_installments,
+    numberOfInstallments,
+    daysBetweenInstallments,
 }) => payAndRenewalSpecialRepository({
-    id_loan_to_renew,
+    idLoanToRenew,
 
-    id_of_quota,
-    paid_date,
+    idOfQuota,
+    paidDate,
     idUser,
 
-    id_customer,
-    id_payment_frequency,
-    id_payment_method,
+    idCustomer,
+    idPaymentFrequency,
+    idPaymentMethod,
     amount,
     percentage,
-    start_date,
+    startDate,
     ganancy,
     observation,
-    id_state_loan,
+    idStateLoan,
     evidence,
     
-    number_of_installments,
-    days_between_installments,
+    numberOfInstallments,
+    daysBetweenInstallments,
 })
 
 module.exports = payAndRenewalSpecialUseCaseExecute

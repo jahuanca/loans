@@ -4,6 +4,7 @@ const { sequelize } = require('./../connection');
 class ActivityLog extends Model {
     static associate(models) {
         ActivityLog.belongsTo(models.User, {
+            as: 'user',
             foreignKey: {
                 name: 'idUser',
                 allowNull: false,

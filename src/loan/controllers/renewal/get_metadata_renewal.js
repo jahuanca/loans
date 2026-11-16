@@ -3,11 +3,11 @@ const getMetadataByCreateUseCaseExecute = require("../../use_cases/renewal/get_m
 
 const getMetadataRenewalController = async (req, res, next) => {
 
-    const { id_customer } = req.query
+    const { idCustomer } = req.query
 
     const [err, renewals] = await getPromise(
         getMetadataByCreateUseCaseExecute({
-            id_customer
+            idCustomer
         })
     )
     if (err) {

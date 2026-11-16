@@ -9,7 +9,7 @@ class Quota extends Model {
     static associate(models) {
         Quota.belongsTo(models.Loan, {
             foreignKey: {
-                name: 'id_loan',
+                name: 'idLoan',
                 allowNull: false,
             },
         })
@@ -26,7 +26,7 @@ Quota.init(
             type: DataTypes.STRING(200),
             allowNull: false,
         },
-        id_loan: {
+        idLoan: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
@@ -38,23 +38,23 @@ Quota.init(
             type: DataTypes.DOUBLE,
             allowNull: false,
         },
-        date_to_pay: {
+        dateToPay: {
             type: DataTypes.DATEONLY,
             allowNull: false,
         },
-        paid_date: {
+        paidDate: {
             type: DataTypes.DATE,
             allowNull: true,
         },
-        amount_delinquency: {
+        amountDelinquency: {
             type: DataTypes.DATE,
             allowNull: true,
         },
-        id_state_quota: {
+        idStateQuota: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        is_last: {
+        isLast: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false,
@@ -62,7 +62,7 @@ Quota.init(
         descriptionOperation: {
             type: DataTypes.VIRTUAL,
         },
-        idUser: {
+        idUserOfOperation: {
             type: DataTypes.VIRTUAL,
         },
     },

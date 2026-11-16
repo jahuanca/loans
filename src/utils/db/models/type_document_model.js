@@ -24,7 +24,7 @@ TypeDocument.init(
     {
         paranoid: true,
         sequelize,
-        modelName: 'Type_Document',
+        modelName: 'TypeDocument',
         tableName: 'type_documents',
         underscored: true,
     },

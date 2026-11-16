@@ -12,6 +12,9 @@ const sequelize = new Sequelize(databaseName, usernameDatabase, passwordDatabase
     host: hostDatabase,
     dialect: dialectDatabase,
     logging: false,
+    define: {
+        underscore: true,
+    }
 })
 
 const startConnection = async () => {

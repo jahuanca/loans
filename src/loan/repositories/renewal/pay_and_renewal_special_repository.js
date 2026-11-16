@@ -5,55 +5,55 @@ const Renewal = require("../../db/renewal_model")
 const { payQuota, createLoanSpecial } = require("../utils")
 
 const payAndRenewalSpecialRepository = async ({
-    id_loan_to_renew,
+    idLoanToRenew,
 
-    id_of_quota,
-    paid_date,
+    idOfQuota,
+    paidDate,
     idUser,
 
-    id_customer,
-    id_payment_frequency,
-    id_payment_method,
+    idCustomer,
+    idPaymentFrequency,
+    idPaymentMethod,
     amount,
     percentage,
-    start_date,
+    startDate,
     ganancy,
     observation,
-    id_state_loan,
+    idStateLoan,
     evidence,
-    number_of_installments,
-    days_between_installments,
+    numberOfInstallments,
+    daysBetweenInstallments,
 }) => {
     const valueToReturn = await sequelize.transaction(async t => {
         const quotaPaid = await payQuota({
-            id_of_quota,
-            paid_date,
+            idOfQuota,
+            paidDate,
             idUser,
             t,
         })
 
         const loan = await createLoanSpecial({
-            id_customer,
-            id_user: idUser,
-            id_payment_frequency,
-            id_payment_method,
+            idCustomer,
+            idUser: idUser,
+            idPaymentFrequency,
+            idPaymentMethod,
             amount,
             percentage,
-            start_date,
+            startDate,
             ganancy,
             observation,
-            id_state_loan,
+            idStateLoan,
             evidence,
-            number_of_installments,
-            days_between_installments,
+            numberOfInstallments,
+            daysBetweenInstallments,
             t,
         })
 
         await _createRenewal({
             loan,
-            id_loan_to_renew,
+            idLoanToRenew,
             amount,
-            id_customer,
+            idCustomer,
             idUser,
             t,
         })
@@ -68,30 +68,30 @@ const payAndRenewalSpecialRepository = async ({
 
 const _createRenewal = async ({
     loan,
-    id_loan_to_renew,
+    idLoanToRenew,
     amount,
-    id_customer,
+    idCustomer,
     idUser,
     t,
 }) => {
     const { dataValues } = loan
 
-    const loanToRenew = await Loan.findByPk(id_loan_to_renew)
+    const loanToRenew = await Loan.findByPk(idLoanToRenew)
     const { id: idLast, amount: amountLast, } = loanToRenew.dataValues
 
-    const variation_in_amount = amount - amountLast
+    const variationInAmount = amount - amountLast
 
-    let id_type_renewal = typeRenewal.SAME_AMOUNT
-    if (variation_in_amount > 0) { id_type_renewal = typeRenewal.INCREASE }
-    if (variation_in_amount < 0) { id_type_renewal = typeRenewal.DECREASE }
+    let idTypeRenewal = typeRenewal.SAME_AMOUNT
+    if (variationInAmount > 0) { idTypeRenewal = typeRenewal.INCREASE }
+    if (variationInAmount < 0) { idTypeRenewal = typeRenewal.DECREASE }
 
     await Renewal.create({
-        id_customer,
-        id_user: idUser,
-        id_previous_loan: idLast,
-        id_new_loan: dataValues.id,
-        variation_in_amount: variation_in_amount,
-        id_type_renewal: id_type_renewal,
+        idCustomer,
+        idUser: idUser,
+        idPreviousLoan: idLast,
+        idNewLoan: dataValues.id,
+        variationInAmount: variationInAmount,
+        idTypeRenewal: idTypeRenewal,
     }, { transaction: t })
 }
 

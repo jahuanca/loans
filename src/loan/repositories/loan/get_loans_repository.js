@@ -9,16 +9,16 @@ const PaymentMethod = require("../../../utils/db/models/payment_method_model");
 const Customer = require("../../../customer/db/customer_model");
 
 const getLoansRepository = async ({
-    id_customer,
-    id_state_loan,
+    idCustomer,
+    idStateLoan,
 }) => {
     let where = {}
-    if (id_state_loan != null) where.id_state_loan = id_state_loan
-    if (id_customer != null) where.id_customer = id_customer
+    if (idStateLoan != null) where.idStateLoan = idStateLoan
+    if (idCustomer != null) where.idCustomer = idCustomer
 
     const valuesSaved = localNodeCache.get(LOANS_KEY)
 
-    if (!valuesSaved || id_customer) {
+    if (!valuesSaved || idCustomer) {
         return await _getInDB(where)
     }
     return valuesSaved
@@ -27,11 +27,11 @@ const getLoansRepository = async ({
 const _getInDB = async (where) => {
     const loans = await models.Loan.findAll({
         include: [
-            { model: models.Payment_Frequency },
-            { model: models.Payment_Method },
+            { model: models.PaymentFrequency },
+            { model: models.PaymentMethod },
             { model: models.Customer },
         ],
-        order: [['start_date', 'DESC']],
+        order: [['startDate', 'DESC']],
         where: where,
         raw: true,
         nest: true,

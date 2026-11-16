@@ -3,20 +3,20 @@ const Joi = require('joi')
 const joiId = Joi.number().integer()
 
 const squema = Joi.object({
-    id_loan_to_renew: joiId.required(),
-    id_of_quota: joiId.required(),
-    id_customer: joiId.required(),
-    id_payment_frequency: joiId.required(),
-    id_payment_method: joiId.required(),
+    idLoanToRenew: joiId.required(),
+    idOfQuota: joiId.required(),
+    idCustomer: joiId.required(),
+    idPaymentFrequency: joiId.required(),
+    idPaymentMethod: joiId.required(),
     amount: Joi.number().required(),
     percentage: Joi.number().required(),
-    start_date: Joi.date().required(),
-    paid_date: Joi.date().required(),
+    startDate: Joi.date().required(),
+    paidDate: Joi.date().required(),
     ganancy: Joi.number().required(),
     observation: Joi.string().allow(null),
     evidence: Joi.string().allow(null),
-    number_of_installments: Joi.number().required(),
-    days_between_installments: Joi.number().required(),
+    numberOfInstallments: Joi.number().required(),
+    daysBetweenInstallments: Joi.number().required(),
 })
 
 const payAndRenewalSpecialValidation = (req, res, next) => {

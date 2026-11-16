@@ -5,7 +5,7 @@ const getLoanRepository = ({id}) => {
     if (id != null) where.id = id
     return Loan.findOne({
         include: [{ all: true }],
-        order: [['start_date', 'DESC']],
+        order: [['startDate', 'DESC']],
         where: where,
     })
 }

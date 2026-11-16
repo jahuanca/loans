@@ -8,30 +8,30 @@ class Loan extends Model {
 
         Loan.belongsTo(models.User, {
             foreignKey: {
-                name: 'id_user',
+                name: 'idUser',
                 allowNull: false,
             }
         })
 
-        Loan.belongsTo(models.Payment_Frequency, {
+        Loan.belongsTo(models.PaymentFrequency, {
             foreignKey: {
-                name: 'id_payment_frequency',
+                name: 'idPaymentFrequency',
                 allowNull: false,
             }
         })
 
-        Loan.belongsTo(models.Payment_Method, { foreignKey: 'id_payment_method', })
+        Loan.belongsTo(models.PaymentMethod, { foreignKey: 'idPaymentMethod', })
 
         Loan.hasMany(models.Quota, {
             foreignKey: {
-                name: 'id_loan',
+                name: 'idLoan',
                 allowNull: false,
             }
         })
 
         Loan.belongsTo(models.Customer, {
             foreignKey: {
-                name: 'id_customer',
+                name: 'idCustomer',
                 allowNull: false,
             }
         })
@@ -40,15 +40,15 @@ class Loan extends Model {
 
 Loan.init(
     {
-        id_customer: {
+        idCustomer: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        id_user: {
+        idUser: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        id_payment_frequency: {
+        idPaymentFrequency: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
@@ -60,7 +60,7 @@ Loan.init(
             type: DataTypes.DOUBLE,
             allowNull: false,
         },
-        start_date: {
+        startDate: {
             type: DataTypes.DATE,
             allowNull: false,
         },
@@ -68,15 +68,19 @@ Loan.init(
             type: DataTypes.DOUBLE,
             allowNull: false,
         },
-        id_payment_method: {
+        idPaymentMethod: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        number_of_installments: {
+        idUser: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        days_between_installments: {
+        numberOfInstallments: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        daysBetweenInstallments: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
@@ -84,7 +88,7 @@ Loan.init(
             type: DataTypes.STRING(200),
             allowNull: true,
         },
-        id_state_loan: {
+        idStateLoan: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
@@ -95,7 +99,7 @@ Loan.init(
         descriptionOperation: {
             type: DataTypes.VIRTUAL,
         },
-        idUser: {
+        idUserOfOperation: {
             type: DataTypes.VIRTUAL,
         },
     },

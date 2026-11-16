@@ -4,12 +4,12 @@ const updateLoanUseCaseExecute = ({
     id,
     name,
     description,
-    start_date,
+    startDate,
 }) => updateLoanRepository({
     id,
     name,
     description,
-    start_date,
+    startDate,
 })
 
 module.exports = updateLoanUseCaseExecute

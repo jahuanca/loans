@@ -4,28 +4,28 @@ class Renewal extends Model {
     static associate(models) {
         Renewal.belongsTo(models.Customer, {
             foreignKey: {
-                name: 'id_customer',
+                name: 'idCustomer',
                 allowNull: false,
             }
         })
 
         Renewal.belongsTo(models.User, {
             foreignKey: {
-                name: 'id_user',
+                name: 'idUser',
                 allowNull: false,
             }
         })
 
         Renewal.belongsTo(models.Loan, {
             foreignKey: {
-                name: 'id_previous_loan',
+                name: 'idPreviousLoan',
                 allowNull: true,
             }
         })
 
         Renewal.belongsTo(models.Loan, {
             foreignKey: {
-                name: 'id_new_loan',
+                name: 'idNewLoan',
                 allowNull: false,
             }
         })
@@ -34,19 +34,19 @@ class Renewal extends Model {
 }
 
 Renewal.init({
-    id_customer: {
+    idCustomer: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    id_user: {
+    idUser: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    id_previous_loan: {
+    idPreviousLoan: {
         type: DataTypes.INTEGER,
         allowNull: true,
     },
-    id_new_loan: {
+    idNewLoan: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
@@ -55,11 +55,11 @@ Renewal.init({
         allowNull: false,
         defaultValue: Date.now(),
     },
-    variation_in_amount: {
+    variationInAmount: {
         type: DataTypes.DOUBLE,
         allowNull: false,
     },
-    id_type_renewal: {
+    idTypeRenewal: {
         type: DataTypes.CHAR(1),
         allowNull: false,
     },

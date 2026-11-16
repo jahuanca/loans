@@ -4,16 +4,16 @@ const updatePaymentFrequencyUseCaseExecute = ({
     id,
     name,
     description,
-    recommended_percentage,
-    monthly_installments,
-    days_installment,
+    recommendedPercentage,
+    monthlyInstallments,
+    daysInstallment,
 }) => updatePaymentFrequencyRepository({
     id,
     name,
     description,
-    recommended_percentage,
-    monthly_installments,
-    days_installment,
+    recommendedPercentage,
+    monthlyInstallments,
+    daysInstallment,
 })
 
 module.exports = updatePaymentFrequencyUseCaseExecute

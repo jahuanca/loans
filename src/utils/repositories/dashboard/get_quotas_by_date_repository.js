@@ -3,28 +3,28 @@ const Quota = require("../../../quota/db/quota_model");
 const { models } = require("../../db/index");
 
 const getQuotasByDateRepository = ({
-    id_state_quota,
-    from_date,
-    until_date,
+    idStateQuota,
+    fromDate,
+    untilDate,
 }) => {
 
     const where = {}
-    if (from_date && until_date) {
-        where.date_to_pay = {
+    if (fromDate && untilDate) {
+        where.dateToPay = {
             [Op.between]: [
-                from_date, until_date
+                fromDate, untilDate
             ]
         }
     } else {
-        if (until_date) {
-            where.date_to_pay = {
-                [Op.lte]: until_date
+        if (untilDate) {
+            where.dateToPay = {
+                [Op.lte]: untilDate
             }
         }
     }
 
-    if (id_state_quota) {
-        where.id_state_quota = id_state_quota
+    if (idStateQuota) {
+        where.idStateQuota = idStateQuota
     }
 
     return Quota.findAll({
@@ -37,13 +37,13 @@ const getQuotasByDateRepository = ({
         attributes: [
             'id',
             'name',
-            'is_last',
-            'Loan.id_payment_frequency',
+            'isLast',
+            [Sequelize.col('Loan.id_payment_frequency'), 'idPaymentFrequency'],
             [
                 Sequelize.literal(
                     'CASE WHEN id_payment_frequency = 5 THEN true ELSE false END'
                 ),
-                'is_special'
+                'isSpecial'
             ],
             [
                 Sequelize.fn('CONCAT',
@@ -51,18 +51,18 @@ const getQuotasByDateRepository = ({
                     ' ',
                     Sequelize.col('Loan.Customer.last_name')
                 ),
-                'customer_name'
+                'customerName'
             ],
             'Loan.Customer.alias',
-            'id_loan',
+            'idLoan',
             'amount',
             'ganancy',
-            'id_state_quota',
-            'date_to_pay',
-            'paid_date',
+            'idStateQuota',
+            'dateToPay',
+            'paidDate',
         ],
         order: [
-            ['date_to_pay', 'ASC']
+            ['dateToPay', 'ASC']
         ]
     })
 }

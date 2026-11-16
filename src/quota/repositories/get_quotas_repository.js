@@ -3,30 +3,30 @@ const Quota = require("../db/quota_model");
 const Loan = require("../../loan/db/loan_model");
 
 const getQuotasRepository = ({
-    id_loan,
-    id_state_quota,
-    from_date,
-    until_date,
+    idLoan,
+    idStateQuota,
+    fromDate,
+    untilDate,
 }) => {
 
     let where = {}
 
-    if (id_state_quota) {
-        where.id_state_quota = id_state_quota
+    if (idStateQuota) {
+        where.idStateQuota = idStateQuota
     }
-    if (id_loan) {
-        where.id_loan = id_loan
+    if (idLoan) {
+        where.idLoan = idLoan
     }
-    if (from_date && until_date) {
-        where.date_to_pay = {
+    if (fromDate && untilDate) {
+        where.dateToPay = {
                 [Op.between]: [
-                    from_date,
-                    until_date,
+                    fromDate,
+                    untilDate,
                 ]
             }
     } else {
-        if (until_date) {
-            where.date_to_pay = {
+        if (untilDate) {
+            where.dateToPay = {
                 [Op.lte]: Date.now()
             }
         }
@@ -36,7 +36,7 @@ const getQuotasRepository = ({
     return Quota.findAll({
         where: where,
         order: [
-            ['date_to_pay', 'ASC']
+            ['dateToPay', 'ASC']
         ]
     })
 }

@@ -4,18 +4,18 @@ const updatePaymentFrequencyRepository = async ({
     id,
     name,
     description,
-    recommended_percentage,
-    monthly_installments,
-    days_installment,
+    recommendedPercentage,
+    monthlyInstallments,
+    daysInstallment,
 }) => {
     const paymentFrequency = await PaymentFrequency.findByPk(id)
     if (paymentFrequency == null) return paymentFrequency
     await paymentFrequency.update({
         name,
         description,
-        recommended_percentage,
-        monthly_installments,
-        days_installment,
+        recommendedPercentage,
+        monthlyInstallments,
+        daysInstallment,
     })
     await paymentFrequency.save()
     await paymentFrequency.reload()

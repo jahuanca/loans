@@ -3,45 +3,45 @@ const Quota = require("../../../quota/db/quota_model");
 const { idLoanStates } = require("../../../utils/core/default_values");
 const { sequelize } = require("../../../utils/db/connection");
 
-const getCustomerAnalyticsRepository = async ({ id_customer }) => {
-    id_customer = parseInt(id_customer)
+const getCustomerAnalyticsRepository = async ({ idCustomer }) => {
+    idCustomer = parseInt(idCustomer)
 
-    const ganancy = await _getGanancy({ id_customer })
+    const ganancy = await _getGanancy({ idCustomer })
 
     const loans = await Loan.findAll({
         where: {
-            id_customer: id_customer,
+            idCustomer: idCustomer,
         }
     })
 
-    const amount_of_loans = loans.length
+    const amountOfLoans = loans.length
 
-    const start_date = await _getStartDate({ id_customer })
-    const loansInProgress = await _getLoansInProgress({ id_customer })
-    const amountInProgress = await _getAmountInProgress({ id_customer })
+    const startDate = await _getStartDate({ idCustomer })
+    const loansInProgress = await _getLoansInProgress({ idCustomer })
+    const amountInProgress = await _getAmountInProgress({ idCustomer })
 
     return {
-        id_customer,
+        idCustomer,
         ganancy: ganancy ?? 0,
-        amount_of_loans,
-        start_date,
-        loans_in_progress: loansInProgress.length,
-        amount_in_progress: amountInProgress,
+        amountOfLoans,
+        startDate,
+        loansInProgress: loansInProgress.length,
+        amountInProgress: amountInProgress,
         loans: loans,
     }
 }
 
 const _getGanancy = async ({
-    id_customer
+    idCustomer
 }) => {
     const { ganancy } = (await Quota.findAll({
         attributes: [
             [sequelize.fn('SUM', sequelize.col('Quota.ganancy')), 'ganancy'],
         ],
-        where: { id_state_quota: idLoanStates.COMPLETE },
+        where: { idStateQuota: idLoanStates.COMPLETE },
         include: [{
             model: Loan,
-            where: { id_customer: id_customer },
+            where: { idCustomer: idCustomer },
             required: true,
             attributes: []
         }],
@@ -51,39 +51,39 @@ const _getGanancy = async ({
 }
 
 const _getStartDate = async ({
-    id_customer
+    idCustomer
 }) => {
     const {
-        start_date,
+        startDate,
     } = await Loan.findOne({
         where: {
-            id_customer: id_customer,
+            idCustomer: idCustomer,
         },
         order: [
-            ['start_date', 'ASC']
+            ['startDate', 'ASC']
         ],
         limit: 1,
     })
-    return start_date
+    return startDate
 }
 
 const _getLoansInProgress = async ({
-    id_customer
+    idCustomer
 }) => await Loan.findAll({
     where: {
-        id_customer: id_customer,
-        id_state_loan: idLoanStates.PENDING,
+        idCustomer: idCustomer,
+        idStateLoan: idLoanStates.PENDING,
     }
 })
 
 const _getAmountInProgress = async ({
-    id_customer
+    idCustomer
 }) => {
     const quotas = await Quota.findAll({
         where: {
-            id_state_quota: 1
+            idStateQuota: 1
         },
-        include: [{ model: Loan, where: { id_customer: id_customer }, required: true }]
+        include: [{ model: Loan, where: { idCustomer: idCustomer }, required: true }]
     })
 
     let amountInProgress = 0;

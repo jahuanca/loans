@@ -6,7 +6,7 @@ class CapitalMovements extends Model {
     static associate(models) {
         CapitalMovements.belongsTo(models.User, {
             foreignKey: {
-                name: 'id_user',
+                name: 'idUser',
                 as: 'user',
                 allowNull: false,
             }
@@ -14,7 +14,7 @@ class CapitalMovements extends Model {
 
         CapitalMovements.belongsTo(models.Loan, {
             foreignKey: {
-                name: 'id_loan',
+                name: 'idLoan',
                 allowNull: true,
                 as: 'loan',
             }
@@ -23,12 +23,12 @@ class CapitalMovements extends Model {
 }
 
 CapitalMovements.init({
-    id_user: {
+    idUser: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
 
-    id_loan: {
+    idLoan: {
         type: DataTypes.INTEGER,
         allowNull: true,
     },

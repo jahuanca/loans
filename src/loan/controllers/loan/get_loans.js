@@ -5,12 +5,12 @@ const {
 
 const getLoansController = async (req, res, next)=> {
     const {
-        id_customer,
-        id_state_loan,
+        idCustomer,
+        idStateLoan,
     } = req.query
     const [err, loans] = await getPromise(getLoansUseCaseExecute({
-        id_customer,
-        id_state_loan,
+        idCustomer,
+        idStateLoan,
     }))
     if (err) {
         return next(err)

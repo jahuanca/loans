@@ -11,7 +11,7 @@ const getCustomersWithoutLoanRepository = async () => {
                 model: Loan,
                 attributes: [],
                 where: {
-                    id_state_loan: 1
+                    idStateLoan: 1
                 },
                 required: false
             }

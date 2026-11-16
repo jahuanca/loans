@@ -5,34 +5,34 @@ const {
 
 const createSpecialLoanController = async (req, res, next) => {
     const {
-        id_customer,
-        id_payment_frequency,
-        id_payment_method,
+        idCustomer,
+        idPaymentFrequency,
+        idPaymentMethod,
         amount,
         percentage,
-        start_date,
+        startDate,
         ganancy,
         observation,
-        id_state_loan,
+        idStateLoan,
         evidence,
-        number_of_installments,
-        days_between_installments,
+        numberOfInstallments,
+        daysBetweenInstallments,
     } = req.body
     const { idUser } = req
     const [err, loan] = await getPromise(createSpecialLoanUseCaseExecute({
-        id_customer,
-        id_user: idUser,
-        id_payment_frequency,
-        id_payment_method,
+        idCustomer,
+        idUser: idUser,
+        idPaymentFrequency,
+        idPaymentMethod,
         amount,
         percentage,
-        start_date,
+        startDate,
         ganancy,
         observation,
-        id_state_loan,
+        idStateLoan,
         evidence,
-        number_of_installments,
-        days_between_installments,
+        numberOfInstallments,
+        daysBetweenInstallments,
     }))
     if (err) {
         return next(err)

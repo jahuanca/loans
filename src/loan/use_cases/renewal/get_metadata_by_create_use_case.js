@@ -1,9 +1,9 @@
 const getMetadataByCreateRepository = require("../../repositories/renewal/get_metadata_by_create_repository")
 
 const getMetadataByCreateUseCaseExecute = ({
-    id_customer
+    idCustomer
 }) => getMetadataByCreateRepository({
-    id_customer
+    idCustomer
 })
 
 module.exports = getMetadataByCreateUseCaseExecute

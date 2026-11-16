@@ -3,14 +3,14 @@ const getQuotasByDateUseCaseExecute = require("./../../use_cases/dasboard/get_qu
 
 const getQuotasByDateController = async (req, res, next) => {
     const {
-        id_state_quota,
-        from_date,
-        until_date,
+        idStateQuota,
+        fromDate,
+        untilDate,
     } = req.query
     const [err, quotas] = await getPromise(getQuotasByDateUseCaseExecute({
-        id_state_quota,
-        from_date,
-        until_date,
+        idStateQuota,
+        fromDate,
+        untilDate,
     }))
     if (err) {
         return next(err)

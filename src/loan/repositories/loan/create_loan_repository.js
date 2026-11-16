@@ -7,75 +7,75 @@ const { createLoan, createRenewal } = require("../utils");
 const { sequelize } = require("./../../../utils/db/connection");
 
 const createLoanRepository = async ({
-    id_customer,
-    id_loan_to_renew,
-    id_user,
-    id_payment_frequency,
-    id_payment_method,
+    idCustomer,
+    idLoanToRenew,
+    idUser,
+    idPaymentFrequency,
+    idPaymentMethod,
     amount,
     percentage,
-    start_date,
+    startDate,
     ganancy,
     observation,
-    id_state_loan,
+    idStateLoan,
     evidence,
 }) => {
     try {
         const result = await sequelize.transaction(async t => {
             const loan = await createLoan({
-                id_customer,
-                id_user,
-                id_payment_frequency,
-                id_payment_method,
+                idCustomer,
+                idUser,
+                idPaymentFrequency,
+                idPaymentMethod,
                 amount,
                 percentage,
-                start_date,
+                startDate,
                 ganancy,
                 observation,
-                id_state_loan,
+                idStateLoan,
                 evidence,
                 t,
             })
 
             const { dataValues } = loan
-            const { id_loan } = dataValues
+            const { idLoan } = dataValues
 
             await CapitalMovements.create({
                 type: typeMovements.OUT,
-                description: `SALIDA de capital ${amount}, para préstamo P#${id_loan}.`,
+                description: `SALIDA de capital ${amount}, para préstamo P#${idLoan}.`,
                 amount: -amount,
                 ganancy: 0,
-                id_loan: id_loan,
-                id_user: id_user,
+                idLoan: idLoan,
+                idUser: idUser,
             }, {
                 transaction: t,
             })
 
 
-            if (id_loan_to_renew) {
+            if (idLoanToRenew) {
                 await createRenewal({
                     loan,
-                    id_loan_to_renew,
+                    idLoanToRenew,
                     amount,
-                    id_customer,
-                    idUser: id_user,
+                    idCustomer,
+                    idUser: idUser,
                     t,
                 })
             } else {
                 const count = await Loan.count({
                     where: {
-                        id_customer: id_customer
+                        idCustomer: idCustomer
                     }
                 }, { transaction: t })
                 if (count == 0) {
                     const { dataValues } = loan
                     await Renewal.create({
-                        id_customer,
-                        id_user: id_user,
-                        id_previous_loan: null,
-                        id_new_loan: dataValues.id,
-                        variation_in_amount: amount,
-                        id_type_renewal: typeRenewal.INCREASE,
+                        idCustomer,
+                        idUser: idUser,
+                        idPreviousLoan: null,
+                        idNewLoan: dataValues.id,
+                        variationInAmount: amount,
+                        idTypeRenewal: typeRenewal.INCREASE,
                     }, { transaction: t })
                 }
             }

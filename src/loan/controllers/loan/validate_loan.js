@@ -5,18 +5,18 @@ const {
 
 const validateLoanController = async (req, res, next) => {
     const {
-        id_customer,
-        id_payment_frequency,
+        idCustomer,
+        idPaymentFrequency,
         amount,
         percentage,
-        start_date,
+        startDate,
     } = req.body
     const [err, loan] = await getPromise(validateLoanUseCaseExecute({
-        id_customer,
-        id_payment_frequency,
+        idCustomer,
+        idPaymentFrequency,
         amount,
         percentage,
-        start_date,
+        startDate,
     }))
     if (err) {
         return next(err)

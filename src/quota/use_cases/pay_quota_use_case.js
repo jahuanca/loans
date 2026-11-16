@@ -1,12 +1,12 @@
 const { payQuotaRepository } = require("../repositories");
 
 const payQuotaUseCaseExecute = ({
-    id_of_quota,
-    paid_date,
+    idOfQuota,
+    paidDate,
     idUser,
 }) => payQuotaRepository({
-    id_of_quota,
-    paid_date,
+    idOfQuota,
+    paidDate,
     idUser,
 })
 

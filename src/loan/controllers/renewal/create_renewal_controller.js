@@ -4,7 +4,7 @@ const createRenewalUseCaseExecute = require("../../use_cases/renewal/create_rene
 const createRenewalController = async (req, res, next) => {
 
     const {value, idUser} = req
-    value.id_user = idUser
+    value.idUser = idUser
 
     const [err, renewal] = await getPromise(
         createRenewalUseCaseExecute(value)

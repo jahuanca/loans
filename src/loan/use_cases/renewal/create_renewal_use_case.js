@@ -1,22 +1,22 @@
 const { createRenewalRepository } = require("../../repositories")
 
 const createRenewalUseCaseExecute = ({
-    id_user,
-    id_customer,
-    id_new_loan,
-    id_previous_loan,
+    idUser,
+    idCustomer,
+    idNewLoan,
+    idPreviousLoan,
     date,
-    variation_in_amount,
-    id_type_renewal,
+    variationInAmount,
+    idTypeRenewal,
     observation,
 }) => createRenewalRepository({
-    id_user,
-    id_customer,
-    id_new_loan,
-    id_previous_loan,
+    idUser,
+    idCustomer,
+    idNewLoan,
+    idPreviousLoan,
     date,
-    variation_in_amount,
-    id_type_renewal,
+    variationInAmount,
+    idTypeRenewal,
     observation,
 })
 
