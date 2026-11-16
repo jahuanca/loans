@@ -154,7 +154,13 @@ const nameOfModelsAI = Object.freeze({
     GEMINI: 'google:gemini-3.5-flash-lite',
 })
 
+const paymentProviderCategories = Object.freeze({
+    BANK: 'BANCO',
+    WALLET: 'BILLETERA DIGITAL',
+})
+
 module.exports = {
+    paymentProviderCategories,
     defaultActions,
     defaultTypeUsers,
     defaultTypesDocument,

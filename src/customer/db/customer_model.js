@@ -15,7 +15,14 @@ class Customer extends Model {
 
         Customer.belongsTo(models.User, {
             foreignKey: {
-                name: 'idAssignedUser',
+                name: 'idAssignedRecoveryAgent',
+                allowNull: false,
+            }
+        })
+
+        Customer.hasMany(models.CustomerPaymentAccount, {
+            foreignKey: {
+                name: 'idCustomer',
                 allowNull: false,
             }
         })
@@ -55,6 +62,7 @@ Customer.init(
         phone: {
             type: DataTypes.STRING(9),
             allowNull: true,
+            validate: { is: /^9\d{8}$/ },
         },
         latitude: {
             type: DataTypes.STRING(100),
@@ -72,14 +80,14 @@ Customer.init(
             type: DataTypes.STRING(200),
             allowNull: false,
         },
-        idAssignedUser: {
+        idAssignedRecoveryAgent: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
         descriptionOperation: {
             type: DataTypes.VIRTUAL,
         },
-        idUserOfOperation: {
+        idUser: {
             type: DataTypes.VIRTUAL,
         },
     },
@@ -94,28 +102,28 @@ Customer.init(
 
 Customer.afterCreate(async (record, options) => {
     const { dataValues } = record
-    const { idUserOfOperation, descriptionOperation } = dataValues
+    const { idUser, descriptionOperation } = dataValues
     await setLog({
         tableName: Customer.tableName,
         newValues: dataValues,
         oldValues: null,
         typeOperation: INSERT,
         descriptionOperation: descriptionOperation,
-        idUserOfOperation: idUserOfOperation,
+        idUser: idUser,
     })
     // TODO: poner esto en un try catch
 })
 
 Customer.afterUpdate(async (record, options) => {
     const { dataValues, _previousDataValues } = record
-    const { idUserOfOperation, descriptionOperation } = dataValues
+    const { idUser, descriptionOperation } = dataValues
     await setLog({
         tableName: Customer.tableName,
         newValues: dataValues,
         oldValues: _previousDataValues,
         typeOperation: UPDATE,
         descriptionOperation: descriptionOperation,
-        idUserOfOperation: idUserOfOperation,
+        idUser: idUser,
     }) 
     // TODO: poner esto en un try catch
 })

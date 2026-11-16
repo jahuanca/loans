@@ -12,7 +12,7 @@ const createCustomerRepository = ({
     longitude,
     idTypeDocument,
     document,
-    idAssignedUser,
+    idAssignedRecoveryAgent,
     idUser,
 }) => {
     removeLocalCollection(keysCache.CUSTOMER_KEY)
@@ -24,7 +24,7 @@ const createCustomerRepository = ({
         address,
         latitude,
         longitude,
-        idAssignedUser,
+        idAssignedRecoveryAgent,
         idTypeDocument: idTypeDocument,
         document,
         idUserOfOperation: idUser,

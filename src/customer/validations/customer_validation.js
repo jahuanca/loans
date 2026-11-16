@@ -4,7 +4,7 @@ const validateSquema = require("../../utils/validations/validation")
 
 const _squemaCustomer = {
     idTypeCustomer: joiId.required(),
-    idAssignedUser: joiId.required(),
+    idAssignedRecoveryAgent: joiId.required(),
     idTypeDocument: joiId.required(),
     alias: joiString(50).allow(null),
     name: joiString(100).required(),
