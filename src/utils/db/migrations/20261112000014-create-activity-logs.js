@@ -26,7 +26,7 @@ module.exports = {
         type: Sequelize.CHAR(1),
         allowNull: true,
       },
-      description_operation: {
+      descriptionOperation: {
         type: Sequelize.STRING,
         allowNull: true,
       },

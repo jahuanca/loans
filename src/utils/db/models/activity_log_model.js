@@ -5,7 +5,7 @@ class ActivityLog extends Model {
     static associate(models) {
         ActivityLog.belongsTo(models.User, {
             foreignKey: {
-                name: 'id_user',
+                name: 'idUser',
                 allowNull: false,
             }
         })
@@ -14,21 +14,25 @@ class ActivityLog extends Model {
 
 ActivityLog.init(
     {
-        table_name: {
+        idUser: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        tableName: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        type_operation: {
+        typeOperation: {
             type: DataTypes.CHAR(1),
         },
-        description_operation: {
+        descriptionOperation: {
             type: DataTypes.STRING,
         },
-        new_registry: {
+        newRegistry: {
             type: DataTypes.JSON,
             allowNull: false,
         },
-        old_registry: {
+        oldRegistry: {
             type: DataTypes.JSON,
             allowNull: true,
         },

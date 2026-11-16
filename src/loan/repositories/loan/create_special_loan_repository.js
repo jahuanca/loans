@@ -33,7 +33,7 @@ const createSpecialLoanRepository = async ({
                 observation,
                 id_state_loan: 1,
                 evidence: 'ruta desconocida',
-                description_operation: operationsOfLog.CREATE_SPECIAL_LOAN,
+                descriptionOperation: operationsOfLog.CREATE_SPECIAL_LOAN,
                 idUser: id_user,
 
                 number_of_installments: number_of_installments,

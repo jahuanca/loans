@@ -8,12 +8,12 @@ const setLog = ({
     descriptionOperation,
     idUser,
 }) => ActivityLog.create({
-    table_name: tableName,
-    new_registry: newValues,
-    old_registry: oldValues,
-    type_operation: typeOperation,
-    description_operation: descriptionOperation,
-    id_user: idUser,
+    tableName: tableName,
+    newRegistry: newValues,
+    oldRegistry: oldValues,
+    typeOperation: typeOperation,
+    descriptionOperation: descriptionOperation,
+    idUser: idUser,
 })
 
 module.exports = {

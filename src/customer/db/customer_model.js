@@ -64,9 +64,12 @@ Customer.init(
             type: DataTypes.STRING(200),
             allowNull: false,
         },
+        descriptionOperation: {
+            type: DataTypes.VIRTUAL,
+        },
         idUser: {
             type: DataTypes.VIRTUAL,
-        }
+        },
     },
     {
         paranoid: true,
@@ -79,15 +82,29 @@ Customer.init(
 
 Customer.afterCreate(async (record, options) => {
     const { dataValues } = record
-    console.log(dataValues)
+    const { idUser, descriptionOperation } = dataValues
     await setLog({
         tableName: Customer.tableName,
         newValues: dataValues,
         oldValues: null,
         typeOperation: typeOperationLog.INSERT,
-        descriptionOperation: dataValues.description_operation,
-        idUser: 1,
+        descriptionOperation: descriptionOperation,
+        idUser: idUser,
     })
+    // TODO: poner esto en un try catch
+})
+
+Customer.afterUpdate(async (record, options) => {
+    const { dataValues, _previousDataValues } = record
+    const { idUser, descriptionOperation } = dataValues
+    await setLog({
+        tableName: Customer.tableName,
+        newValues: dataValues,
+        oldValues: _previousDataValues,
+        typeOperation: typeOperationLog.UPDATE,
+        descriptionOperation: descriptionOperation,
+        idUser: idUser,
+    }) 
     // TODO: poner esto en un try catch
 })
 

@@ -1,5 +1,5 @@
 const Customer = require("./../../db/customer_model")
-const { keysCache } = require("../../../utils/core/default_values");
+const { keysCache, operationsOfLog } = require("../../../utils/core/default_values");
 const { localNodeCache, removeLocalCollection} = require("../../../utils/core/node_cache");
 const { CUSTOMER_KEY } = keysCache
 
@@ -15,6 +15,7 @@ const updateCustomerRepository = async ({
     longitude,
     document,
     phone,
+    idUser,
 }) => {
     const customerToUpdate = await Customer.findByPk(id)
     if (customerToUpdate == null) {
@@ -32,6 +33,7 @@ const updateCustomerRepository = async ({
         document,
         customer: customerToUpdate,
         phone,
+        idUser,
     })
 
     await customerToUpdate.save()
@@ -51,6 +53,7 @@ const updateCustomer = ({
     document,
     customer,
     phone,
+    idUser,
 }) => {
     customer.id_type_document = id_type_document
     customer.id_type_customer = id_type_customer
@@ -62,6 +65,8 @@ const updateCustomer = ({
     customer.longitude = longitude
     customer.document = document
     customer.phone = phone
+    customer.descriptionOperation = operationsOfLog.UPDATE_CUSTOMER
+    customer.idUser = idUser
     return customer
 }
 

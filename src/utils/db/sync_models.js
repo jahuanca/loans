@@ -142,7 +142,7 @@ const syncTypeUserCustomer = () => {
 // syncTypeDocument()
 // syncPaymentMethod()
 // syncPaymentFrequency()
-syncActivityLog()
+// syncActivityLog()
 // syncTypeUser()
 // syncUser()
 // syncLoan()

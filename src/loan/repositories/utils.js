@@ -22,7 +22,7 @@ const payQuota = async ({
     }
     quota.id_state_quota = idQuotaStates.COMPLETE
     quota.paid_date = paid_date
-    quota.description_operation = operationsOfLog.PAY_QUOTA
+    quota.descriptionOperation = operationsOfLog.PAY_QUOTA
     quota.idUser = idUser
     
     await quota.save({ transaction: t })
@@ -48,7 +48,7 @@ const _setLoanComplete = async ({
     if (count == 0) {
         const loan = await Loan.findByPk(id_loan, { transaction: t })
         loan.id_state_loan = idLoanStates.COMPLETE
-        loan.description_operation = operationsOfLog.COMPLETE_LOAN
+        loan.descriptionOperation = operationsOfLog.COMPLETE_LOAN
         loan.idUser = idUser
         await loan.save({ transaction: t })
     }
@@ -124,7 +124,7 @@ const createLoan = async ({
         observation,
         id_state_loan: 1,
         evidence: 'ruta desconocida',
-        description_operation: operationsOfLog.CREATE_LOAN,
+        descriptionOperation: operationsOfLog.CREATE_LOAN,
         idUser: id_user,
 
         number_of_installments: monthly_installments,
@@ -204,7 +204,7 @@ const createLoanSpecial = async ({
         observation,
         id_state_loan: 1,
         evidence: 'ruta desconocida',
-        description_operation: operationsOfLog.CREATE_LOAN,
+        descriptionOperation: operationsOfLog.CREATE_LOAN,
         idUser: id_user,
 
         number_of_installments: number_of_installments,

@@ -9,7 +9,7 @@ activityLogRoutes.get('/log', getActivityLastsController)
 activityLogRoutes.get('/run', async (req, res, next) => {
     const logs = await ActivityLog.findAll({
         where: {
-            description_operation: 'CREATE_SPECIAL_LOAN'
+            descriptionOperation: 'CREATE_SPECIAL_LOAN'
         }
     })
 

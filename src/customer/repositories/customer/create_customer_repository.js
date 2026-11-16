@@ -26,7 +26,7 @@ const createCustomerRepository = ({
         id_type_document: id_type_document,
         document,
         idUser,
-        description_operation: operationsOfLog.CREATE_CUSTOMER,
+        descriptionOperation: operationsOfLog.CREATE_CUSTOMER,
     })
 }
 

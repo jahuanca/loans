@@ -92,7 +92,7 @@ Loan.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        description_operation: {
+        descriptionOperation: {
             type: DataTypes.VIRTUAL,
         },
         idUser: {
@@ -110,13 +110,14 @@ Loan.init(
 
 Loan.afterCreate(async (record, options) => {
     const { dataValues } = record
+    const { descriptionOperation, idUser } = dataValues
     setLog({
         tableName: Loan.tableName,
         newValues: dataValues,
         oldValues: null,
         typeOperation: typeOperationLog.INSERT,
-        descriptionOperation: dataValues.description_operation,
-        idUser: dataValues.idUser,
+        descriptionOperation: descriptionOperation,
+        idUser: idUser,
     })
 })
 

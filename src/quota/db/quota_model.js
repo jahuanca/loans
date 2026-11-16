@@ -59,7 +59,7 @@ Quota.init(
             allowNull: false,
             defaultValue: false,
         },
-        description_operation: {
+        descriptionOperation: {
             type: DataTypes.VIRTUAL,
         },
         idUser: {
@@ -81,13 +81,18 @@ Quota.afterUpdate((record, options) => {
         _previousDataValues,
     } = record
 
+    const {
+        descriptionOperation,
+        idUser,
+    } = dataValues
+
     setLog({
         tableName: Quota.tableName,
         newValues: dataValues,
         oldValues: _previousDataValues,
         typeOperation: typeOperationLog.UPDATE,
-        descriptionOperation: dataValues.description_operation,
-        idUser: dataValues.idUser,
+        descriptionOperation: descriptionOperation,
+        idUser: idUser,
     })
 })
 

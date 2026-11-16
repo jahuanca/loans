@@ -6,6 +6,9 @@ const validateSquema = (req, res, next, squema) => {
         console.log('Error al validar: ', details)
         return res.status(500).json({message: 'Error in validation'})
     }
+
+    const { idUser } = req
+    value.idUser = idUser
     req.value = value
     next()
 }

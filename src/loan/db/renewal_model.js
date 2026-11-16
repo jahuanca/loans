@@ -1,11 +1,37 @@
 const { Model, DataTypes } = require("sequelize");
-const { sequelize } = require('../../utils/db/connection'); 
-const Loan = require("./loan_model");
-const { typeRenewal } = require("../../utils/core/default_values");
-const User = require("../../user/db/user_model");
-const Customer = require("../../customer/db/customer_model");
+const { sequelize } = require('../../utils/db/connection');
+class Renewal extends Model {
+    static associate(models) {
+        Renewal.belongsTo(models.Customer, {
+            foreignKey: {
+                name: 'id_customer',
+                allowNull: false,
+            }
+        })
 
-class Renewal extends Model { }
+        Renewal.belongsTo(models.User, {
+            foreignKey: {
+                name: 'id_user',
+                allowNull: false,
+            }
+        })
+
+        Renewal.belongsTo(models.Loan, {
+            foreignKey: {
+                name: 'id_previous_loan',
+                allowNull: true,
+            }
+        })
+
+        Renewal.belongsTo(models.Loan, {
+            foreignKey: {
+                name: 'id_new_loan',
+                allowNull: false,
+            }
+        })
+
+    }
+}
 
 Renewal.init({
     id_customer: {
@@ -45,36 +71,8 @@ Renewal.init({
     paranoid: true,
     sequelize,
     modelName: 'Renewal',
-        tableName: 'renewals',
-        underscored: true,
-})
-
-Renewal.belongsTo(Customer, {
-    foreignKey: {
-        name: 'id_customer',
-        allowNull: false,
-    }
-})
-
-Renewal.belongsTo(User, {
-    foreignKey: {
-        name: 'id_user',
-        allowNull: false,
-    }
-})
-
-Renewal.belongsTo(Loan, {
-    foreignKey: {
-        name: 'id_previous_loan',
-        allowNull: true,
-    }
-})
-
-Renewal.belongsTo(Loan, {
-    foreignKey: {
-        name: 'id_new_loan',
-        allowNull: false,
-    }
+    tableName: 'renewals',
+    underscored: true,
 })
 
 module.exports = Renewal
