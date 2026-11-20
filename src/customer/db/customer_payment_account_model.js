@@ -67,7 +67,7 @@ CustomerPaymentAccount.init(
         descriptionOperation: {
             type: DataTypes.VIRTUAL,
         },
-        idUser: {
+        idUserOfOperation: {
             type: DataTypes.VIRTUAL,
         },
     },
@@ -98,7 +98,7 @@ CustomerPaymentAccount.afterCreate(async (record) => {
         oldValues: null,
         typeOperation: INSERT,
         descriptionOperation: descriptionOperation,
-        idUidUserOfOperationser: idUserOfOperation,
+        idUserOfOperation: idUserOfOperation,
     })
 })
 
