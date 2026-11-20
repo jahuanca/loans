@@ -91,27 +91,27 @@ CustomerPaymentAccount.init(
 
 CustomerPaymentAccount.afterCreate(async (record) => {
     const { dataValues } = record
-    const { idUser, descriptionOperation } = dataValues
+    const { idUserOfOperation, descriptionOperation } = dataValues
     await setLog({
         tableName: CustomerPaymentAccount.tableName,
         newValues: dataValues,
         oldValues: null,
         typeOperation: INSERT,
         descriptionOperation: descriptionOperation,
-        idUser: idUser,
+        idUidUserOfOperationser: idUserOfOperation,
     })
 })
 
 CustomerPaymentAccount.afterUpdate(async (record) => {
     const { dataValues, _previousDataValues } = record
-    const { idUser, descriptionOperation } = dataValues
+    const { idUserOfOperation, descriptionOperation } = dataValues
     await setLog({
         tableName: CustomerPaymentAccount.tableName,
         newValues: dataValues,
         oldValues: _previousDataValues,
         typeOperation: UPDATE,
         descriptionOperation: descriptionOperation,
-        idUser: idUser,
+        idUserOfOperation: idUserOfOperation,
     })
 })
 

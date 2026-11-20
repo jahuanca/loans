@@ -114,14 +114,14 @@ Loan.init(
 
 Loan.afterCreate(async (record, options) => {
     const { dataValues } = record
-    const { descriptionOperation, idUser } = dataValues
+    const { descriptionOperation, idUserOfOperation } = dataValues
     setLog({
         tableName: Loan.tableName,
         newValues: dataValues,
         oldValues: null,
         typeOperation: typeOperationLog.INSERT,
         descriptionOperation: descriptionOperation,
-        idUser: idUser,
+        idUserOfOperation: idUserOfOperation,
     })
 })
 

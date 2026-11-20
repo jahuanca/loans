@@ -58,6 +58,13 @@ module.exports = {
         type: Sequelize.STRING(200),
         allowNull: false,
       },
+      id_assigned_recovery_agent: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: 'users', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT',
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,

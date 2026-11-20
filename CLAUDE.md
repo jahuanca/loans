@@ -6,7 +6,7 @@ API REST en **Node.js + Express 4 (CommonJS)** con **Sequelize 6 + PostgreSQL**.
 
 - `npm run dev` — levanta el servidor con `--watch` y carga `.env` (entrada: `main.js`).
 - `npm run sync` — sincroniza los modelos con la BD (`src/utils/db/sync_models.js`). **No ejecutar sin pedir confirmación**: modifica la base de datos.
-- No hay tests configurados todavía.
+- `npm test` — corre los tests con Jest (+ Supertest para rutas). Viven en `tests/<modulo>/`. No tocan la BD: se hace `jest.mock` de `src/<modulo>/repositories` con factory (para no cargar Sequelize) y de `utils/core/winston`; las rutas se montan en una app Express mínima, nunca con `src/app.js` (llama a `startConnection()`). Ver `tests/user/` como ejemplo. Estructura: `tests/<modulo>/{controllers,use_cases,repositories,routes}/`, un archivo `<nombre>.test.js` por cada controller/use case/repositorio. Cada capa simula solo la de abajo: controllers → use case; use_cases → `repositories`; repositories → modelo `db/<x>_model` (con factory); routes → `repositories` + Supertest.
 - No leer ni mostrar el contenido de `.env`.
 
 ## Arquitectura (Clean Architecture por módulo)
@@ -68,3 +68,11 @@ Los módulos se registran en `src/app.js` (el orden importa: `setModuleError` va
 - Seguir exactamente el patrón de un módulo existente (`quota/` es el más simple; `customer/` incluye validaciones y permisos).
 - No cambiar contratos de rutas existentes sin avisar (los consume un frontend).
 - Ojo con nombres heredados con typos (`squema`, `ganancy`, `dasboard`): no renombrarlos salvo que se pida.
+
+# Gestión de planes
+
+- Todos los planes deben guardarse en `docs/plans/`.
+- Antes de iniciar una tarea, revisar si existe un plan relacionado.
+- Cuando se apruebe un plan, conservarlo como referencia.
+- Actualizar el estado del plan conforme se avance.
+- No modificar decisiones arquitectónicas aprobadas sin consultar.

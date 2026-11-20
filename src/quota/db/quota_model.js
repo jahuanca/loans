@@ -83,7 +83,7 @@ Quota.afterUpdate((record, options) => {
 
     const {
         descriptionOperation,
-        idUser,
+        idUserOfOperation,
     } = dataValues
 
     setLog({
@@ -92,7 +92,7 @@ Quota.afterUpdate((record, options) => {
         oldValues: _previousDataValues,
         typeOperation: typeOperationLog.UPDATE,
         descriptionOperation: descriptionOperation,
-        idUser: idUser,
+        idUserOfOperation: idUserOfOperation,
     })
 })
 
