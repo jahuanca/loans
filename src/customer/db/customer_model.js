@@ -71,14 +71,6 @@ Customer.init(
             allowNull: true,
             validate: { is: /^9\d{8}$/ },
         },
-        latitude: {
-            type: DataTypes.STRING(100),
-            allowNull: true,
-        },
-        longitude: {
-            type: DataTypes.STRING(100),
-            allowNull: true,
-        },
         idTypeDocument: {
             type: DataTypes.INTEGER,
             allowNull: false,

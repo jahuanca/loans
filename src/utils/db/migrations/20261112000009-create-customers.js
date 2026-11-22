@@ -39,14 +39,6 @@ module.exports = {
         type: Sequelize.STRING(9),
         allowNull: true,
       },
-      latitude: {
-        type: Sequelize.STRING(100),
-        allowNull: true,
-      },
-      longitude: {
-        type: Sequelize.STRING(100),
-        allowNull: true,
-      },
       id_type_document: {
         type: Sequelize.INTEGER,
         allowNull: false,

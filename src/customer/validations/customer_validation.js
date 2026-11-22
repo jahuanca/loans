@@ -1,5 +1,5 @@
 const Joi = require("joi")
-const { joiString, joiId, joiPhone, joiLatLong } = require("../../utils/validations/joi_values")
+const { joiString, joiId, joiPhone } = require("../../utils/validations/joi_values")
 const validateSquema = require("../../utils/validations/validation")
 
 const _squemaCustomer = {
@@ -11,8 +11,6 @@ const _squemaCustomer = {
     lastName: joiString(100).required(),
     address: joiString(100).required(),
     phone: joiPhone.required(),
-    latitude: joiLatLong.allow(null),
-    longitude: joiLatLong.allow(null),
     document: joiString(200).required(),
 }
 
