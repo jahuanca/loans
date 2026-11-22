@@ -70,7 +70,7 @@ describe(`rutas ${BASE}`, () => {
 
     test('POST /create valida, aplica la regla de categoria y usa el idUser del token', async () => {
         repositories.findCustomerByIdRepository.mockResolvedValue({ id: 3 })
-        repositories.findPaymentProviderByIdRepository.mockResolvedValue({ id: 2, category: 'BILLETERA DIGITAL', isActive: true })
+        repositories.findPaymentProviderByIdRepository.mockResolvedValue({ id: 2, category: 'WALLET', isActive: true })
         repositories.createCustomerPaymentAccountRepository.mockResolvedValue({ id: 10 })
 
         const res = await request(app).post(`${BASE}/create`).send({

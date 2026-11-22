@@ -3,8 +3,8 @@ const { paymentProviderCategories } = require("../../../utils/core/default_value
 const { BANK, WALLET } = paymentProviderCategories
 
 // Regla de negocio que el modelo delega al use case (depende del proveedor):
-// - BANCO: exige CCI o numero de cuenta; no lleva telefono.
-// - BILLETERA DIGITAL: exige telefono; no lleva CCI ni numero de cuenta.
+// - BANK (banco): exige CCI o numero de cuenta; no lleva telefono.
+// - WALLET (billetera digital): exige telefono; no lleva CCI ni numero de cuenta.
 // Devuelve los identificadores limpios segun la categoria.
 const normalizeAccountByCategory = ({ provider, accountNumber, cci, phone }) => {
     if (provider == null) throw new ErrorApp('El proveedor de pago no existe')

@@ -157,8 +157,8 @@ const nameOfModelsAI = Object.freeze({
 })
 
 const paymentProviderCategories = Object.freeze({
-    BANK: 'BANCO',
-    WALLET: 'BILLETERA DIGITAL',
+    BANK: 'BANK',
+    WALLET: 'WALLET',
 })
 
 module.exports = {

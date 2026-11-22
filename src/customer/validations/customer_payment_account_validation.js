@@ -3,7 +3,7 @@ const { joiString, joiId, joiPhone } = require("../../utils/validations/joi_valu
 const validateSquema = require("../../utils/validations/validation")
 
 // Mismos formatos que customer_payment_account_model.js.
-// Que identificador exige cada categoria (BANCO / BILLETERA) se valida en el use case.
+// Que identificador exige cada categoria (BANK / WALLET) se valida en el use case.
 const _squemaCustomerPaymentAccount = {
     idPaymentProvider: joiId.required(),
     accountNumber: Joi.string().trim().pattern(/^\d{10,20}$/).allow(null),

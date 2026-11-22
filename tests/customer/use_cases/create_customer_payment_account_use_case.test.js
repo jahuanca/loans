@@ -35,7 +35,7 @@ describe('Create CustomerPaymentAccount use case', () => {
 
     test('Si la regla de categoria falla, no debe crear', async () => {
         findCustomerByIdRepository.mockResolvedValue({ id: 3 })
-        findPaymentProviderByIdRepository.mockResolvedValue({ id: 2, category: 'BILLETERA DIGITAL', isActive: true })
+        findPaymentProviderByIdRepository.mockResolvedValue({ id: 2, category: 'WALLET', isActive: true })
 
         await expect(createCustomerPaymentAccountUseCaseExecute({ ...input, phone: null }))
             .rejects.toThrow('Una billetera digital requiere telefono')
@@ -44,7 +44,7 @@ describe('Create CustomerPaymentAccount use case', () => {
 
     test('Billetera: pasa solo los campos permitidos, limpia CCI e isDefault=false por defecto', async () => {
         findCustomerByIdRepository.mockResolvedValue({ id: 3 })
-        findPaymentProviderByIdRepository.mockResolvedValue({ id: 2, category: 'BILLETERA DIGITAL', isActive: true })
+        findPaymentProviderByIdRepository.mockResolvedValue({ id: 2, category: 'WALLET', isActive: true })
         createCustomerPaymentAccountRepository.mockResolvedValue({ id: 10 })
 
         const result = await createCustomerPaymentAccountUseCaseExecute(input)

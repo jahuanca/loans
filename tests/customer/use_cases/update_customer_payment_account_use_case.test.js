@@ -13,7 +13,7 @@ describe('Update CustomerPaymentAccount use case', () => {
     afterEach(() => jest.clearAllMocks())
 
     test('Banco: limpia el telefono y pasa los campos al repositorio', async () => {
-        findPaymentProviderByIdRepository.mockResolvedValue({ id: 1, category: 'BANCO', isActive: true })
+        findPaymentProviderByIdRepository.mockResolvedValue({ id: 1, category: 'BANK', isActive: true })
         updateCustomerPaymentAccountRepository.mockResolvedValue({ id: 5 })
 
         const result = await updateCustomerPaymentAccountUseCaseExecute({
