@@ -114,6 +114,8 @@ const operationsOfLog = Object.freeze({
     UPDATE_CUSTOMER: 'UPDATE_CUSTOMER',
     CREATE_CUSTOMER_PAYMENT_ACCOUNT: 'CREATE_CUSTOMER_PAYMENT_ACCOUNT',
     UPDATE_CUSTOMER_PAYMENT_ACCOUNT: 'UPDATE_CUSTOMER_PAYMENT_ACCOUNT',
+    CREATE_CUSTOMER_ADDRESS: 'CREATE_CUSTOMER_ADDRESS',
+    UPDATE_CUSTOMER_ADDRESS: 'UPDATE_CUSTOMER_ADDRESS',
     CREATE_LOAN: 'CREATE_LOAN',
     CREATE_SPECIAL_LOAN: 'CREATE_SPECIAL_LOAN',
     PAY_QUOTA: 'PAY_QUOTA',
@@ -161,7 +163,15 @@ const paymentProviderCategories = Object.freeze({
     WALLET: 'WALLET',
 })
 
+const customerAddressTypes = Object.freeze({
+    HOME: 'HOME',
+    BUSINESS: 'BUSINESS',
+    FAMILY: 'FAMILY',
+    OTHER: 'OTHER',
+})
+
 module.exports = {
+    customerAddressTypes,
     paymentProviderCategories,
     defaultActions,
     defaultTypeUsers,

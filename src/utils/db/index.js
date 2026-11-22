@@ -17,6 +17,7 @@ const { Model } = require('sequelize');
 const CapitalMovements = require('../../loan/db/capital_movements_model');
 const PaymentProvider = require('./models/payment_provider_model');
 const CustomerPaymentAccount = require('../../customer/db/customer_payment_account_model');
+const CustomerAddress = require('../../customer/db/customer_address_model');
 
 /**
  * @type {Object.<string, typeof Model>}
@@ -39,6 +40,7 @@ const db = {};
   Customer,
   PaymentProvider,
   CustomerPaymentAccount,
+  CustomerAddress,
 ].forEach(model => {
     db[model.options.modelName ?? model.name] = model;
   });

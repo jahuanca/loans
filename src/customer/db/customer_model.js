@@ -27,6 +27,13 @@ class Customer extends Model {
             }
         })
 
+        Customer.hasMany(models.CustomerAddress, {
+            foreignKey: {
+                name: 'idCustomer',
+                allowNull: false,
+            }
+        })
+
         Customer.hasMany(models.Loan, {
             foreignKey: {
                 name: 'idCustomer',
@@ -57,7 +64,7 @@ Customer.init(
         },
         address: {
             type: DataTypes.STRING(100),
-            allowNull: false,
+            allowNull: true,
         },
         phone: {
             type: DataTypes.STRING(9),
