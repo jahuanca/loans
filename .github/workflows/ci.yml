@@ -1,0 +1,39 @@
+# CI del backend: corre los tests de Jest en cada PR y en cada push a main.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# Si subes otro commit al mismo PR, cancela la corrida anterior.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Tests (Jest)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Instalar Node 22 (con caché de npm)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          # No hay package-lock.json versionado, así que la llave del caché sale de package.json.
+          cache-dependency-path: package.json
+
+      - name: Instalar dependencias
+        run: npm install --no-audit --no-fund
+
+      # Lint: solo corre si algún día se agrega un script "lint" en package.json.
+      - name: Lint (si existe)
+        run: npm run lint --if-present
+
+      - name: Tests
+        run: npm test -- --ci
