@@ -101,6 +101,8 @@ describe(`rutas ${BASE}`, () => {
         ['latitud fuera de rango', { latitude: -95 }],
         ['latitud sin longitud', { longitude: undefined }],
         ['longitud con latitud null', { latitude: null }],
+        ['sin coordenadas', { latitude: undefined, longitude: undefined }],
+        ['coordenadas null', { latitude: null, longitude: null }],
     ])('POST /create rechaza %s', async (_, changes) => {
         const res = await request(app).post(`${BASE}/create`).send({ ...validBody, ...changes })
 

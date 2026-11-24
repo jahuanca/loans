@@ -1,6 +1,8 @@
 /node_modules
 .env
 /logs
+# Archivos subidos (fotos de domicilios, etc.)
+/uploads
 package-lock.json
 # Claude - configuración personal
 CLAUDE.local.md

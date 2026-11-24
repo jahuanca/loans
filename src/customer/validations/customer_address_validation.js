@@ -27,6 +27,8 @@ const bothCoordinatesOrNone = (value, helpers) => {
 
 const squemaCreate = Joi.object({
     ..._squemaCustomerAddress,
+    latitude: joiLatitude.required(),
+    longitude: joiLongitude.required(),
     idCustomer: joiId.required(),
 }).custom(bothCoordinatesOrNone)
 
