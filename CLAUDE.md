@@ -63,6 +63,12 @@ Los módulos se registran en `src/app.js` (el orden importa: `setModuleError` va
 6. `routes/<entidad>_routes.js` con validaciones y `actionUser` si corresponde.
 7. `index.js` del módulo (`setModule<Entidad>`) y registrarlo en `src/app.js` antes de `setModuleError`.
 
+## Hooks y skills de Claude Code
+
+- Hook `PostToolUse` (`.claude/settings.json` → `.claude/hooks/check_edited_js.js`): tras cada `Edit|Write|MultiEdit` de un `.js` en `src/` o `tests/`, corre `node --check` y `jest --findRelatedTests` de ese archivo. Si falla sale con código 2 y Claude ve el error para corregirlo.
+- Skill `pre-review` (`/pre-review`): revisa el diff contra este CLAUDE.md (bugs, seguridad, tests faltantes) antes de push/PR. No edita archivos.
+- Otras skills: `loans-node-crud`, `loans-node-submodulo`.
+
 ## Al trabajar en este repo
 
 - Seguir exactamente el patrón de un módulo existente (`quota/` es el más simple; `customer/` incluye validaciones y permisos).
