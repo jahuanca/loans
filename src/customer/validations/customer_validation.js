@@ -6,10 +6,11 @@ const _squemaCustomer = {
     idTypeCustomer: joiId.required(),
     idAssignedRecoveryAgent: joiId.required(),
     idTypeDocument: joiId.required(),
-    alias: joiString(50).allow(null),
+    alias: joiString(50).allow(null, ''),
     name: joiString(100).required(),
     lastName: joiString(100).required(),
-    address: joiString(100).required(),
+    // Opcional: las direcciones viven en /customer-address y se agregan desde el detalle.
+    address: joiString(100).allow(null, ''),
     phone: joiPhone.required(),
     document: joiString(200).required(),
 }

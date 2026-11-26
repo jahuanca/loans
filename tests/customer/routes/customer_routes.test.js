@@ -1,6 +1,7 @@
 // Montamos SOLO el router de clientes (no src/app.js, que conecta a la BD).
 // Se simula la capa de repositorios: routes -> validations -> controllers -> use_cases corren de verdad.
 jest.mock('../../../src/customer/repositories', () => ({
+    createCustomerRepository: jest.fn(),
     findCustomerByIdRepository: jest.fn(),
     findTypeCustomerByIdRepository: jest.fn(),
     findUserByIdRepository: jest.fn(),
@@ -39,6 +40,17 @@ const personalBody = {
     phone: '987654321',
 }
 
+const createBody = {
+    idTypeDocument: 1,
+    document: '12345678',
+    alias: null,
+    name: 'Jose',
+    lastName: 'Perez',
+    phone: '987654321',
+    idTypeCustomer: 2,
+    idAssignedRecoveryAgent: 7,
+}
+
 const manageBody = { id: 3, idTypeCustomer: 2, idAssignedRecoveryAgent: 7 }
 
 const buildApp = () => {
@@ -63,6 +75,44 @@ describe(`rutas ${BASE} (update por secciones)`, () => {
         jest.spyOn(console, 'log').mockImplementation(() => {})
     })
     afterEach(() => jest.restoreAllMocks())
+
+    describe('POST /create', () => {
+        test('crea el cliente sin direccion (se agregan luego desde el detalle)', async () => {
+            repositories.createCustomerRepository.mockResolvedValue({ id: 10 })
+
+            const res = await request(app).post(`${BASE}/create`).send(createBody)
+
+            expect(res.status).toBe(200)
+            expect(res.body).toEqual({ id: 10 })
+            expect(repositories.createCustomerRepository).toHaveBeenCalledWith({
+                ...createBody,
+                idUser: ID_USER_TOKEN,
+            })
+        })
+
+        test.each([
+            ['address null', { address: null }],
+            ['alias vacio', { alias: '' }],
+        ])('acepta %s', async (_, changes) => {
+            repositories.createCustomerRepository.mockResolvedValue({ id: 10 })
+
+            const res = await request(app).post(`${BASE}/create`).send({ ...createBody, ...changes })
+
+            expect(res.status).toBe(200)
+        })
+
+        test.each([
+            ['sin nombre', { name: undefined }],
+            ['sin tipo de cliente', { idTypeCustomer: undefined }],
+            ['sin recuperador', { idAssignedRecoveryAgent: undefined }],
+            ['celular invalido', { phone: '123' }],
+        ])('rechaza %s', async (_, changes) => {
+            const res = await request(app).post(`${BASE}/create`).send({ ...createBody, ...changes })
+
+            expect(res.status).toBe(500)
+            expect(repositories.createCustomerRepository).not.toHaveBeenCalled()
+        })
+    })
 
     describe('PUT /update-personal-data', () => {
         test('valida, usa el idUser del token y actualiza', async () => {
