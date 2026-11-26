@@ -29,7 +29,7 @@ describe('Create Customer repository', () => {
             idTypeCustomer: 2,
             idAssignedRecoveryAgent: 7,
             name: 'Jose',
-            address: '',
+            address: undefined,
             idUserOfOperation: 42,
             descriptionOperation: 'CREATE_CUSTOMER',
         }))

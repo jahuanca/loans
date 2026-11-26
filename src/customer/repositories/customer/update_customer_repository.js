@@ -25,7 +25,7 @@ const updateCustomerRepository = async ({
         alias,
         name,
         lastName,
-        address: address ?? '',
+        address,
         document,
         phone,
         idAssignedRecoveryAgent,
