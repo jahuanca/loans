@@ -27,7 +27,7 @@ describe('Update CustomerPaymentAccount repository', () => {
 
         expect(CustomerPaymentAccount.update).toHaveBeenCalledWith(
             { isDefault: false },
-            { where: { idCustomer: 3, isDefault: true, id: { [Op.ne]: 5 } }, transaction: 'tx' },
+            { where: { idCustomer: 3, isDefault: true, id: { [Op.ne]: 5 } }, transaction: 'tx', validate: false },
         )
         expect(account.set).toHaveBeenCalledWith(expect.objectContaining({
             holderName: 'Ana',

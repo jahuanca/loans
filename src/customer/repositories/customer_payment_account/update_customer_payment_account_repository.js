@@ -21,11 +21,13 @@ const updateCustomerPaymentAccountRepository = ({
     }
 
     if (isDefault) {
+        // validate: false: ver create_customer_payment_account_repository (hasIdentifier).
         await CustomerPaymentAccount.update(
             { isDefault: false },
             {
                 where: { idCustomer: accountToUpdate.idCustomer, isDefault: true, id: { [Op.ne]: id } },
                 transaction,
+                validate: false,
             },
         )
     }

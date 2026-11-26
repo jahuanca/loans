@@ -45,7 +45,9 @@ describe('Create CustomerPaymentAccount repository', () => {
         expect(result).toEqual({ id: 10 })
         expect(CustomerPaymentAccount.update).toHaveBeenCalledWith(
             { isDefault: false },
-            { where: { idCustomer: 3, isDefault: true }, transaction: 'tx' },
+            // validate: false evita el validador de modelo hasIdentifier en el update masivo
+            // (fallaba con "La cuenta debe tener CCI, numero de cuenta o telefono").
+            { where: { idCustomer: 3, isDefault: true }, transaction: 'tx', validate: false },
         )
     })
 })
