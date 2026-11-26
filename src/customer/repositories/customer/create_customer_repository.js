@@ -20,8 +20,7 @@ const createCustomerRepository = ({
         name,
         phone,
         lastName,
-        // El alta ya no envia direccion; null tambien se guarda como ''.
-        address: address ?? '',
+        address,
         idTypeCustomer,
         idAssignedRecoveryAgent,
         idTypeDocument: idTypeDocument,
