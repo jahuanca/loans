@@ -62,9 +62,11 @@ Customer.init(
             type: DataTypes.STRING(100),
             allowNull: false,
         },
+        // Legado: las direcciones viven en customer_addresses. Se deja NOT NULL con '' por defecto.
         address: {
             type: DataTypes.STRING(100),
-            allowNull: true,
+            allowNull: false,
+            defaultValue: '',
         },
         phone: {
             type: DataTypes.STRING(9),
