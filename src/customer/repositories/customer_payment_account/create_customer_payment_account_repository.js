@@ -16,9 +16,12 @@ const createCustomerPaymentAccountRepository = ({
     observation,
 }) => sequelize.transaction(async (transaction) => {
     if (isDefault) {
+        // validate: false -> el update masivo arma una instancia solo con { isDefault } y
+        // correria el validador de modelo hasIdentifier, que falla porque no trae
+        // cci/accountNumber/phone. Solo se cambia un booleano: no hay nada que validar.
         await CustomerPaymentAccount.update(
             { isDefault: false },
-            { where: { idCustomer, isDefault: true }, transaction },
+            { where: { idCustomer, isDefault: true }, transaction, validate: false },
         )
     }
 
