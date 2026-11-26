@@ -9,8 +9,9 @@ const _squemaCustomer = {
     alias: joiString(50).allow(null, ''),
     name: joiString(100).required(),
     lastName: joiString(100).required(),
-    // Opcional: las direcciones viven en /customer-address y se agregan desde el detalle.
-    address: joiString(100).allow(null, ''),
+    // Ya no existe en el modelo (las direcciones viven en /customer-address).
+    // Se acepta y se descarta para no romper versiones viejas de la app que aun lo envian.
+    address: Joi.any().strip(),
     phone: joiPhone.required(),
     document: joiString(200).required(),
 }

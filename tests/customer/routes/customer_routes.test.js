@@ -92,6 +92,7 @@ describe(`rutas ${BASE} (update por secciones)`, () => {
 
         test.each([
             ['address null', { address: null }],
+            ['address de una version vieja de la app (se descarta)', { address: 'Av. Grau 123' }],
             ['alias vacio', { alias: '' }],
         ])('acepta %s', async (_, changes) => {
             repositories.createCustomerRepository.mockResolvedValue({ id: 10 })
@@ -99,6 +100,8 @@ describe(`rutas ${BASE} (update por secciones)`, () => {
             const res = await request(app).post(`${BASE}/create`).send({ ...createBody, ...changes })
 
             expect(res.status).toBe(200)
+            // address ya no existe en el modelo: nunca llega al repositorio.
+            expect(repositories.createCustomerRepository.mock.calls[0][0]).not.toHaveProperty('address')
         })
 
         test.each([

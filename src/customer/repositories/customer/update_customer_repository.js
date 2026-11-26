@@ -15,7 +15,7 @@ const updateCustomerRepository = async ({
 
     const {
         idTypeDocument, idTypeCustomer, alias, 
-        name, lastName, address,
+        name, lastName,
         document, phone, idAssignedRecoveryAgent,
     } = data
 
@@ -25,7 +25,6 @@ const updateCustomerRepository = async ({
         alias,
         name,
         lastName,
-        address,
         document,
         phone,
         idAssignedRecoveryAgent,
